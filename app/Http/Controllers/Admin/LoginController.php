@@ -14,7 +14,6 @@ class LoginController extends Controller
      *显示博客后台登录页面
      */
     public function index(){
-
         return view('admin.login.login');
 
     }

@@ -7,7 +7,7 @@
 @section('description', '登录博客系统操作')
 
 @section('content')
-<form  id="msform"  action="https://www.w3school.com.cn/tags/att_form_method.asp" method="get" >
+<form  id="msform"  action="{{ url('admin/login/logIn') }}" method="get" >
 
     <fieldset>
         <h2>登录</h2>
