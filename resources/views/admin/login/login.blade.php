@@ -13,7 +13,7 @@
         <h2>登录</h2>
         <input type="text" name="email" placeholder="Email" />
         <input type="password" name="pass" placeholder="Password" />
-        <input  name="next" class="next action-button"  type="submit" value="Next" />
+        <input name="next" class="next action-button"  type="submit" value="Next" />
     </fieldset>
 
 </form>
