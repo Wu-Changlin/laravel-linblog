@@ -7,7 +7,7 @@
 @section('description', '登录博客系统操作')
 
 @section('content')
-<form  id="msform"  action="{{ url('admin/login/logIn') }}" method="get" >
+<form  id="msform"  action="{{ url('admin/login/logIn') }}" method="post" >
 
     <fieldset>
         <h2>登录</h2>
