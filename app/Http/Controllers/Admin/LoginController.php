@@ -25,10 +25,33 @@ class LoginController extends Controller
      * 测试用get
      * post  $user_name 用户名称(用户邮箱)  $password 用户密码  $verification _code 登录验证码 动态生成
      */
-    public function logIn()
-    {
 
-        dd('logIn.博客(用户或管理员登录)后台登录操作');
+
+    public function logIn(Request $request)
+    {
+        //接收页面传输数据
+        $input = $request->all();
+        $login__token=isset($input['_token'])?$input['_token']:"";
+        $login__email=isset($input['email'])?$input['email']:"";
+        $login__pass=isset($input['pass'])?$input['pass']:"";
+        //检测输入数据
+        $data=[];
+        if(empty($login__email) ||  empty($login__pass)){
+            return response()->view('admin.login.login',$data, "请输入邮箱地址或密码");
+//            sendMSG("请输入邮箱地址或密码!","104014");
+        }
+
+        dd(".博客(用户或管理员登录)后台登录操作");
+        //判断页面数据是否合法
+//        if ($request->isMethod('post')) {
+//
+//        return response()->view('admin.admin.admin_index',$data, 200);
+//        var_dump($input);
+//        dd(".博客(用户或管理员登录)后台登录操作");
+//        }else{
+//            return view('admin.login.login');
+//        }
+
     }
 
     /**

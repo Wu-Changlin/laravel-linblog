@@ -24,11 +24,14 @@ Route::namespace('Home')->name('home.')->group(function () {
 // 用户登录后台
 Route::namespace('Admin')->prefix('admin')->group(function () {
 
+//    http://192.168.164.134:1133/admin/login/logIn
+//    http://192.168.164.134:1133/admin/login/logIn
+
     Route::prefix('login')->group(function () {
         //登录页面  http://192.168.164.134:1133/admin/login/index
         Route::get('index','LoginController@index' );
         // 登录     http://192.168.164.134:1133/admin/login/logIn
-        Route::get('logIn', 'LoginController@logIn');
+        Route::post('logIn', 'LoginController@logIn');
         // 退出      http://192.168.164.134:1133/admin/login/logOut/1
         Route::get('logOut/{id}', 'LoginController@logOut');
     });
@@ -38,10 +41,10 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 
 // 用户注册
 Route::namespace('Admin')->prefix('register')->group(function () {
-        //登录页面  http://192.168.164.134:1133/register
+        //注册页面  http://192.168.164.134:1133/register
         Route::get('/','RegisterController@showRegisterUserIndex' );
         // 注册     http://192.168.164.134:1133/register/registerUser
-        Route::get('registerUser', 'RegisterController@registerUser');
+        Route::post('registerUser', 'RegisterController@registerUser');
 });
 
 

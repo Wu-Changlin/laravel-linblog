@@ -8,16 +8,16 @@
 
 @section('content')
 <form  id="msform"  action="{{ url('admin/login/logIn') }}" method="post" >
-
+    {{ csrf_field() }}
     <fieldset>
         <h2>登录</h2>
-        <input type="text" name="email" placeholder="Email" />
-        <input type="password" name="pass" placeholder="Password" />
-        <input name="next" class="next action-button"  type="submit" value="Next" />
+        <input type="text"   name="email" placeholder="Email" required=""/>
+        <input type="password" name="pass" placeholder="Password" required=""/>
+        <input name="next"  class="next action-button"  type="submit" value="Next"  />
     </fieldset>
 
 </form>
 
-
-
 @endsection
+
+
