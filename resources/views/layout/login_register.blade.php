@@ -7,17 +7,18 @@
     <meta name="keywords" content=" @yield('keywords')" />
     <meta name="description" content=" @yield('description')"/>
     <meta name="viewport" content="width=device-width">
+    <link href="{{asset('admin/style/bootstrap.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('admin/login/login.register.css')}}">
     @yield('css')
 </head>
 <body>
 
-
 @yield('content')
 
-
-
-
 @yield('js')
+<script src="{{asset('admin/style/jquery_002.js')}}"></script>
+
+<script src="{{asset('admin/style/bootstrap.js')}}"></script>
+<script src="{{asset('admin/style/jquery.js')}}"></script>
 </body>
 </html>

@@ -36,6 +36,15 @@ class RegisterController extends Controller
         $login__email=isset($input['email'])?$input['email']:"";
         $login__pass=isset($input['pass'])?$input['pass']:"";
         $login__cpass=isset($input['cpass'])?$input['cpass']:"";
+
+        $messages = [
+            'email' => '请将填写email完整',
+            'pass' => '请将填写完密码完整',
+        ];
+        $this->validate($request, [
+            'email' => 'required',
+            'pass' => 'required',
+        ], $messages);
 //       if(!($login__pass===$login__cpass)){
 //            //dd($login__pass===$login__cpass);
 //            return back()->withErrors('success','账户/密码错误');

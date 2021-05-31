@@ -1,7 +1,12 @@
 <?php
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
+
+
 
 /**
  * Class LoginController  博客后台登录和退出   保证用户信息安全用psot请求
@@ -29,29 +34,46 @@ class LoginController extends Controller
 
     public function logIn(Request $request)
     {
-        //接收页面传输数据
-        $input = $request->all();
-        $login__token=isset($input['_token'])?$input['_token']:"";
-        $login__email=isset($input['email'])?$input['email']:"";
-        $login__pass=isset($input['pass'])?$input['pass']:"";
-        //检测输入数据
-        $data=[];
-        if(empty($login__email) ||  empty($login__pass)){
-            return response()->view('admin.login.login',$data, "请输入邮箱地址或密码");
-//            sendMSG("请输入邮箱地址或密码!","104014");
+        if ($request->isMethod('post')) {
+            $input = $request->all();
+            $login__token = isset($input['_token']) ? $input['_token'] : "";
+            $login__name = isset($input['name']) ? $input['name'] : "";
+            $login__password = isset($input['password']) ? $input['password'] : "";
+            if (empty($login__name) || empty($login__password)) {
+                return back()->with('msg', '名称和密码都不能为空');
+            }
+        }else{
+            return back()->with('msg', '非法请求');
         }
+        $article = new User();
+        $r=$article->add();
+        $a=$article-> up();
 
-        dd(".博客(用户或管理员登录)后台登录操作");
-        //判断页面数据是否合法
-//        if ($request->isMethod('post')) {
+        dd($a);
+
+        $hashStr = Hash::make($login__password);
+        echo $r;
+        //使用check()方法，进行验证，对比当前密码和数据库的密码是否相同。
+//        $hashStr = Hash::make($str);
+//        $booleanValue = Hash::check($login__password,$hashStr);
+
+        //使用门面Hash中make()方法来将密码进行加密。
+        //$hashStr = Hash::make($str);
+//        $hashStr ='$2y$10$/yjf7n71LdnrzHXus1YiWORgtkEuRcxRCyoHwRumdapjxIcCkJz1W';
 //
-//        return response()->view('admin.admin.admin_index',$data, 200);
-//        var_dump($input);
-//        dd(".博客(用户或管理员登录)后台登录操作");
-//        }else{
-//            return view('admin.login.login');
-//        }
+//        //使用check()方法，进行验证，对比当前密码和数据库加密之后的密码是否相同。
+//        $booleanValue = Hash::check($str,$hashStr);
+//        echo $hashStr;
+//        dd($booleanValue);
 
+////            $t=bcrypt($login__password);
+//        $m=Hash::make($login__password);
+//
+////            $m=Hash::mack($login__password);
+////            echo '$t'.$t."/n";
+//            echo '$m'.$m;
+
+        return view('admin.admin.admin_index');
     }
 
     /**

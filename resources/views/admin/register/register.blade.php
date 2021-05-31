@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,7 +5,6 @@
     <title>登录 - 管理后台</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{asset('admin/login/admin.css ')}}" rel="stylesheet">
     <style>
         .login_content {
@@ -23,12 +21,13 @@
     <a class="hiddenanchor" id="signup"></a>
     <a class="hiddenanchor" id="signin"></a>
 
+
     <div class="login_wrapper">
         <div class="animate form login_form">
             <section class="login_content">
                 <form action=" {{ url('register/registerUser') }}" method="post">
-                    <input class="hidden" type="checkbox" name="remember" checked>
                     {{ csrf_field() }}
+
                     <h1>Admin</h1>
                     <div>
                         <input type="text" class="form-control" placeholder="Email" required="" name="email" value="">
@@ -38,10 +37,23 @@
                         <input type="password" class="form-control" placeholder="Password" required="" name="password">
                     </div>
                     <div>
+
+                        @if ($errors->any())
+                        @foreach ($errors->all() as $error)
+                            <div class="alert alert-danger ">
+<!--                                <strong>遇到错误: </strong>-->
+                               {{ $error }}!
+                            </div>
+                            @endforeach
+                        @endif
+
+
+
                         <button class="btn btn-default submit" type="submit">登录</button>
                     </div>
 
                     <div class="clearfix"></div>
+
 
                     <div class="separator">
                         <div class="clearfix"></div>
@@ -83,7 +95,6 @@
         }
     });
 </script>
-
 
 
 </body>
