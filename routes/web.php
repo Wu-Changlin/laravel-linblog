@@ -27,9 +27,9 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
     //
     Route::prefix('login')->group(function () {
         //登录页面  http://192.168.164.134:1133/admin/login/index
-        Route::get('index','LoginController@index' );
+        Route::get('index','LoginController@index' )->name("login.index");
         // 登录     http://192.168.164.134:1133/admin/login/logIn
-        Route::post('logIn', 'LoginController@logIn');
+        Route::post('logIn', 'LoginController@logIn')->name("admin.login");
         // 退出      http://192.168.164.134:1133/admin/login/logOut/1
         Route::get('logOut/{id}', 'LoginController@logOut');
     });
@@ -65,7 +65,7 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
     // 首页控制器
     Route::prefix('adminUser')->group(function () {
         // 后台首页     http://192.168.164.134:1133/admin/adminUser
-        Route::get('/', 'AdminController@showIndex');
+        Route::get('/', 'AdminController@showIndex')->name("admin.index");
         // 管理员列表    http://192.168.164.134:1133/admin/adminUser/showAdminUser
         Route::get('showAdminUser', 'AdminController@showAdminUser');
 

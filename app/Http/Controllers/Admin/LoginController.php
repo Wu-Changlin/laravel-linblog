@@ -36,23 +36,31 @@ class LoginController extends Controller
     {
         if ($request->isMethod('post')) {
             $input = $request->all();
-            $login__token = isset($input['_token']) ? $input['_token'] : "";
-            $login__name = isset($input['name']) ? $input['name'] : "";
-            $login__password = isset($input['password']) ? $input['password'] : "";
-            if (empty($login__name) || empty($login__password)) {
+            $login_token = isset($input['_token']) ? $input['_token'] : "";
+            $login_name = isset($input['name']) ? $input['name'] : "";
+            $login_password = isset($input['password']) ? $input['password'] : "";
+            if (empty($login_name) || empty($login_password)) {
                 return back()->with('msg', '名称和密码都不能为空');
             }
         }else{
             return back()->with('msg', '非法请求');
         }
-        $article = new User();
-        $r=$article->add();
-        $a=$article-> up();
+        //通过输入的用户名去查询数据库是否有此该用户信息
+        $users = User::where('name', $login_name)->get();
+        if ($users) {
+            return back()->with('msg', '用户不存在');
 
-        dd($a);
+        }
+        echo 1111;
+//        $article = new User();
+//        $r=$article->add();
+//        $a=$article-> up();
 
-        $hashStr = Hash::make($login__password);
-        echo $r;
+
+
+
+        $hashStr = Hash::make($login_password);
+
         //使用check()方法，进行验证，对比当前密码和数据库的密码是否相同。
 //        $hashStr = Hash::make($str);
 //        $booleanValue = Hash::check($login__password,$hashStr);

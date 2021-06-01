@@ -1,4 +1,4 @@
-@extends('layout.login_register')
+@extends('layouts.login_register')
 
 @section('title', '登录博客系统')
 
@@ -31,11 +31,11 @@ position: relative;
 
 @if(session('msg'))
     <p  id="msf"   class="alert alert-danger " style="color:red" text-align="center">{{ session('msg') }}</p>
-
 @endif
 
 
-<form  id="msform"  action="{{ url('admin/login/logIn') }}" method="post" >
+{{--<form  id="msform"  action="{{ url('admin/login/logIn') }}" method="post" >--}}
+<form  id="msform"  action="{{ route("admin.login")}}" method="post" >
     {{ csrf_field() }}
     <fieldset>
         <h2>登录</h2>
@@ -44,7 +44,6 @@ position: relative;
         <input type="password" name="password" placeholder="password" required=""/>
         <input name="next"  class="next action-button"  type="submit" value="Next"  />
     </fieldset>
-
 </form>
 
 @endsection
