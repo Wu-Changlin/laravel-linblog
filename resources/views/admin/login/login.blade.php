@@ -1,4 +1,4 @@
-@extends('layouts.login_register')
+@extends('layout.login_register')
 
 @section('title', '登录博客系统')
 
@@ -20,18 +20,17 @@ position: relative;
 @section('content')
 
 
-<!--@if ($errors->any())-->
-<!--@foreach ($errors->all() as $error)-->
-<!--<div class="alert alert-danger ">-->
-<!--    <strong>遇到错误: </strong>-->
-<!--    {{ $error }}!-->
-<!--</div>-->
-<!--@endforeach-->
-<!--@endif-->
+{{--@if ($errors->any())--}}
+{{--@foreach ($errors->all() as $error)--}}
+{{--<div class="alert alert-danger ">--}}
+{{--遇到错误: </strong>--}}
+{{--</div>--}}
+{{--@endforeach--}}
+{{--@endif--}}
 
-@if(session('msg'))
-    <p  id="msf"   class="alert alert-danger " style="color:red" text-align="center">{{ session('msg') }}</p>
-@endif
+{{--@if(session('msg'))--}}
+{{--    <p  id="msf"   class="alert alert-danger " style="color:red" text-align="center">{{ session('msg') }}</p>--}}
+{{--@endif--}}
 
 
 {{--<form  id="msform"  action="{{ url('admin/login/logIn') }}" method="post" >--}}
@@ -49,3 +48,28 @@ position: relative;
 @endsection
 
 
+@section('js')
+<script>
+
+
+
+    $.ajax({
+        url: "ajax/ajax_selectPicType.aspx",
+
+        data:{Full:"fu"},
+
+        type: "POST",
+
+        dataType:'json',
+
+        success:Call发44Back,
+
+        error:function(er){
+
+            BackErr(er);}
+
+    });
+    
+</script>
+
+@endsection

@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\User as UserModels ;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -19,7 +19,8 @@ class LoginController extends Controller
      *显示博客后台登录页面
      */
     public function index(){
-        return view('admin.login.login');
+        $this->sendMSG('你好',200);
+        //return view('admin.login.login');
 
     }
 
@@ -45,41 +46,20 @@ class LoginController extends Controller
         }else{
             return back()->with('msg', '非法请求');
         }
+
         //通过输入的用户名去查询数据库是否有此该用户信息
-        $users = User::where('name', $login_name)->get();
-        if ($users) {
+        $users = UserModels::where('name', $login_name)->value('password');
+        dd( $users);
+
+        if (!count($users)) {
             return back()->with('msg', '用户不存在');
-
         }
-        echo 1111;
-//        $article = new User();
-//        $r=$article->add();
-//        $a=$article-> up();
 
-
-
-
-        $hashStr = Hash::make($login_password);
-
-        //使用check()方法，进行验证，对比当前密码和数据库的密码是否相同。
-//        $hashStr = Hash::make($str);
-//        $booleanValue = Hash::check($login__password,$hashStr);
-
-        //使用门面Hash中make()方法来将密码进行加密。
-        //$hashStr = Hash::make($str);
-//        $hashStr ='$2y$10$/yjf7n71LdnrzHXus1YiWORgtkEuRcxRCyoHwRumdapjxIcCkJz1W';
 //
-//        //使用check()方法，进行验证，对比当前密码和数据库加密之后的密码是否相同。
-//        $booleanValue = Hash::check($str,$hashStr);
-//        echo $hashStr;
-//        dd($booleanValue);
-
-////            $t=bcrypt($login__password);
-//        $m=Hash::make($login__password);
 //
-////            $m=Hash::mack($login__password);
-////            echo '$t'.$t."/n";
-//            echo '$m'.$m;
+//
+//        exit;
+
 
         return view('admin.admin.admin_index');
     }

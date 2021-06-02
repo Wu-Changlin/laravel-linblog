@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 
-class CategoryController extends Controller
+class CategorieController extends Controller
 {
     /**
      * 显示所有分类

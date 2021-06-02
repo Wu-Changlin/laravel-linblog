@@ -2,14 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>@yield('title')</title>
+{{--    <title>@yield('title')</title>--}}
+
+    <title> </title>
     <meta name="keywords" content=" @yield('keywords')" />
     <meta name="description" content=" @yield('description')" />
     <meta http-equiv="Cache-Control" content="no-siteapp" />
     <meta name="author" content="baijunyao,baijunyao@baijunyao.com">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="csrf-token" content="kbLEdPdk50u1VUSFUdd4EJjfm1eKZPi7Js8u8fIZ">
-    <link rel="stylesheet" href="{{asset('dist/css/app.css')}}">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <link rel="stylesheet" href="{{asset('home/dist/css/app.css')}}">
     @yield('css')
 </head>
 
@@ -232,7 +234,18 @@
 </div>
 <!-- 登录模态框结束 -->
 
-<script src="{{asset('dist/js/app.js')}}"></script>
+
+
+
+
+
+{{--<script src="{{asset('home/dist/js/app.js')}}"></script>--}}
+<script src="{{asset('js/vue.min.js')}}"></script>
+
+<script>
+   
+    {{--docment.title ="{{ 'name' }}"--}}
+</script>
 @yield('js')
 </body>
 

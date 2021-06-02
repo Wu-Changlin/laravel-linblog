@@ -1,4 +1,4 @@
-@extends('layouts.home')
+@extends('layout.home')
 
 @section('title', '最适合入门的Laravel初级教程(十)集合Collections - 白俊遥博客,技术博客,个人博客模板,php博客系统,设计模式')
 
@@ -1055,5 +1055,5 @@
     })();
 </script>
 
-<script src="{{asset('statics/layer-2.4/layer.js')}}"></script>
+<script src="{{asset('home/statics/layer-2.4/layer.js')}}"></script>
 @endsection

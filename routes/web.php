@@ -10,8 +10,8 @@ Route::namespace('Home')->name('home.')->group(function () {
     //显示文章内容+文章评论  http://192.168.164.134:1133/article/1
     Route::get('article/{id}/', 'ArticleController@showArticle');
 
-    //显示指定类型下的文章  http://192.168.164.134:1133/category/1
-    Route::get('category/{id}/', 'CategoryController@showCategory');
+    //显示指定类型下的所有文章  http://192.168.164.134:1133/category/1
+    Route::get('category/{id}/', 'CategorieController@showCategory');
 
     //评论文章+回复评论  http://192.168.164.134:1133/comment   测试阶段  get  应用post 表单提交 $article_id 文章id  $user_id用户id, comment_id 评论id ,$comment_content评论内容  $parent_id评论父项id  0：默认  1：不可见 2：父项
     Route::get('comment', 'CommentController@showComment');
@@ -27,7 +27,7 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
     //
     Route::prefix('login')->group(function () {
         //登录页面  http://192.168.164.134:1133/admin/login/index
-        Route::get('index','LoginController@index' )->name("login.index");
+        Route::get('index','LoginController@index');
         // 登录     http://192.168.164.134:1133/admin/login/logIn
         Route::post('logIn', 'LoginController@logIn')->name("admin.login");
         // 退出      http://192.168.164.134:1133/admin/login/logOut/1
@@ -104,15 +104,15 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
     // 分类管理
     Route::prefix('category')->group(function () {
         // 分类列表     http://192.168.164.134:1133/admin/category/showCategory
-        Route::get('showCategory', 'CategoryController@showCategory');
+        Route::get('showCategory', 'CategorieController@showCategory');
         // 添加分类     http://192.168.164.134:1133/admin/category/addCategory
-        Route::get('addCategory', 'CategoryController@addCategory');
+        Route::get('addCategory', 'CategorieController@addCategory');
         // 编辑分类     http://192.168.164.134:1133/admin/category/updateCategory/1
-        Route::get('updateCategory/{id}', 'CategoryController@updateCategory');
+        Route::get('updateCategory/{id}', 'CategorieController@updateCategory');
         // 排序         http://192.168.164.134:1133/admin/category/sortCategory
-        Route::get('sortCategory', 'CategoryController@sortCategory');
+        Route::get('sortCategory', 'CategorieController@sortCategory');
         // 删除分类     http://192.168.164.134:1133/admin/category/deleteCategory/1
-        Route::get('deleteCategory/{id}', 'CategoryController@deleteCategory');
+        Route::get('deleteCategory/{id}', 'CategorieController@deleteCategory');
     });
 
     // 标签管理

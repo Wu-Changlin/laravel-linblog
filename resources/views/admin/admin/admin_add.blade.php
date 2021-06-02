@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layout.admin')
 
 @section('title', '霖博客,技术博客,个人博客模板,php博客系统')
 
