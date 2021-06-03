@@ -5,71 +5,46 @@
 @section('keywords', '登录')
 
 @section('description', '登录博客系统操作')
+
+
 @section('css')
 
-<style>
-#msf {
-width: 400px;
-margin: 50px auto;
-text-align: center;
-position: relative;
-}
-</style>
 @endsection
 
+{{--登录表单开始--}}
 @section('content')
 
-
-{{--@if ($errors->any())--}}
-{{--@foreach ($errors->all() as $error)--}}
-{{--<div class="alert alert-danger ">--}}
-{{--遇到错误: </strong>--}}
-{{--</div>--}}
-{{--@endforeach--}}
-{{--@endif--}}
-
-{{--@if(session('msg'))--}}
-{{--    <p  id="msf"   class="alert alert-danger " style="color:red" text-align="center">{{ session('msg') }}</p>--}}
-{{--@endif--}}
-
-
-{{--<form  id="msform"  action="{{ url('admin/login/logIn') }}" method="post" >--}}
 <form  id="msform"  action="{{ route("admin.login")}}" method="post" >
     {{ csrf_field() }}
     <fieldset>
         <h2>登录</h2>
-<!--        <input type="text"   name="name" placeholder="name"   name="" required=""/>-->
-        <input type="text"   name="name" placeholder="name" />
+        <input type="text"   name="email" placeholder="Email" required=""/>
+        <p  id="invalid-email" hidden>*邮箱格式错误</p>
         <input type="password" name="password" placeholder="password" required=""/>
-        <input name="next"  class="next action-button"  type="submit" value="Next"  />
+        <button  class="next action-button"  type="submit" > 登录</button>
     </fieldset>
 </form>
 
 @endsection
 
+{{--登录表单结束--}}
+
 
 @section('js')
-<script>
 
-
-
-    $.ajax({
-        url: "ajax/ajax_selectPicType.aspx",
-
-        data:{Full:"fu"},
-
-        type: "POST",
-
-        dataType:'json',
-
-        success:Call发44Back,
-
-        error:function(er){
-
-            BackErr(er);}
-
-    });
-    
-</script>
+    <script>
+        // 验证邮箱格式是否正确
+        $('input[name="email"]').on('input', function () {
+            var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            var inputValue = $('input[name="email"]').val();
+            if (mailformat.test(inputValue) || inputValue === '') {
+                $('#invalid-email').hide();
+                $('button').prop('disabled', false);
+            } else {
+                $('#invalid-email').show();
+                $('button').prop('disabled', true);
+            }
+        });
+    </script>
 
 @endsection

@@ -4,7 +4,7 @@
 // Home 模块
 Route::namespace('Home')->name('home.')->group(function () {
 
-    //博客首页展示  http://192.168.164.134:1133/   (http://192.168.164.134:1133  +  /)
+    //博客首页展示  http://192.168.164.134:1133/
     Route::get('/', 'IndexController@showIndex');
 
     //显示文章内容+文章评论  http://192.168.164.134:1133/article/1
@@ -74,8 +74,8 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
         // 新增管理员    http://192.168.164.134:1133/admin/adminUser/addAdminUser
         Route::get('addAdminUser', 'AdminController@addAdminUser');
 
-        // 显示编辑管理员页面    http://192.168.164.134:1133/admin/adminUser/showUpdateAdminWeb
-        Route::get('showUpdateAdminWeb', 'AdminController@showUpdateAdminWeb');
+        // 显示编辑管理员页面    http://192.168.164.134:1133/admin/adminUser/showUpdateAdminWeb/1
+        Route::get('showUpdateAdminWeb/{id}', 'AdminController@showUpdateAdminWeb');
         // 编辑管理员    http://192.168.164.134:1133/admin/adminUser/updateAdminUser/1
         Route::get('updateAdminUser/{id}', 'AdminController@updateAdminUser');
 

@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
+use App\Models\Admin as AdminModel;
 use Illuminate\Http\Request;
 
 /**
@@ -16,6 +18,7 @@ class AdminController extends Controller
      */
     public function showIndex()
     {
+
        //dd('AdminController.showIndex.博客后台首页');
         return view('admin.admin.admin_index');
 
@@ -29,8 +32,11 @@ class AdminController extends Controller
      */
     public function showAdminUser()
     {
+        $data=AdminModel::all();
+        $assign=compact('data');  // compact() 的字符串可以就是变量的名字  （ data 视图里的变量名）
+//        dd($assign);
         //dd('showAdminUser.管理员列表');
-        return view('admin.admin.admin_list');
+        return view('admin.admin.admin_list',$assign);
     }
 
     /**
@@ -40,6 +46,7 @@ class AdminController extends Controller
      */
     public function showAddadminWeb()
     {
+
         //dd('showAddadminWeb.显示新增管理员模板页面');
         return view('admin.admin.admin_add');
     }
@@ -49,7 +56,7 @@ class AdminController extends Controller
      *
      *
      */
-    public function showUpdateAdminWeb()
+    public function showUpdateAdminWeb($id)
     {
 
         //dd('showUpdateAdminWeb.显示更改管理员信息页面');
@@ -69,7 +76,7 @@ class AdminController extends Controller
 
     /**
      * 更改管理员信息
-     * @param $admin_user_id 更改文章
+     * @param $admin_user_id 更改管理员信息
      * updateArticle_update_code  0：默认  1：更改管理员信息失败  2：更改管理员信息成功  3：保存中
      */
     public function updateAdminUser($admin_user_id)
@@ -77,6 +84,7 @@ class AdminController extends Controller
         dd('updateAdminUser.更改管理员信息');
     }
 
+   
     /**
      * 删除管理员      清空管理员的所有数据  其下分类、文章 、标签、评论、网站配置
      * @param $admin_user_id 文章id

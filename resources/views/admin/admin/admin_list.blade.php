@@ -35,50 +35,39 @@
                                 <tr>
                                     <th class="text-center" width="10%">ID</th>
                                     <th class="text-center">用户名称</th>
-                                    <th class="text-center">所属用户组</th>
+                                    <th class="text-center">邮箱</th>
                                     <th class="text-center"width="20%">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td align="center">12</td>
-                                    <td align="center">admin</td>
-                                    <td align="center">超级管理员</td>
-                                    <td align="center">
-                                        <a href="/admin/admin/edit/id/12.html" class="btn btn-primary btn-sm shiny">
-                                            <i class="fa fa-edit"></i> 编辑
-                                        </a>
-                                        <a href="#" onClick="warning('确实要删除吗','/admin/admin/del/id/12.html')" class="btn btn-danger btn-sm shiny">
-                                            <i class="fa fa-trash-o"></i> 删除
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="center">20</td>
-                                    <td align="center">admin123456</td>
-                                    <td align="center">配置管理员</td>
-                                    <td align="center">
-                                        <a href="/admin/admin/edit/id/20.html" class="btn btn-primary btn-sm shiny">
-                                            <i class="fa fa-edit"></i> 编辑
-                                        </a>
-                                        <a href="#" onClick="warning('确实要删除吗','/admin/admin/del/id/20.html')" class="btn btn-danger btn-sm shiny">
-                                            <i class="fa fa-trash-o"></i> 删除
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="center">23</td>
-                                    <td align="center">adminlink</td>
-                                    <td align="center">链接管理员</td>
-                                    <td align="center">
-                                        <a href="/admin/admin/edit/id/23.html" class="btn btn-primary btn-sm shiny">
-                                            <i class="fa fa-edit"></i> 编辑
-                                        </a>
-                                        <a href="#" onClick="warning('确实要删除吗','/admin/admin/del/id/23.html')" class="btn btn-danger btn-sm shiny">
-                                            <i class="fa fa-trash-o"></i> 删除
-                                        </a>
-                                    </td>
-                                </tr>
+
+                                @foreach ( $data as $v)
+                                    <tr>
+                                        <td align="center">{{ $v->admin_id }}</td>
+                                        <td align="center">{{ $v->name }}</td>
+                                        <td align="center">{{ $v->email }}</td>
+                                        <td align="center">
+                                            <a href="{{ url('admin/adminUser/showUpdateAdminWeb', [$v->admin_id]) }}" class="btn btn-primary btn-sm shiny">
+                                                <i class="fa fa-edit"></i> 编辑
+                                            </a>
+                                            @if(is_null($v->deleted_at))
+                                                <a href="#" onClick="warning('确实要删除吗','')" class="btn btn-danger btn-sm shiny">
+                                                    <i class="fa fa-trash-o"></i> 删除
+                                                </a>
+                                            @else
+                                                <a href="#" onClick="warning('确实要恢复吗','')" class="btn btn-danger btn-sm shiny">
+                                                    <i class="fa fa-trash-o"></i> 恢复
+                                                </a>
+                                                <a href="#" onClick="warning('确实要彻底删除吗，三思后行','')" class="btn btn-danger btn-sm shiny">
+                                                    <i class="fa fa-trash-o"></i> 彻底删除
+                                                </a>
+                                            @endif
+
+
+
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

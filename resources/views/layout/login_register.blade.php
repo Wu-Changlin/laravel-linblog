@@ -9,16 +9,44 @@
     <meta name="viewport" content="width=device-width">
     <link href="{{asset('admin/style/bootstrap.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('admin/login/login.register.css')}}">
+    <link href="{{asset('css/toastr.min.css')}}" rel="stylesheet" type="text/css" />
     @yield('css')
 </head>
 <body>
 
+
 @yield('content')
 
-@yield('js')
-<script src="{{asset('admin/style/jquery_002.js')}}"></script>
 
+<script src="{{asset('admin/style/jquery_002.js')}}"></script>
 <script src="{{asset('admin/style/bootstrap.js')}}"></script>
 <script src="{{asset('admin/style/jquery.js')}}"></script>
+<script src="{{asset('js/toastr.min.js')}}"></script>  {{--弹窗提示框样式--}}
+<script>
+    // 弹窗提示框样式
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "positionClass": "toast-top-center",
+        "onclick": null,
+        "showDuration": "1000",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut",
+        "progressBar": true
+    }
+</script>
+<script>
+    @if(session('msg'))
+    toastr.error("{{ session('msg') }}");
+    @endif
+</script>
+
+@yield('js')
+
 </body>
 </html>
