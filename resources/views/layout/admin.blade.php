@@ -235,8 +235,15 @@
     }
 </script>
 <script>
+    //自定义错误提示
     @if(session('msg'))
-    toastr.error("{{ session('msg') }}");
+        toastr.error("{{ session('msg') }}");
+    @endif
+    //验证器错误提示
+    @if (count($errors) > 0)
+        @foreach ($errors->all() as $error)
+        toastr.error("{{ $error }}");
+        @endforeach
     @endif
 </script>
         @yield('js')

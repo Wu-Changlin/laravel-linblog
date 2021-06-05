@@ -50,21 +50,9 @@
                                             <a href="{{ url('admin/adminUser/showUpdateAdminWeb', [$v->admin_id]) }}" class="btn btn-primary btn-sm shiny">
                                                 <i class="fa fa-edit"></i> 编辑
                                             </a>
-                                            @if(is_null($v->deleted_at))
-                                                <a href="#" onClick="warning('确实要删除吗','')" class="btn btn-danger btn-sm shiny">
-                                                    <i class="fa fa-trash-o"></i> 删除
-                                                </a>
-                                            @else
-                                                <a href="#" onClick="warning('确实要恢复吗','')" class="btn btn-danger btn-sm shiny">
-                                                    <i class="fa fa-trash-o"></i> 恢复
-                                                </a>
-                                                <a href="#" onClick="warning('确实要彻底删除吗，三思后行','')" class="btn btn-danger btn-sm shiny">
-                                                    <i class="fa fa-trash-o"></i> 彻底删除
-                                                </a>
-                                            @endif
-
-
-
+                                            <a href="#" onClick="warning('三思后行，确实要删除吗','{{ url('admin/adminUser/deleteAdminUser', [$v->admin_id]) }}')" class="btn btn-danger btn-sm shiny">
+                                                <i class="fa fa-trash-o"></i> 删除
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -18,9 +18,9 @@
     {{ csrf_field() }}
     <fieldset>
         <h2>登录</h2>
-        <input type="text"   name="email" placeholder="Email" required=""/>
+        <input type="text"   name="email" placeholder="Email" required="" value="{{ old('email') }}"/>
         <p  id="invalid-email" hidden>*邮箱格式错误</p>
-        <input type="password" name="password" placeholder="password" required=""/>
+        <input type="password" name="password" placeholder="password" required="" value="{{ old('password') }}"/>
         <button  class="next action-button"  type="submit" > 登录</button>
     </fieldset>
 </form>

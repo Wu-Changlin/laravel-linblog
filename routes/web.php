@@ -67,17 +67,17 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
         // 后台首页     http://192.168.164.134:1133/admin/adminUser
         Route::get('/', 'AdminController@showIndex')->name("admin.index");
         // 管理员列表    http://192.168.164.134:1133/admin/adminUser/showAdminUser
-        Route::get('showAdminUser', 'AdminController@showAdminUser');
+        Route::get('showAdminUser', 'AdminController@showAdminUser')->name("admin.showAdminUser");
 
         // 显示新增管理员页面    http://192.168.164.134:1133/admin/adminUser/showAddadminWeb
         Route::get('showAddadminWeb', 'AdminController@showAddadminWeb');
         // 新增管理员    http://192.168.164.134:1133/admin/adminUser/addAdminUser
-        Route::get('addAdminUser', 'AdminController@addAdminUser');
+        Route::post('addAdminUser', 'AdminController@addAdminUser')->name("admin.addAdminUser");
 
         // 显示编辑管理员页面    http://192.168.164.134:1133/admin/adminUser/showUpdateAdminWeb/1
         Route::get('showUpdateAdminWeb/{id}', 'AdminController@showUpdateAdminWeb');
         // 编辑管理员    http://192.168.164.134:1133/admin/adminUser/updateAdminUser/1
-        Route::get('updateAdminUser/{id}', 'AdminController@updateAdminUser');
+        Route::post('updateAdminUser/{id}', 'AdminController@updateAdminUser');
 
         // 删除管理员    http://192.168.164.134:1133/admin/adminUser/deleteAdminUser/1
         Route::get('deleteAdminUser/{id}', 'AdminController@deleteAdminUser');

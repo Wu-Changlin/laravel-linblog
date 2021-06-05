@@ -3,8 +3,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Admin as AdminModels ;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\loginRequest;
 
 
 
@@ -28,40 +27,35 @@ class LoginController extends Controller
 
 
     /**
-     *博客后台登录操作   (用户或管理员登录) is_admin  0:默认（普通用户）2：管理员
-     * 测试用get
+     *博客后台登录操作   (用户或管理员登录)
      * post  $user_name 用户名称(用户邮箱)  $password 用户密码  $verification _code 登录验证码 动态生成
      */
-
-
-    public function logIn(Request $request)
+    public function logIn(loginRequest $request)
     {
-        //判断
-        if ($request->isMethod('post')) {
-            $input = $request->all();
-            $login_token = isset($input['_token']) ? $input['_token'] : "";
-            $login_email = isset($input['email']) ? $input['email'] : "";
-            $login_password = isset($input['password']) ? $input['password'] : "";
-            if (empty($login_email) || empty($login_password)) {
-                return back()->with('msg', '请填写完整邮箱和密码');
-            }
+        if ($request->isMethod('post')) {//判断请求方式是post
+            $input = $request->except('s','_token'); //去除 s：路由地址 ，_token： 表单中包含一个隐藏的 CSRF 令牌字段
+            $login['email'] = isset($input['email']) ? $input['email'] : "";
+            $login['password'] = isset($input['password']) ? $input['password'] : "";
         }else{
-            return back()->with('msg', '非法请求');
+            return redirect()-> back()->withInput()->with('msg', '非法请求');
         };
-        //通过输入的用户名去查询数据库是否有此该用户信息
-        $admin_users = AdminModels::where('email',$login_email)->get();
-
-        if (!count($admin_users)) {
-            return back()->with('msg', '用户不存在');
+        $res=AdminModels::adminLogin($login); //执行登录
+        switch ($res) { //判断登录返回值
+            case 0:
+                return redirect()-> back()->withInput()->with('msg', '用户不存在');
+                break;
+            case 1:
+                return redirect()-> back()->withInput()->with('msg', '密码错误');
+                break;
+            case 2:
+                return redirect()->route('admin.index')->with('msg', '登录成功');
+                break;
+            default:
+                return redirect()->route('admin.index')->with('msg', '网络错误');
         }
-        //用户输入密码对比数据库用户密码  $login_password：字符串 ，$users[0]->password：数据库Hash密码字符串 60
-        if (! Hash::check($login_password,$admin_users[0]->password)) {
-            return back()->with('msg', '密码错误');
-        }
-        return redirect()->route('admin.index')->with('msg', '登录成功');
-        //return view('admin.index');
 
     }
+
 
     /**
      * 退出后台管理并返回博客首页，清除用户缓存   (用户或管理员退出)
