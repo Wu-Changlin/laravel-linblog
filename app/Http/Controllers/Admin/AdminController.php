@@ -60,6 +60,7 @@ class AdminController extends Controller
     public function addAdminUser(Request $request)
     {
 
+        dd($request);
         //判断是否post请求
         if ($request->isMethod('post')) {
             $input = $request->except('s','_token');  //去除 s：路由地址 ，_token： 表单中包含一个隐藏的 CSRF 令牌字段

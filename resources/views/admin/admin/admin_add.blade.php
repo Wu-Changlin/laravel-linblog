@@ -45,7 +45,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="username" class="col-sm-2 control-label no-padding-right">管理员名称</label>
+                                    <label for="username" class="col-sm-2 control-label no-padding-right">管理员邮箱</label>
                                     <div class="col-sm-6">
                                         <input class="form-control"  placeholder="" name="email" required="" type="text" value="{{ old('email') }}">
                                     </div>

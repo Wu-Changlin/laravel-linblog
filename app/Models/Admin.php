@@ -2,11 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use DB;
 use Illuminate\Support\Facades\Hash;
 
-class Admin extends Model
+class Admin extends Base
 {
     protected $primaryKey = 'admin_id'; //创建的表字段中主键ID的名称不为id，则需要通过 $primaryKey 来指定一下设定主键id
 
@@ -26,16 +24,22 @@ class Admin extends Model
             }
         }
         //本次登录信息写入log
-        $admin_log['last_login_ip']=request()->ip();//管理员IP
-        $admin_log['admin_id']=$admin_users->admin_id;//管理员id
-        $admin_log['exec_object']=6;  //执行操作对象 0:默认 1：分类， 2：标签 ，3：文章，4：评论，5：网站配置 ， 6：登录， 7：退出',
-        $admin_log['exec_type']=4;   //执行操作 4：登录
+        $admin_log['last_login_ip']=request()->ip();    //管理员IP
+        $admin_log['admin_id']=$admin_users->admin_id;  //管理员id
+        $admin_log['exec_object']=6;                    //执行操作对象 0:默认 1：分类， 2：标签 ，3：文章，4：评论，5：网站配置 ， 6：管理员',
+        $admin_log['exec_type']=4;                      //执行操作 4：登录
+        $admin_log['exec_object_id']=$admin_users->admin_id;        //执行操作对象id
+        $admin_log['created_at']=date('Y-m-d H:i:s', time());//执行操作创建时间
+        self::addAadminLog($admin_log);
         //写入session
         $admin_session['admin_id']=$admin_users->admin_id;
         $admin_session['email']=$admin_users->email;
         $admin_session['last_login_ip']=request()->ip();
         session(['admin_user'=>$admin_session]);
-        //更新管理员登录次数
+        //更新管理员登录次数+1
+        $admin_users->login_number +=1;
+        $admin_users->save();
+        //登录成功状态
         return 2;
     }
 
