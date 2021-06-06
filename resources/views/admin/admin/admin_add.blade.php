@@ -13,10 +13,10 @@
     <div class="page-breadcrumbs">
         <ul class="breadcrumb">
             <li>
-                <a href="/admin/index/index.html">系统</a>
+                <a href="{{route("admin.index")}}">系统</a>
             </li>
             <li>
-                <a href="/admin/admin/lst.html">管理员管理</a>
+                <a href="{{ route("admin.showAdminUser") }}">管理员管理</a>
             </li>
             <li class="active">添加管理员</li>
         </ul>
@@ -39,15 +39,15 @@
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">管理员名称</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control"  placeholder="" name="name" required="" type="text" value="{{ old('name') }}">
+                                        <input class="form-control"  placeholder=""  name="name"  required="" type="text" value="{{ old('name') }}">
                                     </div>
                                     <p class="help-block col-sm-4 red">* 必填</p>
                                 </div>
-
+{{--                                placeholder=""--}}
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">管理员邮箱</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control"  placeholder="" name="email" required="" type="text" value="{{ old('email') }}">
+                                        <input class="form-control"  placeholder="" name="email"  required="" type="text" value="{{ old('email') }}">
                                     </div>
                                     <p class="help-block col-sm-2 red">* 必填</p>
                                     <p  id="invalid-email"  class="col-sm-2 red" hidden>*邮箱格式错误</p>
@@ -57,7 +57,7 @@
                                 <div class="form-group">
                                     <label for="group_id" class="col-sm-2 control-label no-padding-right">管理员密码</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control"  placeholder="" name="password" required="" type="text" value="{{ old('password') }}">
+                                        <input class="form-control"  placeholder=""  name="password"   required="" type="text" value="{{ old('password') }}">
                                     </div>
                                 </div>
                                 <div class="form-group">

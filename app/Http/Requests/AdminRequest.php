@@ -27,6 +27,7 @@ class AdminRequest extends FormRequest
             'email' => 'required|email|unique:admins,email', // required 不能为空，  email 邮箱格式 ， unique:admins,email  数据唯一验证  admins表名email字段名
 
             'password' => 'required',// required 不能为空
+            'name' => 'required',// required 不能为空
         ];
 
     }
@@ -36,6 +37,7 @@ class AdminRequest extends FormRequest
      */
     public function  messages(){
         return [
+            'name.required'=>'昵称不能为空',
             'email.required'=>'邮箱不能为空',
             'email.unique'=>'邮箱已注册',
             'email.email'=>'邮箱格式错误',

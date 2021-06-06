@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdminRequest;
 use App\Models\Admin as AdminModel;
 use Illuminate\Http\Request;
 
@@ -57,40 +58,30 @@ class AdminController extends Controller
      * @return  addAdminUser_add_code  0：默认  1：新增管理员 失败  2：新增管理员成功
      * post
      */
-    public function addAdminUser(Request $request)
+    public function addAdminUser(AdminRequest $request)
     {
-
-        dd($request);
         //判断是否post请求
         if ($request->isMethod('post')) {
             $input = $request->except('s','_token');  //去除 s：路由地址 ，_token： 表单中包含一个隐藏的 CSRF 令牌字段
             $data['name'] = isset($input['name']) ? $input['name'] : "";
             $data['email'] = isset($input['email']) ? $input['email'] : "";
             $data['password'] = isset($input['password']) ? $input['password'] : "";
-            if (empty($data['name'])  ||  empty($data['email'] ) || empty($data['password'])) {
-                return redirect()-> back()->withInput()->with('msg', '请填写完整昵称、邮箱和密码');
-            }
         }else{
             return redirect()-> back()->withInput()->with('msg', '非法请求');;
         }
-        //新管理员邮箱是否已注册
-        $count = AdminModel::where('email', $data['email'])->count();
-        if($count>0){
-            return redirect()-> back()->withInput()->with('msg', '管理员邮箱已注册,新增管理员失败;请更改邮箱');
-            //return back()->with('msg', '管理员邮箱已注册,新增管理员失败;请更改邮箱');
-        }
-        //添加管理员信息到数据库
-        $adminModel=new AdminModel();
-        $adminModel->name=$data['name'];
-        $adminModel->email=$data['email'];
-        $adminModel->password=$data['password'];
-        $adminModel ->save();
-        //获取新管理员id
-        $id = $adminModel->admin_id;
-        if($id>0){ // $id 大于0 说明新增管理员成功
-            return redirect()->route("admin.showAdminUser")->with('msg', "新增管理员id:".$id);
-        }else{
-            return redirect()-> back()->withInput()->with('msg', '数据写入失败,新增管理员失败');
+        $res=AdminModel::addAdmin($data); //执行新增
+        switch ($res) { //判断新增返回值
+            case 0:
+                return redirect()-> back()->withInput()->with('msg', '数据不为空');
+                break;
+            case 1:
+                return redirect()-> back()->withInput()->with('msg', '邮箱已注册');
+                break;
+            case 2:
+                return redirect()->route("admin.showAdminUser")->with('msg', "新增管理员成功");
+                break;
+            default:
+                return redirect()-> back()->withInput()->with('msg', '数据写入失败,新增管理员失败');
         }
 
     }
@@ -98,16 +89,18 @@ class AdminController extends Controller
     /**
      * 显示更改管理员信息模板页面
      *
-     *
+     *@param $admin_id 更改管理员信息
      */
-    public function showUpdateAdminWeb($id)
+    public function showUpdateAdminWeb($admin_id)
     {
-
-        //dd('showUpdateAdminWeb.显示更改管理员信息页面');
-
-        return view('admin.admin.admin_update');
-
-
+        if(empty($admin_id)){
+            return redirect()-> back()->withInput()->with('msg', '非法访问');
+        }
+        $data = AdminModel::find($admin_id);
+        $data->toArray();
+        $assign=compact('data');  // compact() 的字符串可以就是变量的名字  （ data 视图里的变量名）
+//        dd($assign);
+        return view('admin.admin.admin_update',$assign);
 
     }
 
@@ -115,10 +108,10 @@ class AdminController extends Controller
 
     /**
      * 更改管理员信息
-     * @param $id 更改管理员信息
+     * @param $admin_id 更改管理员信息
      * updateArticle_update_code  0：默认  1：更改管理员信息失败  2：更改管理员信息成功
      */
-    public function updateAdminUser(Request $request,$id)
+    public function updateAdminUser(AdminRequest $request,$admin_id)
     {
         //dd('updateAdminUser.更改管理员信息');
         return back()->with('msg', '更改管理员信息成功');
@@ -142,17 +135,26 @@ class AdminController extends Controller
      */
     public function deleteAdminUser($admin_id)
     {
-        //查询数据库中是否存在该管理员  0：没有  1：存在
-        $admin_count = AdminModel::where('admin_id','=',$admin_id)->count();
-        if($admin_count>0){ //查询结果   $admin_count=1：存在
-            $res=AdminModel::where('admin_id','=',$admin_id)->delete(); //执行删除并返回结果 0：删除失败  1：删除成功
-            if($res>0){
-                return back()->with('msg', '删除管理员成功');
-            }else{
-                return back()->with('msg', '数据库错误，删除管理员失败');
-            }
-        }else{//查询结果   $admin_count=0：不存在
-            return back()->with('msg', '该管理员已删除');
+        if(empty($admin_id)){
+            return redirect()-> back()->withInput()->with('msg', '非法访问');
+        }
+        $admin_user=session('admin_user');
+        if($admin_user['admin_id'] == $admin_id){ //判断删除管理员id是不是当前登录的管理员id
+            return redirect()-> back()->withInput()->with('msg', '请勿自残');
+        }
+        $res=AdminModel::deleteAdmin($admin_id);//执行删除
+        switch ($res) { //判断删除返回值
+            case 0:
+                return redirect()-> back()->withInput()->with('msg', '数据不为空');
+                break;
+            case 1:
+                return redirect()-> back()->withInput()->with('msg', '已删除管理员');
+                break;
+            case 2:
+                return redirect()->route("admin.showAdminUser")->with('msg', "删除管理员成功");
+                break;
+            default:
+                return redirect()-> back()->withInput()->with('msg', '网络错误,删除管理员失败');
         }
 
     }

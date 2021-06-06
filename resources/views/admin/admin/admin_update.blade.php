@@ -13,10 +13,10 @@
     <div class="page-breadcrumbs">
         <ul class="breadcrumb">
             <li>
-                <a href="/admin/index/index.html">系统</a>
+                <a href="{{ route("admin.index") }}">系统</a>
             </li>
             <li>
-                <a href="/admin/admin/lst.html">管理员管理</a>
+                <a href="{{ route("admin.showAdminUser") }}">管理员管理</a>
             </li>
             <li class="active">管理员修改</li>
         </ul>
@@ -38,21 +38,17 @@
                                 <input type="hidden" name="id" value="12">
 
                                 <div class="form-group">
-                                    <label for="username" class="col-sm-2 control-label no-padding-right">所属用户组</label>
+                                    <label for="username" class="col-sm-2 control-label no-padding-right">管理员昵称</label>
                                     <div class="col-sm-6">
-                                        <select name="group_id">
-                                            <option selected="selected" value="1">超级管理员</option>
-                                            <option  value="3">配置管理员</option>
-                                            <option  value="4">链接管理员</option>
-                                        </select>
+                                        <input class="form-control"  placeholder="" name="name" value="{{ $data->name }}" type="text">
                                     </div>
                                     <p class="help-block col-sm-4 red">* 必填</p>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="username" class="col-sm-2 control-label no-padding-right">管理员名称</label>
+                                    <label for="username" class="col-sm-2 control-label no-padding-right">管理员邮箱</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control"  placeholder="" name="name" value="admin" type="text">
+                                        <input class="form-control"  placeholder="" name="name" value="{{ $data->email }}" type="text">
                                     </div>
                                     <p class="help-block col-sm-4 red">* 必填</p>
                                 </div>
@@ -60,7 +56,7 @@
                                 <div class="form-group">
                                     <label for="group_id" class="col-sm-2 control-label no-padding-right">管理员密码</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control"  placeholder="" name="password" value="15eed4d30e4e0fa9dd36f96237b1024c" type="text">
+                                        <input class="form-control"  placeholder="" name="password" value="{{ $data->password }}" type="text">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -81,6 +77,23 @@
 <!-- /Page Content -->
 @endsection
 
+@section('js')
 
+    <script>
+        // 验证邮箱格式是否正确
+        $('input[name="email"]').on('input', function () {
+            var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; //邮箱正则
+            var inputValue = $('input[name="email"]').val();                  //input框name="email"的值
+            if (mailformat.test(inputValue) || inputValue === '') {           // email格式错误或者input框name="email"的值为空
+                $('#invalid-email').hide();
+                $('button').prop('disabled', false);
+            } else {                                                          // email格式正确或者input框name="email"的值不为空
+                $('#invalid-email').show();
+                $('button').prop('disabled', true);
+            }
+        });
+    </script>
+
+@endsection
 
 

@@ -13,6 +13,7 @@ class Kernel extends HttpKernel
      *
      * @var array
      */
+    #全局中间件
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
@@ -26,6 +27,7 @@ class Kernel extends HttpKernel
      *
      * @var array
      */
+    ## 中间件组 \routes\　web => web.php  api=> api.php 文件中所有的路由都必须通过中间件的处理
     protected $middlewareGroups = [
         'web' => [
             \App\Http\Middleware\EncryptCookies::class,
@@ -50,6 +52,7 @@ class Kernel extends HttpKernel
      *
      * @var array
      */
+    #路由中间件
     protected $routeMiddleware = [
         'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,

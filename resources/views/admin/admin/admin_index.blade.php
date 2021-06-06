@@ -12,7 +12,7 @@
     <div class="page-breadcrumbs">
         <ul class="breadcrumb">
             <li>
-                <a href="/admin/adminUser">控制面板</a>
+                <a href="{{ route("admin.index") }}">控制面板</a>
             </li>
         </ul>
     </div>

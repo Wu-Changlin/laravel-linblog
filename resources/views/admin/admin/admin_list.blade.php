@@ -13,7 +13,7 @@
     <div class="page-breadcrumbs">
         <ul class="breadcrumb">
             <li>
-                <a href="/admin/adminUser">系统</a>
+                <a href="{{ route("admin.index") }}">系统</a>
             </li>
             <li class="active">用户管理</li>
         </ul>
