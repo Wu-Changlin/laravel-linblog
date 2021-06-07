@@ -34,9 +34,9 @@
                     </div>
                     <div class="widget-body">
                         <div id="horizontal-form">
-                            <form class="form-horizontal" role="form" action="" method="post">
-                                <input type="hidden" name="id" value="12">
-
+                            <form class="form-horizontal" role="form" action="{{ route("admin.updateAdminUser") }}" method="post">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="id" value="{{ $data->admin_id }}">
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">管理员昵称</label>
                                     <div class="col-sm-6">
@@ -48,9 +48,10 @@
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">管理员邮箱</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control"  placeholder="" name="name" value="{{ $data->email }}" type="text">
+                                        <input class="form-control"  placeholder="" name="email" value="{{ $data->email }}" type="text">
                                     </div>
-                                    <p class="help-block col-sm-4 red">* 必填</p>
+                                    <p class="help-block col-sm-2 red">* 必填</p>
+                                    <p id="invalid-email"  class="col-sm-2 red" hidden>*邮箱格式错误</p>
                                 </div>
 
                                 <div class="form-group">

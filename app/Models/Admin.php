@@ -77,7 +77,41 @@ class Admin extends Base
      * @param $data array 更改管理员信息
      */
     public static function updateAdmin ($data) {
+//        "name" => "yesyrdh"
+//  "email" => "8408328@qq.com"
+//  "password" => "$2y$10$XUfxTvMAZJj.eq8OvKgOkOfNXOvw2JKTULPbRlAa8E/P7wUYFyTgW"
+//  "admin_id" => "3"
+        if(empty($data)){ //如果$data为空直接返回
+            return 0;
+        }
+        $admin_user = self::find($data['admin_id'],["name","email","password"]); //根据用户输入邮箱查询数据库用户信息
+        //判断信息是否修改
+        $admin_info=$admin_user->toArray();
+        if($data['name']!=$admin_info['name']){
 
+        }
+        if($data['email']!=$admin_info['email']){
+            $admin_count = self::where('email',$data['email'])->count(); //根据用户输入邮箱查询数据库用户信息
+            if($admin_count){//如果有数据说明邮箱已注册
+                return 1;
+            }
+        }
+        if($data['password']!=$admin_info['password']){
+            $data['password']=Hash::make($data['password']); //对字符串密码hash加密
+        }
+
+//        $data['password']=Hash::make($data['password']); //对字符串密码hash加密
+//        $res=self::create($data);//使用create方法新增管理员
+//        //本次新增管理员信息写入log
+//        $admin_user=session('admin_user');
+//        $admin_log['last_login_ip']=$admin_user['last_login_ip'];    //管理员IP
+//        $admin_log['admin_id']=$admin_user['admin_id'];  //管理员id
+//        $admin_log['exec_object']=6;                    //执行操作对象 0:默认 1：分类， 2：标签 ，3：文章，4：评论，5：网站配置 ， 6：管理员',
+//        $admin_log['exec_type']=3;                      //执行操作类型 0:默认 1：删除， 2：添加， 3：修改，4：登录， 5：退出',
+//        $admin_log['exec_object_id']=$data['admin_id'];    //执行操作对象id
+//        $admin_log['created_at']=$res->updated_at;;//执行操作创建时间
+//        self::addAadminLog($admin_log);
+        return 2;
     }
 
     /**

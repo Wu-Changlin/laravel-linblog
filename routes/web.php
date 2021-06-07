@@ -23,15 +23,12 @@ Route::namespace('Home')->name('home.')->group(function () {
 // 用户登录后台
 Route::namespace('Admin')->prefix('admin')->group(function () {
 //    http://192.168.164.134:1133/admin/login/logIn
-//    http://192.168.164.134:1133/admin/login/logIn
-    //
     Route::prefix('login')->group(function () {
         //登录页面  http://192.168.164.134:1133/admin/login/index
-        Route::get('index','LoginController@index');
+        Route::get('index','LoginController@index')->name("login.index");
         // 登录     http://192.168.164.134:1133/admin/login/logIn
         Route::post('logIn', 'LoginController@logIn')->name("admin.login");
-        // 退出      http://192.168.164.134:1133/admin/login/logOut/1
-        Route::get('logOut/{id}', 'LoginController@logOut');
+
     });
 
 });
@@ -60,12 +57,13 @@ Route::namespace('Admin')->prefix('register')->group(function () {
 
 
 // Admin 模块
-Route::namespace('Admin')->prefix('admin')->group(function () {
-
-    // 首页控制器
+Route::namespace('Admin')->prefix('admin')->middleware('admin.login')->group(function () {
+    // 后台首页     http://192.168.164.134:1133/admin/index
+    Route::get('index', 'AdminController@showIndex')->name("admin.index");
+    // 退出      http://192.168.164.134:1133/admin/logOut
+    Route::get('logOut', 'AdminController@logOut')->name('admin.logout');
+    // 管理员控制器
     Route::prefix('adminUser')->group(function () {
-        // 后台首页     http://192.168.164.134:1133/admin/adminUser
-        Route::get('/', 'AdminController@showIndex')->name("admin.index");
         // 管理员列表    http://192.168.164.134:1133/admin/adminUser/showAdminUser
         Route::get('showAdminUser', 'AdminController@showAdminUser')->name("admin.showAdminUser");
 
@@ -76,8 +74,8 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 
         // 显示编辑管理员页面    http://192.168.164.134:1133/admin/adminUser/showUpdateAdminWeb/1
         Route::get('showUpdateAdminWeb/{id}', 'AdminController@showUpdateAdminWeb');
-        // 编辑管理员    http://192.168.164.134:1133/admin/adminUser/updateAdminUser/1
-        Route::post('updateAdminUser/{id}', 'AdminController@updateAdminUser');
+        // 编辑管理员    http://192.168.164.134:1133/admin/adminUser/updateAdminUser/
+        Route::post('updateAdminUser', 'AdminController@updateAdminUser')->name("admin.updateAdminUser");
 
         // 删除管理员    http://192.168.164.134:1133/admin/adminUser/deleteAdminUser/1
         Route::get('deleteAdminUser/{id}', 'AdminController@deleteAdminUser');
@@ -127,17 +125,7 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
         Route::get('deleteTag/{id}', 'TagController@deleteTag');
     });
 
-    // 评论管理
-    Route::prefix('comment')->group(function () {
-        // 评论列表      http://192.168.164.134:1133/admin/comment/showComment
-        Route::get('showComment', 'CommentController@showComment');
-        //回复评论      http://192.168.164.134:1133/admin/comment/addComment
-        Route::get('addComment', 'CommentController@addComment');
-        // 编辑评论      http://192.168.164.134:1133/admin/comment/updateComment/1
-        Route::get('updateComment/{id}', 'CommentController@updateComment');
-        // 删除评论      http://192.168.164.134:1133/admin/comment/deleteComment/1
-        Route::get('deleteComment/{id}', 'CommentController@deleteComment');
-    });
+
 
     // 用户信息管理
     Route::prefix('users')->group(function () {

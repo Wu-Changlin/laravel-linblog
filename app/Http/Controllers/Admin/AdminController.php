@@ -19,8 +19,11 @@ class AdminController extends Controller
      */
     public function showIndex()
     {
+        //
+//
+//       //dd('AdminController.showIndex.博客后台首页');
+//        dd(session()->flush('admin_user'));
 
-       //dd('AdminController.showIndex.博客后台首页');
         return view('admin.admin.admin_index');
 
     }
@@ -33,6 +36,7 @@ class AdminController extends Controller
      */
     public function showAdminUser()
     {
+
         $data=AdminModel::all();
         $assign=compact('data');  // compact() 的字符串可以就是变量的名字  （ data 视图里的变量名）
 //        dd($assign);
@@ -67,7 +71,7 @@ class AdminController extends Controller
             $data['email'] = isset($input['email']) ? $input['email'] : "";
             $data['password'] = isset($input['password']) ? $input['password'] : "";
         }else{
-            return redirect()-> back()->withInput()->with('msg', '非法请求');;
+            return redirect()-> back()->withInput()->with('msg', '非法请求');
         }
         $res=AdminModel::addAdmin($data); //执行新增
         switch ($res) { //判断新增返回值
@@ -111,10 +115,34 @@ class AdminController extends Controller
      * @param $admin_id 更改管理员信息
      * updateArticle_update_code  0：默认  1：更改管理员信息失败  2：更改管理员信息成功
      */
-    public function updateAdminUser(AdminRequest $request,$admin_id)
+    public function updateAdminUser(AdminRequest $request)
     {
-        //dd('updateAdminUser.更改管理员信息');
-        return back()->with('msg', '更改管理员信息成功');
+
+        //判断是否post请求
+        if ($request->isMethod('post')) {
+            $input = $request->except('s','_token');  //去除 s：路由地址 ，_token： 表单中包含一个隐藏的 CSRF 令牌字段
+            $data['name'] = isset($input['name']) ? $input['name'] : "";
+            $data['email'] = isset($input['email']) ? $input['email'] : "";
+            $data['password'] = isset($input['password']) ? $input['password'] : "";
+            $data['admin_id'] = isset($input['id']) ? $input['id'] : 0;
+        }else{
+            return redirect()-> back()->withInput()->with('msg', '非法请求');
+        }
+        $res=AdminModel::updateAdmin($data);   //执行修改
+        switch ($res) { //判断修改返回值
+            case 0:
+                return redirect()-> back()->withInput()->with('msg', '数据不为空');
+                break;
+            case 1:
+                return redirect()-> back()->withInput()->with('msg', '邮箱已注册');
+                break;
+            case 2:
+                return redirect()->route("admin.showAdminUser")->with('msg', "更改管理员信息成功");
+                break;
+            default:
+                return redirect()-> back()->withInput()->with('msg', '数据写入失败,更改管理员信息失败');
+        }
+
     }
 
 //    /**
@@ -159,6 +187,10 @@ class AdminController extends Controller
 
     }
 
+    public function logOut(){
+        session()->flush(); // 清空session
+        return redirect()->route("login.index")->with('msg','注销登录');
+    }
 
 
 }

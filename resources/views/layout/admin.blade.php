@@ -53,15 +53,15 @@
                             <ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
                                 <li class="username"><a>David Stevenson</a></li>
                                 <li class="dropdown-footer">
-                                    <a href="/admin/admin/logout.html">
+                                    <a href="{{ route("admin.logout") }}">
                                         退出登录
                                     </a>
                                 </li>
-                                <li class="dropdown-footer">
-                                    <a href="/admin/admin/edit/id/12.html">
-                                        修改密码
-                                    </a>
-                                </li>
+{{--                                <li class="dropdown-footer">--}}
+{{--                                    <a href="/admin/admin/edit/id/12.html">--}}
+{{--                                        修改密码--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
                             </ul>
                             <!--/Login Area Dropdown-->
                         </li>
