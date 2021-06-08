@@ -15,19 +15,56 @@ class TagController extends Controller
     public function showTag()
     {
         $data= TagModel::all();
+        //文字替换数字值  前台减少判断
+        foreach($data as $key){
+            if($key->is_pull == 1){
+                $str='是';
+                $key->is_pull=$str;
+            }elseif ($key->is_pull == 2){
+                $str='否';
+                $key->is_pull=$str;
+            }else{
+                $str='默认';
+                $key->is_pull=$str;
+            }
+        }
         $assion=compact('data');
-        dd($assion);
-        dd('showTag.后台显示标签');
+        return view('admin.tag.tag_list',$assion);
+
+    }
+
+    /**
+     * 显示新增标签页
+     *
+     *
+     */
+    public function showAddtagWeb()
+    {
+       // dd('addTag.新增标签');
+        return view('admin.tag.tag_add');
     }
 
     /**
      * 新增标签
-     * @return  addTag_add_code  0：默认  1：新增标签失败  2：新增标签成功  3：保存中
+     *
      *
      */
     public function addTag()
     {
-        dd('addTag.后台新增标签');
+
+        return view('admin.tag.tag_add');
+    }
+
+
+    /**
+     * 显示更改标签页
+     * @param $tag_id 更改标签id
+     *
+     */
+    public function showUpdatetagWeb($tag_id)
+    {
+        dd('updateTag.后台更改标签');
+        return view('admin.tag.tag_update');
     }
 
     /**
@@ -35,7 +72,7 @@ class TagController extends Controller
      * @param $tag_id 更改标签id
      * updateArticle_update_code  0：默认  1：更改标签失败  2：更改标签成功  3：保存中
      */
-    public function updateTag($tag_id)
+    public function updateTag()
     {
         dd('updateTag.后台更改标签');
     }

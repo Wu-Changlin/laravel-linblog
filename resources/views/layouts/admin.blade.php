@@ -126,6 +126,22 @@
                     </ul>
                 </li>
 
+                <li>
+                    <a href="#" class="menu-dropdown">
+                        <i class="menu-icon fa fa-file-text"></i>
+                        <span class="menu-text">标签管理</span>
+                        <i class="menu-expand"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li>
+                            <a href="{{route('tag.showTag')  }}">
+                                    <span class="menu-text">
+                                        标签列表                                    </span>
+                                <i class="menu-expand"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
                 <li>
                     <a href="#" class="menu-dropdown">

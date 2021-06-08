@@ -102,6 +102,23 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login')->group(fun
     });
 
 
+    // 标签管理
+    Route::prefix('tag')->group(function () {
+        // 标签列表     http://192.168.164.134:1133/admin/tag/showTag
+        Route::get('showTag', 'TagController@showTag')->name('tag.showTag');
+        // 添加标签     http://192.168.164.134:1133/admin/tag/showAddtagWeb
+        Route::get('showAddtagWeb', 'TagController@showAddtagWeb');
+        Route::post('addTag', 'TagController@addTag');
+
+        // 编辑标签     http://192.168.164.134:1133/admin/tag/showUpdatetagWeb/1
+        Route::get('showUpdatetagWeb/{id}', 'TagController@showUpdatetagWeb');
+        Route::post('updateTag', 'TagController@updateTag');
+
+        // 删除标签     http://192.168.164.134:1133/admin/tag/deleteTag/1
+        Route::get('deleteTag/{id}', 'TagController@deleteTag');
+    });
+
+
     // 文章管理
     Route::prefix('article')->group(function () {
         // 文章列表     http://192.168.164.134:1133/admin/article/showArticle
@@ -120,17 +137,6 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login')->group(fun
     });
 
 
-    // 标签管理
-    Route::prefix('tag')->group(function () {
-        // 标签列表     http://192.168.164.134:1133/admin/tag/showTag
-        Route::get('showTag', 'TagController@showTag');
-        // 添加标签     http://192.168.164.134:1133/admin/tag/addTag
-        Route::get('addTag', 'TagController@addTag');
-        // 编辑标签     http://192.168.164.134:1133/admin/tag/updateTag/1
-        Route::get('updateTag/{id}', 'TagController@updateTag');
-        // 删除标签     http://192.168.164.134:1133/admin/tag/deleteTag/1
-        Route::get('deleteTag/{id}', 'TagController@deleteTag');
-    });
 
     // 友情链接管理
     Route::prefix('friendshipLink')->group(function () {
