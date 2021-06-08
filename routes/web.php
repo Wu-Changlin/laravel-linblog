@@ -11,7 +11,7 @@ Route::namespace('Home')->name('home.')->group(function () {
     Route::get('article/{id}/', 'ArticleController@showArticle');
 
     //显示指定类型下的所有文章  http://192.168.164.134:1133/category/1
-    Route::get('category/{id}/', 'CategorieController@showCategory');
+    Route::get('category/{id}/', 'categoryController@showCategory')->name('category.show');;
 
     //评论文章+回复评论  http://192.168.164.134:1133/comment   测试阶段  get  应用post 表单提交 $article_id 文章id  $user_id用户id, comment_id 评论id ,$comment_content评论内容  $parent_id评论父项id  0：默认  1：不可见 2：父项
     Route::get('comment', 'CommentController@showComment');
@@ -81,11 +81,31 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login')->group(fun
         Route::get('deleteAdminUser/{id}', 'AdminController@deleteAdminUser');
     });
 
+    // 分类管理
+    Route::prefix('category')->group(function () {
+        // 分类列表     http://192.168.164.134:1133/admin/category/index
+        Route::get('index', 'CategoryController@index')->name('category.index');
+        //显示添加分类页面 http://192.168.164.134:1133/admin/category/showAddcategoryWeb
+        Route::get('showAddcategoryWeb', 'CategoryController@showAddcategoryWeb');
+        // 添加分类     http://192.168.164.134:1133/admin/category/addCategory
+        Route::post('addCategory', 'CategoryController@addCategory')->name('category.addCategory');
+
+        // 显示编辑分类     http://192.168.164.134:1133/admin/category/showUpdatecategoryWeb/1
+        Route::get('showUpdatecategoryWeb/{id}', 'CategoryController@showUpdatecategoryWeb');
+        // 编辑分类   http://192.168.164.134:1133/admin/category/updateCategory
+        Route::post('updateCategory', 'CategoryController@updateCategory')->name('category.updateCategory');
+
+        // 排序         http://192.168.164.134:1133/admin/category/sortCategory
+        Route::get('sortCategory', 'CategoryController@sortCategory');
+        // 删除分类     http://192.168.164.134:1133/admin/category/deleteCategory/1
+        Route::get('deleteCategory/{id}', 'CategoryController@deleteCategory');
+    });
+
+
     // 文章管理
     Route::prefix('article')->group(function () {
         // 文章列表     http://192.168.164.134:1133/admin/article/showArticle
         Route::get('showArticle', 'ArticleController@showArticle');
-
         // 显示发布文章页面     http://192.168.164.134:1133/admin/article/addArticle
         Route::get('addArticle', 'ArticleController@addArticle');
         // 执行发布文章操作     http://192.168.164.134:1133/admin/article/addArticle
@@ -99,19 +119,6 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login')->group(fun
         Route::get('deleteArticle/{id}', 'ArticleController@deleteArticle');
     });
 
-    // 分类管理
-    Route::prefix('category')->group(function () {
-        // 分类列表     http://192.168.164.134:1133/admin/category/showCategory
-        Route::get('showCategory', 'CategorieController@showCategory');
-        // 添加分类     http://192.168.164.134:1133/admin/category/addCategory
-        Route::get('addCategory', 'CategorieController@addCategory');
-        // 编辑分类     http://192.168.164.134:1133/admin/category/updateCategory/1
-        Route::get('updateCategory/{id}', 'CategorieController@updateCategory');
-        // 排序         http://192.168.164.134:1133/admin/category/sortCategory
-        Route::get('sortCategory', 'CategorieController@sortCategory');
-        // 删除分类     http://192.168.164.134:1133/admin/category/deleteCategory/1
-        Route::get('deleteCategory/{id}', 'CategorieController@deleteCategory');
-    });
 
     // 标签管理
     Route::prefix('tag')->group(function () {
@@ -125,18 +132,26 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login')->group(fun
         Route::get('deleteTag/{id}', 'TagController@deleteTag');
     });
 
-
-
-    // 用户信息管理
-    Route::prefix('users')->group(function () {
-        // 用户信息列表    http://192.168.164.134:1133/admin/users/showUserInfo
-        Route::get('showUserInfo', 'UsersController@showUserInfo');
-        // 更新用户头像   http://192.168.164.134:1133/admin/users/updateUserPhoto/1
-        Route::get('updateUserPhoto/{id}', 'UsersController@updateUserPhoto');
-        // 用户更改密码    http://192.168.164.134:1133/admin/users/updateUserPassword/1
-        Route::get('updateUserPassword/{id}', 'UsersController@updateUserPassword');
-
+    // 友情链接管理
+    Route::prefix('friendshipLink')->group(function () {
+        // 友情链接列表  http://192.168.164.134:1133/admin/friendshipLink/showFriendshipLink
+        Route::get('showFriendshipLink', 'FriendshipLinkController@showFriendshipLink');
+        // 添加友情链接
+        Route::get('create', 'FriendshipLinkController@create');
+        Route::post('store', 'FriendshipLinkController@store');
+        // 编辑友情链接
+        Route::get('edit/{id}', 'FriendshipLinkController@edit');
+        Route::post('update/{id}', 'FriendshipLinkController@update');
+        // 排序
+        Route::post('sort', 'FriendshipLinkController@sort');
+        // 删除友情链接
+        Route::get('destroy/{id}', 'FriendshipLinkController@destroy');
+        // 恢复删除的友情链接
+        Route::get('restore/{id}', 'FriendshipLinkController@restore');
+        // 彻底删除友情链接
+        Route::get('forceDelete/{id}', 'FriendshipLinkController@forceDelete');
     });
+
 
     // 网站配置管理
     Route::prefix('web')->group(function () {

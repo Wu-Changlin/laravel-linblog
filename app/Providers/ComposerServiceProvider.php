@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Models\Article;
-use App\Models\Categorie;
+use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Config;
 use App\Models\Tag;
@@ -27,25 +27,6 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        echo 1;
-        echo 2;
-
-        view()->composer(['layout/home', 'home'], function ($view) {
-
-            // 分配数据
-            echo 3;
-
-            $view->with('name','王美丽');
-
-
-
-            echo 4;
-        });
-        echo 5;
-//        View::composer('layout/home',function($view){
-//            echo 0000;
-//            $view->with('name','王美丽');
-//        });
 
     }
 

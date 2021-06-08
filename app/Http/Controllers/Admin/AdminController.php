@@ -117,7 +117,6 @@ class AdminController extends Controller
      */
     public function updateAdminUser(AdminRequest $request)
     {
-
         //判断是否post请求
         if ($request->isMethod('post')) {
             $input = $request->except('s','_token');  //去除 s：路由地址 ，_token： 表单中包含一个隐藏的 CSRF 令牌字段
@@ -137,6 +136,9 @@ class AdminController extends Controller
                 return redirect()-> back()->withInput()->with('msg', '邮箱已注册');
                 break;
             case 2:
+                return redirect()-> back()->withInput()->with('msg', "保留");
+                break;
+            case 3:
                 return redirect()->route("admin.showAdminUser")->with('msg', "更改管理员信息成功");
                 break;
             default:
@@ -144,16 +146,6 @@ class AdminController extends Controller
         }
 
     }
-
-//    /**
-//     * 彻底删除管理员       清空管理员的所有数据  其下分类、文章 、标签、评论、网站配置
-//     * @param $id 管理员 id
-//     *deleteAdmin_admin_code  0：默认  1：删除管理员失败  2：删除管理员成功
-//     */
-//    public function deleteAdminUser($id)
-//    {
-//        dd('deleteAdmin.删除管理员');
-//    }
 
 
     /**
@@ -187,6 +179,10 @@ class AdminController extends Controller
 
     }
 
+    /**
+     * 管理员退出
+     * @return 返回登录页
+     */
     public function logOut(){
         session()->flush(); // 清空session
         return redirect()->route("login.index")->with('msg','注销登录');

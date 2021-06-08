@@ -1,4 +1,4 @@
-@extends('layout.login_register')
+@extends('layouts.login_register')
 
 @section('title', '登录博客系统')
 

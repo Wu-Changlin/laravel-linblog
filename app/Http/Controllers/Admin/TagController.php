@@ -1,7 +1,9 @@
 <?php
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
+use App\Models\Tag as TagModel ;
 
 
 class TagController extends Controller
@@ -12,6 +14,9 @@ class TagController extends Controller
      */
     public function showTag()
     {
+        $data= TagModel::all();
+        $assion=compact('data');
+        dd($assion);
         dd('showTag.后台显示标签');
     }
 

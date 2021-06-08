@@ -100,23 +100,9 @@
                     </a>
                     <ul class="submenu">
                         <li>
-                            <a href="/admin/adminUser/showAdminUser">
+                            <a href=" {{url('admin/adminUser/showAdminUser')}}">
                                     <span class="menu-text">
                                         管理员列表                                    </span>
-                                <i class="menu-expand"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/admin/auth_group/lst.html">
-                                    <span class="menu-text">
-                                        用户组列表                                    </span>
-                                <i class="menu-expand"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/admin/auth_rule/lst.html">
-                                    <span class="menu-text">
-                                        权限列表                                    </span>
                                 <i class="menu-expand"></i>
                             </a>
                         </li>
@@ -131,7 +117,7 @@
                     </a>
                     <ul class="submenu">
                         <li>
-                            <a href="/admin/cate/lst.html">
+                            <a href="{{url('admin/category/index')}}">
                                     <span class="menu-text">
                                         栏目列表                                    </span>
                                 <i class="menu-expand"></i>

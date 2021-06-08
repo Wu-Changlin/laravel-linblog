@@ -4,7 +4,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 /**
-* Class CategorieController   显示指定类型下的文章
+* Class categoryController   显示指定类型下的文章
 * @package App\Http\Controllers\Home
 */
 

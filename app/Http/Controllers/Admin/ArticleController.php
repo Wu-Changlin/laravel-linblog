@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Article as ArticleModel;
 
 
 class ArticleController extends Controller
@@ -13,6 +14,9 @@ class ArticleController extends Controller
     public function showArticle()
     {
 
+        $data= ArticleModel::all();
+        $assign=compact('data');
+        dd($assign);
         dd('showArticle.后台显示所有文章管理');
     }
 
