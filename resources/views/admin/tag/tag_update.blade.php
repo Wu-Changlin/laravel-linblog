@@ -2,9 +2,9 @@
 
 @section('title', '霖博客,技术博客,个人博客模板,php博客系统')
 
-@section('keywords', '编辑栏目')
+@section('keywords', '编辑标签')
 
-@section('description', '显示编辑栏目页面')
+@section('description', '显示编辑标签页面')
 
 @section('content')
 <!-- Page Content -->
@@ -16,9 +16,9 @@
                 <a href="{{route('admin.index')}}">系统</a>
             </li>
             <li>
-                <a href="{{url('admin/category/showCategory')}}">栏目管理</a>
+                <a href="{{url('admin/tag/showTag')}}">标签管理</a>
             </li>
-            <li class="active">编辑栏目</li>
+            <li class="active">编辑标签</li>
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
@@ -30,19 +30,21 @@
             <div class="col-lg-12 col-sm-12 col-xs-12" style="">
                 <div class="widget" style="">
                     <div class="widget-header bordered-bottom bordered-blue">
-                        <span class="widget-caption">新增栏目</span>
+                        <span class="widget-caption">修改标签</span>
                     </div>
                     <div class="widget-body" style="">
                         <div id="horizontal-form" style="">
-                            <form class="form-horizontal" role="form" action="{{ route('category.updateCategory') }}" method="post" style="">
+                            <form class="form-horizontal" role="form" action="{{ route('tag.updateTag') }}" method="post" style="">
                                {{ csrf_field() }}
-                                <input type="hidden" name="id" value="{{ $data->category_id }}">
+                                <input type="hidden" name="id" value="{{ $data->tag_id }}">
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">上级栏目</label>
                                     <div class="col-sm-6">
-                                        <select name="pid">
-                                            <option value="0">顶级栏目</option>
-                                        </select>
+                                            <select name="category_id">
+                                                @foreach($category as $v)
+                                                    <option value="{{ $v->category_id }}"  @if( $v->category_id == $data->category_id)  selected="selected"  @endif>{{ $v->category_name }}</option>
+                                                @endforeach
+                                            </select>
                                     </div>
                                 </div>
 
@@ -85,29 +87,6 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="group_id" class="col-sm-2 control-label no-padding-right">栏目类型</label>
-                                    <div class="col-sm-6">
-                                        <div class="radio" style="float:left;margin-right:10px;">
-                                            <label>
-                                                <input name="type" value="1" @if( $data->type=='1') checked="checked"  @endif type="radio">
-                                                <span class="text">文章列表</span>
-                                            </label>
-                                        </div>
-                                        <div class="radio" style="float:left;margin-right:10px;">
-                                            <label>
-                                                <input name="type" value="2"  @if( $data->type=='2') checked="checked"  @endif type="radio">
-                                                <span class="text">单页栏目</span>
-                                            </label>
-                                        </div>
-                                        <div class="radio" style="float:left;margin-right:10px;">
-                                            <label>
-                                                <input name="type" value="3"  @if( $data->type=='3') checked="checked"  @endif type="radio">
-                                                <span class="text">图片列表</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
 
 
                                 <div class="form-group">

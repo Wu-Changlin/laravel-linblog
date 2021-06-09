@@ -112,14 +112,14 @@
                 <li>
                     <a href="#" class="menu-dropdown">
                         <i class="menu-icon fa fa-folder"></i>
-                        <span class="menu-text">栏目管理</span>
+                        <span class="menu-text">分类管理</span>
                         <i class="menu-expand"></i>
                     </a>
                     <ul class="submenu">
                         <li>
                             <a href="{{url('admin/category/index')}}">
                                     <span class="menu-text">
-                                        栏目列表                                    </span>
+                                        分类列表                                    </span>
                                 <i class="menu-expand"></i>
                             </a>
                         </li>
@@ -151,7 +151,7 @@
                     </a>
                     <ul class="submenu">
                         <li>
-                            <a href="/admin/article/lst.html">
+                            <a href="{{ route('article.showArticle') }}">
                                     <span class="menu-text">
                                         文章列表                                    </span>
                                 <i class="menu-expand"></i>

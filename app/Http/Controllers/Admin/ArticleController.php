@@ -14,10 +14,21 @@ class ArticleController extends Controller
     public function showArticle()
     {
 
-        $data= ArticleModel::all();
-        $assign=compact('data');
-        dd($assign);
-        dd('showArticle.后台显示所有文章管理');
+//        $data= ArticleModel::all();
+//        $assign=compact('data');
+//        dd($assign);
+        return view('admin.article.article_list');
+    }
+
+    /**
+     * 显示发布文章页
+     * @return
+     *
+     */
+    public function showAddarticleWeb()
+    {
+
+        return view('admin.article.article_add');
     }
 
     /**
@@ -31,6 +42,16 @@ class ArticleController extends Controller
     }
 
     /**
+     * 显示更改文章页
+     * @param $article_id 更改文章
+     * update
+     */
+    public function showUpdatearticleWeb($article_id)
+    {
+        return view('admin.article.article_update');
+    }
+
+    /**
      * 更改文章
      * @param $article_id 更改文章
      * updateArticle_update_code  0：默认  1：更改失败  2：更改成功  3：保存中
@@ -41,13 +62,13 @@ class ArticleController extends Controller
     }
 
     /**
-     * 删除文章     文章下的评论一并删除
+     * 删除文章
      * @param $article_id 文章id
      *deleteArticle_delete_code  0：默认  1：删除失败  2：删除成功
      */
     public function deleteArticle($article_id)
     {
-        dd('deleteArticle.后台更改文章');
+        dd('deleteArticle.后台删除文章');
     }
 
     /**

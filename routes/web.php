@@ -108,11 +108,11 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login')->group(fun
         Route::get('showTag', 'TagController@showTag')->name('tag.showTag');
         // 添加标签     http://192.168.164.134:1133/admin/tag/showAddtagWeb
         Route::get('showAddtagWeb', 'TagController@showAddtagWeb');
-        Route::post('addTag', 'TagController@addTag');
+        Route::post('addTag', 'TagController@addTag')->name('tag.addTag');
 
         // 编辑标签     http://192.168.164.134:1133/admin/tag/showUpdatetagWeb/1
         Route::get('showUpdatetagWeb/{id}', 'TagController@showUpdatetagWeb');
-        Route::post('updateTag', 'TagController@updateTag');
+        Route::post('updateTag', 'TagController@updateTag')->name('tag.updateTag');;
 
         // 删除标签     http://192.168.164.134:1133/admin/tag/deleteTag/1
         Route::get('deleteTag/{id}', 'TagController@deleteTag');
@@ -122,14 +122,16 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login')->group(fun
     // 文章管理
     Route::prefix('article')->group(function () {
         // 文章列表     http://192.168.164.134:1133/admin/article/showArticle
-        Route::get('showArticle', 'ArticleController@showArticle');
-        // 显示发布文章页面     http://192.168.164.134:1133/admin/article/addArticle
-        Route::get('addArticle', 'ArticleController@addArticle');
-        // 执行发布文章操作     http://192.168.164.134:1133/admin/article/addArticle
-        Route::get('addArticle', 'ArticleController@addArticle');
+        Route::get('showArticle', 'ArticleController@showArticle')->name('article.showArticle');
 
-        // 编辑文章     http://192.168.164.134:1133/admin/article/updateArticle/1
-        Route::get('updateArticle/{id}', 'ArticleController@updateArticle');
+        // 显示发布文章页面     http://192.168.164.134:1133/admin/article/showAddarticleWeb
+        Route::get('showAddarticleWeb', 'ArticleController@showAddarticleWeb');
+        // 执行发布文章操作     http://192.168.164.134:1133/admin/article/addArticle
+        Route::post('addArticle', 'ArticleController@addArticle')->name('article.addArticle');
+
+        // 编辑文章     http://192.168.164.134:1133/admin/article/showUpdatearticleWeb/1
+        Route::get('showUpdatearticleWeb/{id}', 'ArticleController@showUpdatearticleWeb');
+        Route::post('updateArticle', 'ArticleController@updateArticle')->name('article.updateArticle');
         // 上传图片     http://192.168.164.134:1133/admin/article/uploadArticleImage
         Route::get('uploadArticleImage', 'ArticleController@uploadArticleImage');
         // 删除文章     http://192.168.164.134:1133/admin/article/deleteArticle/3

@@ -64,7 +64,7 @@ class CategoryController extends Controller
     public function addCategory(Request $request)
     {
         if($request->isMethod('post')){
-            $input=$request;
+            $input = $request->except('s','_token');
             $data['pid'] = intval($input['pid']) ?  intval($input['pid']) : 0;
             $data['name'] = isset($input['name']) ? $input['name'] : "";
             $data['keywords'] = isset($input['keywords']) ? $input['keywords'] : "";

@@ -14,7 +14,7 @@ class TagController extends Controller
      */
     public function showTag()
     {
-        $data= TagModel::all();
+        $data= TagModel::lists();
         //文字替换数字值  前台减少判断
         foreach($data as $key){
             if($key->is_pull == 1){
@@ -28,9 +28,8 @@ class TagController extends Controller
                 $key->is_pull=$str;
             }
         }
-        $assion=compact('data');
-        return view('admin.tag.tag_list',$assion);
-
+        $assing=compact('data');
+        return view('admin.tag.tag_list',$assing);
     }
 
     /**
@@ -40,8 +39,10 @@ class TagController extends Controller
      */
     public function showAddtagWeb()
     {
+        $data=TagModel::categorys();
+        $assing=compact('data');
        // dd('addTag.新增标签');
-        return view('admin.tag.tag_add');
+        return view('admin.tag.tag_add',$assing);
     }
 
     /**
@@ -49,10 +50,33 @@ class TagController extends Controller
      *
      *
      */
-    public function addTag()
+    public function addTag(Request $request)
     {
 
-        return view('admin.tag.tag_add');
+        if($request->isMethod('post')){
+            $input = $request->except('s','_token');
+            $data['name'] = isset($input['name']) ? $input['name'] : "";
+            $data['keywords'] = isset($input['keywords']) ? $input['keywords'] : "";
+            $data['description'] = isset($input['description']) ? $input['description'] : "";
+            $data['is_pull'] = intval($input['rec_index']) ? intval($input['rec_index']) : 0;
+            $data['category_id'] = intval($input['category_id']) ? intval($input['category_id']) : 0;
+        }else{
+            return redirect()->back()->withInput()->with('msg', '非法访问');
+        }
+        $res=TagModel::addTag($data);
+        switch ($res) { //判断新增返回值
+            case 0:
+                return redirect()->back()->withInput()->with('msg', '数据不为空');
+                break;
+            case 1:
+                return redirect()->back()->withInput()->with('msg', '标签已存在');
+                break;
+            case 2:
+                return redirect()->route("tag.showTag")->with('msg', "新增标签成功");
+                break;
+            default:
+                return redirect()-> back()->withInput()->with('msg', '数据写入失败,新增标签失败');
+        }
     }
 
 
@@ -63,8 +87,13 @@ class TagController extends Controller
      */
     public function showUpdatetagWeb($tag_id)
     {
-        dd('updateTag.后台更改标签');
-        return view('admin.tag.tag_update');
+        if( ! isset($tag_id)){
+          return redirect()->back()->with('msg', '非法访问');
+        }
+        $category=TagModel::categorys();
+        $data=TagModel::find($tag_id);
+        $assing=compact('data','category');
+        return view('admin.tag.tag_update',$assing);
     }
 
     /**
@@ -72,9 +101,37 @@ class TagController extends Controller
      * @param $tag_id 更改标签id
      * updateArticle_update_code  0：默认  1：更改标签失败  2：更改标签成功  3：保存中
      */
-    public function updateTag()
+    public function updateTag(Request $request)
     {
-        dd('updateTag.后台更改标签');
+        //判断是否post请求
+        if ($request->isMethod('post')) {
+            $input = $request->except('s','_token');  //去除 s：路由地址 ，_token： 表单中包含一个隐藏的 CSRF 令牌字段
+            $data['tag_id'] = intval($input['id']) ?  intval($input['id']) : 0;
+            $data['category_id'] = intval($input['category_id']) ?  intval($input['category_id']) : 0;
+            $data['name'] = isset($input['name']) ? $input['name'] : "";
+            $data['keywords'] = isset($input['keywords']) ? $input['keywords'] : "";
+            $data['description'] = isset($input['description']) ? $input['description'] : "";
+            $data['is_pull'] = intval($input['rec_index']) ? intval($input['rec_index']) : 0;
+        }else{
+            return redirect()-> back()->withInput()->with('msg', '非法请求');
+        }
+        $res=TagModel::updateTag($data);   //执行修改
+        switch ($res) { //判断修改返回值
+            case 0:
+                return redirect()-> back()->withInput()->with('msg', '数据不为空');
+                break;
+            case 1:
+                return redirect()-> back()->withInput()->with('msg', '分类已存在');
+                break;
+            case 2:
+                return redirect()-> back()->withInput()->with('msg', "保留");
+                break;
+            case 3:
+                return redirect()->route("tag.showTag")->with('msg', "更改分类信息成功");
+                break;
+            default:
+                return redirect()-> back()->withInput()->with('msg', '数据写入失败,更改分类信息失败');
+        }
     }
 
     /**
@@ -84,9 +141,23 @@ class TagController extends Controller
      */
     public function deleteTag($tag_id)
     {
-        dd('deleteTag.后台删除标签');
+        if(empty($tag_id)){
+            return redirect()-> back()->withInput()->with('msg', '非法访问');
+        }
+        $res=TagModel::deleteTag($tag_id);//执行删除
+        switch ($res) { //判断删除返回值
+            case 0:
+                return redirect()-> back()->withInput()->with('msg', '数据不为空');
+                break;
+            case 1:
+                return redirect()-> back()->withInput()->with('msg', '标签不存在');
+                break;
+            case 2:
+                return redirect()->route("tag.showTag")->with('msg', "删除标签成功");
+                break;
+            default:
+                return redirect()-> back()->withInput()->with('msg', '网络错误,删除标签失败');
+        }
     }
-
-
 
 }

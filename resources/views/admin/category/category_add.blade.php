@@ -48,21 +48,21 @@
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">栏目名称</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control" placeholder="" name="name" required="" type="text">
+                                        <input class="form-control" placeholder="" name="name" required="" type="text" value="{{ old('name') }}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">栏目关键词</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control" placeholder="" name="keywords" type="text">
+                                        <input class="form-control" placeholder="" name="keywords" type="text" value="{{ old('keywords') }}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">栏目描述</label>
                                     <div class="col-sm-6">
-                                        <textarea name="description" class="form-control"></textarea>
+                                        <textarea name="description" class="form-control">{{ old('description') }}</textarea>
                                     </div>
                                 </div>
 

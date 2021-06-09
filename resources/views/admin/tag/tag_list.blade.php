@@ -2,9 +2,9 @@
 
 @section('title', '霖博客,技术博客,个人博客模板,php博客系统')
 
-@section('keywords', '栏目列表')
+@section('keywords', '标签列表')
 
-@section('description', '显示所有栏目')
+@section('description', '显示所有标签')
 
 @section('content')
 <!-- Page Content -->
@@ -15,7 +15,7 @@
             <li>
                 <a href="{{route('admin.index')}}">系统</a>
             </li>
-            <li class="active">栏目管理</li>
+            <li class="active">标签管理</li>
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
@@ -23,7 +23,7 @@
     <!-- Page Body -->
     <div class="page-body">
 
-        <button type="button" tooltip="添加栏目" class="btn btn-sm btn-azure btn-addon" onclick="javascript:window.location.href = '/admin/tag/showAddtagWeb'"> <i class="fa fa-plus"></i> Add
+        <button type="button" tooltip="添加标签" class="btn btn-sm btn-azure btn-addon" onclick="javascript:window.location.href = '/admin/tag/showAddtagWeb'"> <i class="fa fa-plus"></i> Add
         </button>
         <div class="row">
             <div class="col-lg-12 col-sm-12 col-xs-12">
@@ -36,7 +36,7 @@
                                     <tr>
                                         <th class="text-center" width="10%">ID</th>
 {{--                                        <th class="text-center" width="10%">排序</th>--}}
-                                        <th class="text-center">栏目名称</th>
+                                        <th class="text-center">标签名称</th>
                                         <th class="text-center">所属分类</th>
                                         <th class="text-center">标签关键词</th>
                                         <th class="text-center">标签描述</th>
@@ -49,7 +49,7 @@
                                     <tr>
                                         <td align="center">{{  $v->tag_id }}</td>
                                         <td align="center">{{  $v->name }}</td>
-                                        <td align="center">{{  $v->category_id }}</td>
+                                        <td align="center">{{  $v->category_name }}</td>
                                         <td align="center">{{  $v->keywords }}</td>
                                         <td align="center">{{  $v->description }}</td>
                                         <td align="center">{{  $v->is_pull }}</td>
