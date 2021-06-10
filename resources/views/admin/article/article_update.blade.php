@@ -65,26 +65,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="username" class="col-sm-2 control-label no-padding-right">推荐</label>
-                                        <div class="col-sm-6">
 
-                                            <div class="radio" style="float:left;margin-right:10px;">
-                                                <label>
-                                                    <input name="rec" value="1" checked="checked" type="radio">
-                                                    <span class="text">是</span>
-                                                </label>
-                                            </div>
-
-                                            <div class="radio" style="float:left;margin-right:10px;">
-                                                <label>
-                                                    <input name="rec" value="0" class="inverted" type="radio">
-                                                    <span class="text">否</span>
-                                                </label>
-                                            </div>
-
-                                        </div>
-                                    </div>
 
                                     <div class="form-group">
                                         <label for="username" class="col-sm-2 control-label no-padding-right">缩略图</label>

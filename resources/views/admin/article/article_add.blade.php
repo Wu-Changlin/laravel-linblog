@@ -6,6 +6,11 @@
 
 @section('description', '显示所有文章')
 
+@section('css')
+    <link href="{{asset('admin/article/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+@endsection
+
+
 @section('content')
 <!-- Page Content -->
 <div class="page-content" style="">
@@ -34,12 +39,44 @@
                     </div>
                     <div class="widget-body" style="">
                         <div id="horizontal-form" style="">
-                            <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data" style="">
+                            <form class="form-horizontal" role="form" action="{{ route('article.addArticle') }}" method="post" enctype="multipart/form-data" style="">
+                                {{ csrf_field() }}
                                 <div class="form-group" style="">
+
+                                    <div class="form-group">
+                                        <label for="username" class="col-sm-2 control-label no-padding-right">所属栏目</label>
+                                        <div class="col-sm-6">
+                                            <select name="category_id">
+                                                @foreach($categorys as $v)
+                                                    <option value="{{ $v->category_id }}">{{ $v->category_name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="username" class="col-sm-2 control-label no-padding-right">所属栏目</label>
+                                        <div class="col-sm-6">
+                                            <select name="tag_id">
+                                                @foreach($tags as $v)
+                                                    <option value="{{ $v->tag_id }}">{{ $v->tag_name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+
                                     <div class="form-group">
                                         <label for="username" class="col-sm-2 control-label no-padding-right">标题</label>
                                         <div class="col-sm-6">
                                             <input class="form-control" placeholder="" name="title" type="text">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="username" class="col-sm-2 control-label no-padding-right">作者</label>
+                                        <div class="col-sm-6">
+                                            <input class="form-control" placeholder="" name="author" type="text" value="{{ $author }}">
                                         </div>
                                     </div>
 
@@ -57,58 +94,56 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="username" class="col-sm-2 control-label no-padding-right">作者</label>
-                                        <div class="col-sm-6">
-                                            <input class="form-control" placeholder="" name="author" type="text">
-                                        </div>
-                                    </div>
-
 
 
                                     <div class="form-group">
-                                        <label for="username" class="col-sm-2 control-label no-padding-right">推荐</label>
+                                        <label for="username" class="col-sm-2 control-label no-padding-right">下架</label>
                                         <div class="col-sm-6">
                                             <div class="radio" style="float:left;margin-right:10px;">
                                                 <label>
-                                                    <input name="rec" value="1" type="radio">
+                                                    <input name="rec_index" value="1" type="radio">
                                                     <span class="text">是</span>
                                                 </label>
                                             </div>
                                             <div class="radio" style="float:left;margin-right:10px;">
                                                 <label>
-                                                    <input name="rec" value="0" class="inverted" checked="checked" type="radio">
+                                                    <input name="rec_index" value="2" class="inverted" checked="checked" type="radio">
                                                     <span class="text">否</span>
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
 
+                                    {{--上传图片插件开始--}}
                                     <div class="form-group">
-                                        <label for="username" class="col-sm-2 control-label no-padding-right">缩略图</label>
-                                        <div class="col-sm-6">
-                                            <input placeholder="" name="thumb" type="file">
+                                        <label for="username" class="col-sm-2 control-label no-padding-right">封面图</label>
+                                        <div class="col-md-9"></div>
+                                        <div class="col-md-6">
+                                            <div class="fileinput fileinput-new" data-provides="fileinput" id="uploadImageDiv">
+                                                <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 220px; height: 150px; line-height: 150px;"></div>
+                                                <div>
+                                                    <span class="btn default btn-file">
+                                                        <span class="fileinput-new">选择图片</span>
+                                                        <span class="fileinput-exists">更改</span>
+                                                        <input type="file" name="cover">
+                                                    </span>
+                                                    <a href="#" class="btn default fileinput-exists" data-dismiss="fileinput">移除</a>
+                                                </div>
+                                            </div>
+                                            <div id="titleImageError" style="color: #a94442"></div>
                                         </div>
                                     </div>
+                                    {{--上传图片插件结束--}}
+                                </div>
 
 
-                                    <label for="username" class="col-sm-2 control-label no-padding-right">所属栏目</label>
+                                <div class="form-group">
+                                    <label for="username" class="col-sm-2 control-label no-padding-right">markdown</label>
                                     <div class="col-sm-6">
-                                        <select name="cateid">
-                                            <option value="1">单车分类</option>
-                                            <option value="2">|————————死飞车</option>
-                                            <option value="4">|————————山地车</option>
-                                            <option value="5">|————————公路车</option>
-                                            <option value="6">骑行装备</option>
-                                            <option value="7">|————————人身装备</option>
-                                            <option value="8">|————————车身装备</option>
-                                            <option value="9">单车生活</option>
-                                            <option value="10">|————————单车生活2</option>
-                                            <option value="11">关于我们</option>
-                                            <option value="12">公司简介</option>
-                                        </select>
+                                        <textarea class="form-control" name="markdown"></textarea>
                                     </div>
                                 </div>
+
 
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10">
@@ -128,6 +163,8 @@
 <!-- /Page Content -->
 @endsection
 
-
+@section('js')
+    <script src="{{asset('admin/article/bootstrap-fileinput.js')}}"></script>
+@endsection
 
 

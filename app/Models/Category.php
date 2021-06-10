@@ -13,11 +13,11 @@ class Category extends Base
         if(empty($data)){ //如果$data为空直接返回
             return 0;
         }
-        $category_count = self::where('name',$data['name'])->count(); //根据用户输入邮箱查询数据库用户信息
+        $category_count = self::where('name',$data['name'])->count(); //根据用户输入分类名查询数据库分类表分类信息
         if($category_count){//如果有数据说明分类已存在
             return 1;
         }
-        $res=self::create($data);//使用create方法新增管理员
+        $res=self::create($data);//使用create方法新增分类
         //本次新增分类信息写入log
         $admin_user=session('admin_user');
         $admin_log['last_login_ip']=$admin_user['last_login_ip'];    //管理员IP
@@ -49,8 +49,8 @@ class Category extends Base
         if($data['name'] == $category_info['name']){
             array_pull($data, 'name');
         }else{
-            $category_name_count = self::where('name',$data['name'])->count(); //根据用户输入邮箱查询数据库用户信息
-            if($category_name_count){//如果有数据说明邮箱已注册
+            $category_name_count = self::where('name',$data['name'])->count(); //根据用户输入分类名查询数据库分类表分类信息
+            if($category_name_count){//如果有数据说明分类已存在
                 return 1;
             }
         }

@@ -66,7 +66,7 @@ class TagController extends Controller
         $res=TagModel::addTag($data);
         switch ($res) { //判断新增返回值
             case 0:
-                return redirect()->back()->withInput()->with('msg', '数据不为空');
+                return redirect()->back()->withInput()->with('msg', '数据为空');
                 break;
             case 1:
                 return redirect()->back()->withInput()->with('msg', '标签已存在');
@@ -75,7 +75,7 @@ class TagController extends Controller
                 return redirect()->route("tag.showTag")->with('msg', "新增标签成功");
                 break;
             default:
-                return redirect()-> back()->withInput()->with('msg', '数据写入失败,新增标签失败');
+                return redirect()->back()->withInput()->with('msg', '数据写入失败,新增标签失败');
         }
     }
 
@@ -113,24 +113,24 @@ class TagController extends Controller
             $data['description'] = isset($input['description']) ? $input['description'] : "";
             $data['is_pull'] = intval($input['rec_index']) ? intval($input['rec_index']) : 0;
         }else{
-            return redirect()-> back()->withInput()->with('msg', '非法请求');
+            return redirect()->back()->withInput()->with('msg', '非法请求');
         }
         $res=TagModel::updateTag($data);   //执行修改
         switch ($res) { //判断修改返回值
             case 0:
-                return redirect()-> back()->withInput()->with('msg', '数据不为空');
+                return redirect()->back()->withInput()->with('msg', '数据为空');
                 break;
             case 1:
-                return redirect()-> back()->withInput()->with('msg', '分类已存在');
+                return redirect()->back()->withInput()->with('msg', '分类已存在');
                 break;
             case 2:
-                return redirect()-> back()->withInput()->with('msg', "保留");
+                return redirect()->back()->withInput()->with('msg', "保留");
                 break;
             case 3:
                 return redirect()->route("tag.showTag")->with('msg', "更改分类信息成功");
                 break;
             default:
-                return redirect()-> back()->withInput()->with('msg', '数据写入失败,更改分类信息失败');
+                return redirect()->back()->withInput()->with('msg', '数据写入失败,更改分类信息失败');
         }
     }
 
@@ -142,21 +142,21 @@ class TagController extends Controller
     public function deleteTag($tag_id)
     {
         if(empty($tag_id)){
-            return redirect()-> back()->withInput()->with('msg', '非法访问');
+            return redirect()->back()->withInput()->with('msg', '非法访问');
         }
         $res=TagModel::deleteTag($tag_id);//执行删除
         switch ($res) { //判断删除返回值
             case 0:
-                return redirect()-> back()->withInput()->with('msg', '数据不为空');
+                return redirect()->back()->withInput()->with('msg', '数据为空');
                 break;
             case 1:
-                return redirect()-> back()->withInput()->with('msg', '标签不存在');
+                return redirect()->back()->withInput()->with('msg', '标签不存在');
                 break;
             case 2:
                 return redirect()->route("tag.showTag")->with('msg', "删除标签成功");
                 break;
             default:
-                return redirect()-> back()->withInput()->with('msg', '网络错误,删除标签失败');
+                return redirect()->back()->withInput()->with('msg', '网络错误,删除标签失败');
         }
     }
 

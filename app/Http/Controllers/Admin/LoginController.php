@@ -37,15 +37,15 @@ class LoginController extends Controller
             $login['email'] = isset($input['email']) ? $input['email'] : "";
             $login['password'] = isset($input['password']) ? $input['password'] : "";
         }else{
-            return redirect()-> back()->withInput()->with('msg', '非法请求');
+            return redirect()->back()->withInput()->with('msg', '非法请求');
         };
         $res=AdminModels::adminLogin($login); //执行登录
         switch ($res) { //判断登录返回值
             case 0:
-                return redirect()-> back()->withInput()->with('msg', '用户不存在');
+                return redirect()->back()->withInput()->with('msg', '用户不存在');
                 break;
             case 1:
-                return redirect()-> back()->withInput()->with('msg', '密码错误');
+                return redirect()->back()->withInput()->with('msg', '密码错误');
                 break;
             case 2:
                 return redirect()->route('admin.index')->with('msg', '登录成功');

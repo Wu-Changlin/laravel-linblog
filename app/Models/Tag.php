@@ -3,7 +3,7 @@
 namespace App\Models;
 
 
-use Illuminate\Support\Facades\DB;
+
 
 class Tag extends Base
 {
@@ -45,7 +45,7 @@ class Tag extends Base
         if(empty($data)){ //如果$data为空直接返回
             return 0;
         }
-        $tag_count = self::where('name',$data['name'])->count(); //根据用户输入标签查询数据库用户信息
+        $tag_count = self::where('name',$data['name'])->count(); //根据用户输入标签名查询数据库标签表标签名
         if($tag_count){//如果有数据说明标签已存在
             return 1;
         }
@@ -70,7 +70,7 @@ class Tag extends Base
         if(empty($data)){ //如果$data为空直接返回
             return 0;
         }
-        $tag_res = self::find($data['tag_id'],["category_id","name", "keywords" ,"description","is_pull"]); //根据用户输入标签查询数据库标签信息
+        $tag_res = self::find($data['tag_id'],["category_id","name", "keywords" ,"description","is_pull"]); //查询该标签信息
         $tag_info=$tag_res->toArray(); //集合转数组
         //判断分类id是否修改
         if($data['category_id'] ==$tag_info['category_id']){
@@ -80,8 +80,8 @@ class Tag extends Base
         if($data['name'] == $tag_info['name']){
             array_pull($data, 'name');
         }else{
-            $tag_name_count = self::where('name',$data['name'])->count(); //根据用户输入标签查询数据库用户信息
-            if($tag_name_count){//如果有数据说明标签已注册
+            $tag_name_count = self::where('name',$data['name'])->count(); //根据用户输入标签名查询数据库标签表标签名
+            if($tag_name_count){//如果有数据说明标签已存在
                 return 1;
             }
         }

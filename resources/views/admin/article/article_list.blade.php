@@ -34,34 +34,40 @@
                                 <thead class="">
                                 <tr>
                                     <th class="text-center" width="10%">ID</th>
+                                    <th class="text-center">所属栏目</th>
+                                    <th class="text-center">所属标签</th>
                                     <th class="text-center">标题</th>
                                     <th class="text-center">作者</th>
-                                    <th class="text-center">推荐</th>
-                                    <th class="text-center">所属栏目</th>
+                                    <th class="text-center">访问量</th>
+                                    <th class="text-center">下架</th>
                                     <th class="text-center">缩略图</th>
                                     <th class="text-center" width="20%">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
+                                @foreach( $data as $v)
                                     <tr>
-                                    <td align="center">11</td>
-                                    <td align="center">禧玛诺METREA 驱动——现代城市骑行新风尚</td>
-                                    <td align="center">光明网</td>
-                                    <td align="center"> 已推荐</td>
-                                    <td align="center">车身装备</td>
-                                    <td align="center">
-                                        <img src="\uploads/20210510/33c4dbcf05c841f1116764ac8c7d2cf6.jpg" height="30">
+                                        <td align="center">{{ $v->article_id }}</td>
+                                        <td align="center">{{ $v->category_name }}</td>
+                                        <td align="center">{{ $v->tag_name }}</td>
+                                        <td align="center">{{ $v->title }}</td>
+                                        <td align="center">{{ $v->author }}</td>
+                                        <td align="center">{{ $v->Visits }}</td>
+                                        <td align="center">{{ $v->is_pull }}</td>
+                                        <td align="center">
+                                            <img src="{{url($v->cover)}}" height="30">
 
-                                    </td>
-                                    <td align="center">
-                                        <a href="{{ url('admin/article/showUpdatearticleWeb/1') }}" class="btn btn-primary btn-sm shiny">
-                                            <i class="fa fa-edit"></i> 编辑
-                                        </a>
-                                        <a href="#" onclick="warning('确实要删除吗','{{ url('admin/article/deleteArticle/3') }}')" class="btn btn-danger btn-sm shiny">
-                                            <i class="fa fa-trash-o"></i> 删除
-                                        </a>
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td align="center">
+                                            <a href="{{ url('admin/article/showUpdatearticleWeb',[$v->article_id]) }}" class="btn btn-primary btn-sm shiny">
+                                                <i class="fa fa-edit"></i> 编辑
+                                            </a>
+                                            <a href="#" onclick="warning('三思后行，确实要删除吗','{{ url('admin/article/deleteArticle',[$v->article_id]) }}')" class="btn btn-danger btn-sm shiny">
+                                                <i class="fa fa-trash-o"></i> 删除
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                             <div style="padding-top:10px;">

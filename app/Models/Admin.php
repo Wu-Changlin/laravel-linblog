@@ -17,11 +17,11 @@ class Admin extends Base
         if(empty($data)){ //如果$data为空直接返回
             return 0;
         }
-        $admin_users = self::where('email',$data['email'])->first(); //根据用户输入邮箱查询数据库用户信息
+        $admin_users = self::where('email',$data['email'])->first(); //根据用户输入邮箱查询数据库管理员信息
         if(!$admin_users){
             return 0;
         }else{
-            if(!Hash::check($data['password'],$admin_users->password)){ //用户输入密码对比数据库用户密码  $data['password']：字符串 ，$admin_users->password：数据库Hash密码字符串 60
+            if(!Hash::check($data['password'],$admin_users->password)){ //用户输入密码对比数据库管理员密码  $data['password']：字符串 ，$admin_users->password：数据库Hash密码字符串 60
                 return 1;
             }
         }
@@ -36,6 +36,7 @@ class Admin extends Base
         //写入session
         $admin_session['admin_id']=$admin_users->admin_id;
         $admin_session['email']=$admin_users->email;
+        $admin_session['name']=$admin_users->name;
         $admin_session['last_login_ip']=request()->ip();
         session(['admin_user'=>$admin_session]);
         //更新管理员登录次数+1
@@ -53,7 +54,7 @@ class Admin extends Base
         if(empty($data)){ //如果$data为空直接返回
             return 0;
         }
-        $admin_count = self::where('email',$data['email'])->count(); //根据用户输入邮箱查询数据库用户信息
+        $admin_count = self::where('email',$data['email'])->count(); //根据用户输入邮箱查询数据库管理员邮箱信息
         if($admin_count){//如果有数据说明邮箱已注册
             return 1;
         }
@@ -79,7 +80,7 @@ class Admin extends Base
         if(empty($data)){ //如果$data为空直接返回
             return 0;
         }
-        $admin_user = self::find($data['admin_id'],["name","email","password"]); //根据用户输入邮箱查询数据库用户信息
+        $admin_user = self::find($data['admin_id'],["name","email","password"]); //查询该管理员信息
         $admin_info=$admin_user->toArray(); //集合转数组
         //判断昵称是否修改
         if($data['name'] ==$admin_info['name']){
@@ -89,7 +90,7 @@ class Admin extends Base
         if($data['email'] == $admin_info['email']){
             array_pull($data, 'email');
         }else{
-            $admin_count = self::where('email',$data['email'])->count(); //根据用户输入邮箱查询数据库用户信息
+            $admin_count = self::where('email',$data['email'])->count(); //根据用户输入邮箱查询数据库管理员邮箱信息
             if($admin_count){//如果有数据说明邮箱已注册
                 return 1;
             }
@@ -107,6 +108,7 @@ class Admin extends Base
             return 2;
         }
         self::where('admin_id',$data['admin_id'])->update($data);
+
         //本次修改管理员信息写入log
         $admin_user=session('admin_user');
         $admin_log['last_login_ip']=$admin_user['last_login_ip'];    //管理员IP
@@ -115,6 +117,22 @@ class Admin extends Base
         $admin_log['exec_type']=3;                      //执行操作类型 0:默认 1：删除， 2：添加， 3：修改，4：登录， 5：退出',
         $admin_log['exec_object_id']=$data['admin_id'];    //执行操作对象id
         $admin_log['created_at']=date('Y-m-d H:i:s', time());//执行操作创建时间
+        //如果当前登录管理员修改本管理员的基本信息则更新session
+        if(intval($data['admin_id']) === $admin_user['admin_id']){
+            if(isset($data['password'])){
+                session()->flush(); // 清空session
+                return 4;
+            }
+            $admin_new_info = self::find($data['admin_id'],['admin_id',"name","email"]); //根据用户输入邮箱查询数据库用户信息
+            //重新写入session
+            $admin_session['admin_id']=$admin_new_info->admin_id;
+            $admin_session['email']=$admin_new_info->email;
+            $admin_session['name']=$admin_new_info->name;
+            $admin_session['last_login_ip']=request()->ip();
+            session(['admin_user'=>$admin_session]);
+        }
+
+
         self::addAadminLog($admin_log);
         return 3;
     }
