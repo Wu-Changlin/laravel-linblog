@@ -128,16 +128,31 @@ class ArticleController extends Controller
         dd('uploadArticleImage.后台排序文章');
     }
 
+
     /**
      * 上传文章图片
      *uploadArticleImage__upload_code 1：上传失败  2：上传成功
      *
      */
-    public function uploadArticleImage()
+    public function uploadArticleImage(Request $request)
     {
-        dd('uploadArticleImage.后台上传文章图片');
-    }
 
+        $result = [
+            'success' => 1,
+            'message' => 'success',
+            'url'     => '',
+        ];
+
+//        foreach (config('bjyblog.upload_disks') as $disk) {
+//            $result['url'] = '/' . $request->file('editormd-image-file')->store('uploads/article/' . Date::now()->format('Ymd'), $disk);
+//        }
+
+//        if ($request->hasFile('editormd-image-file')) {
+        $result['url'] = '/' . $request->file('editormd-image-file')->store('uploads/article/' . date('Ymd', time()), 'public');
+//        }
+
+        return response()->json($result);
+    }
 
 
 }

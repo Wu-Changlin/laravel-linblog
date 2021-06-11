@@ -8,6 +8,8 @@
 
 @section('css')
     <link href="{{asset('admin/article/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('admin/editormd/css/editormd.min.css')}}" rel="stylesheet" type="text/css" />
+    <meta name="_token" content="{{ csrf_token() }}"/>
 @endsection
 
 
@@ -138,8 +140,9 @@
 
 
                                 <div class="form-group">
-                                    <label for="username" class="col-sm-2 control-label no-padding-right">markdown</label>
-                                    <div class="col-sm-6">
+                                    <label for="username" class="col-sm-2 control-label no-padding-right">内容</label>
+
+                                    <div class="col-sm-1" id="lin-content">
                                         <textarea class="form-control" name="markdown"></textarea>
                                     </div>
                                 </div>
@@ -164,7 +167,34 @@
 @endsection
 
 @section('js')
-    <script src="{{asset('admin/article/bootstrap-fileinput.js')}}"></script>
+    <script src="{{asset('admin/article/bootstrap-fileinput.js')}}"></script>  {{--上传图片插件--}}
+    <script src="{{asset('admin/editormd/editormd.min.js')}}"></script>
+    <script src="{{ asset('admin/editormd/languages/en.js') }}"></script>
+    <script>
+        var testEditor;
+
+        $(function() {
+            // You can custom @link base url.
+            editormd.urls.atLinkBase = "https://github.com/";
+
+            testEditor = editormd("lin-content", {
+                autoFocus : false,
+                width     : "80%",
+                height    : 720,
+                toc       : true,
+                //atLink    : false,    // disable @link
+                //emailLink : false,    // disable email address auto link
+                todoList  : true,
+                placeholder: "",
+                toolbarAutoFixed: false,
+                path      : '{{ asset('admin/editormd/lib') }}/',
+                emoji: true,
+                toolbarIcons : ['undo', 'redo', 'bold', 'del', 'italic', 'quote', 'uppercase', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'list-ul', 'list-ol', 'hr', 'link', 'reference-link', 'image', 'code', 'code-block', 'table', 'emoji', 'html-entities', 'watch', 'preview', 'search', 'fullscreen'],
+                imageUpload: true,
+                imageUploadURL : '{{ url('admin/article/uploadArticleImage') }}',
+            });
+        });
+    </script>
 @endsection
 
 

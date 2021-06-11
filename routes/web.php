@@ -133,7 +133,7 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login')->group(fun
         Route::get('showUpdatearticleWeb/{id}', 'ArticleController@showUpdatearticleWeb');
         Route::post('updateArticle', 'ArticleController@updateArticle')->name('article.updateArticle');
         // 上传图片     http://192.168.164.134:1133/admin/article/uploadArticleImage
-        Route::get('uploadArticleImage', 'ArticleController@uploadArticleImage');
+        Route::post('uploadArticleImage', 'ArticleController@uploadArticleImage');
         // 删除文章     http://192.168.164.134:1133/admin/article/deleteArticle/3
         Route::get('deleteArticle/{id}', 'ArticleController@deleteArticle');
     });
