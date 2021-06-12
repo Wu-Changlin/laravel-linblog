@@ -54,6 +54,8 @@ class ArticleController extends Controller
     {
         if($request->isMethod('post')){
             $input = $request->except('s','_token');  //去除 s：路由地址 ，_token： 表单中包含一个隐藏的 CSRF 令牌字段
+
+            dd($input);
             $data['category_id'] = intval($input['category_id']) ? intval($input['category_id']) : 0;
             $data['tag_id'] = intval($input['tag_id']) ? intval($input['tag_id']) : 0;
             $data['title'] = isset($input['title']) ? $input['title'] : "";
@@ -137,21 +139,6 @@ class ArticleController extends Controller
     public function uploadArticleImage(Request $request)
     {
 
-        $result = [
-            'success' => 1,
-            'message' => 'success',
-            'url'     => '',
-        ];
-
-//        foreach (config('bjyblog.upload_disks') as $disk) {
-//            $result['url'] = '/' . $request->file('editormd-image-file')->store('uploads/article/' . Date::now()->format('Ymd'), $disk);
-//        }
-
-//        if ($request->hasFile('editormd-image-file')) {
-        $result['url'] = '/' . $request->file('editormd-image-file')->store('uploads/article/' . date('Ymd', time()), 'public');
-//        }
-
-        return response()->json($result);
     }
 
 

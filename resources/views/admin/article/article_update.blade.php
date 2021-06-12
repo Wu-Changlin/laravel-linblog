@@ -1,119 +1,47 @@
-@extends('layouts.admin')
+<!DOCTYPE html>
+<html lang="en">
 
-@section('title', '霖博客,技术博客,个人博客模板,php博客系统')
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上传</title>
+    <script type="text/javascript" src="{{asset('admin/article/wangEditor.min.js')}}"></script>
+</head>
 
-@section('keywords', '文章列表')
-
-@section('description', '显示所有文章')
-
-@section('content')
-<!-- Page Content -->
-<div class="page-content" style="">
-    <!-- Page Breadcrumb -->
-    <div class="page-breadcrumbs">
-        <ul class="breadcrumb">
-            <li>
-                <a href="{{ route('admin.index') }}">系统</a>
-            </li>
-            <li>
-                <a href="{{ route('article.showArticle') }}">文章管理</a>
-            </li>
-            <li class="active">修改文章</li>
-        </ul>
-    </div>
-    <!-- /Page Breadcrumb -->
-
-    <!-- Page Body -->
-    <div class="page-body" style="">
-
-        <div class="row" style="">
-            <div class="col-lg-12 col-sm-12 col-xs-12" style="">
-                <div class="widget" style="">
-                    <div class="widget-header bordered-bottom bordered-blue">
-                        <span class="widget-caption">修改文章</span>
-                    </div>
-                    <div class="widget-body" style="">
-                        <div id="horizontal-form" style="">
-                            <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data" style="">
-                                <input type="hidden" name="id" value="11">
-                                <div class="form-group" style="">
-                                    <div class="form-group">
-                                        <label for="username" class="col-sm-2 control-label no-padding-right">标题</label>
-                                        <div class="col-sm-6">
-                                            <input class="form-control" placeholder="" name="title" type="text" value="禧玛诺METREA 驱动——现代城市骑行新风尚">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="username" class="col-sm-2 control-label no-padding-right">关键字</label>
-                                        <div class="col-sm-6">
-                                            <input class="form-control" placeholder="" name="keywords" type="text" value="新风尚">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="username" class="col-sm-2 control-label no-padding-right">描述</label>
-                                        <div class="col-sm-6">
-                                            <textarea class="form-control" name="desc">禧玛诺METREA 驱动</textarea>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="username" class="col-sm-2 control-label no-padding-right">作者</label>
-                                        <div class="col-sm-6">
-                                            <input class="form-control" placeholder="" name="author" type="text" value="光明网">
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="form-group">
-                                        <label for="username" class="col-sm-2 control-label no-padding-right">缩略图</label>
-                                        <div class="col-sm-6">
-                                            <input placeholder="" name="thumb" type="file">
-                                            <img src="\uploads/20210510/33c4dbcf05c841f1116764ac8c7d2cf6.jpg" height="30">
-
-                                        </div>
-                                    </div>
-
-
-
-                                    <label for="username" class="col-sm-2 control-label no-padding-right">所属栏目</label>
-                                    <div class="col-sm-6">
-                                        <select name="cateid">
-                                            <option value="1">单车分类</option>
-                                            <option value="2">|--------死飞车</option>
-                                            <option value="4">|--------山地车</option>
-                                            <option value="5">|--------公路车</option>
-                                            <option value="6">骑行装备</option>
-                                            <option value="7">|--------人身装备</option>
-                                            <option selected="selected" value="8">|--------车身装备</option>
-                                            <option value="9">单车生活</option>
-                                            <option value="10">|--------单车生活2</option>
-                                            <option value="11">关于我们</option>
-                                            <option value="12">公司简介</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-10">
-                                        <button type="submit" class="btn btn-default">保存信息</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <!-- /Page Body -->
+<body>
+<div id="div1">
+    <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
 </div>
-<!-- /Page Content -->
-@endsection
 
 
 
+<!-- 引入 wangEditor.min.js -->
+<script type="text/javascript">
+    var E = window.wangEditor;
+    var editor = new E('#div1')  // 两个参数也可以传入 elem 对象，class 选择器 ， 这个是将菜单与编辑分开 ，可以看文档
+    editor.config.pasteIgnoreImg = true; //开启文件上传服务器
+    editor.config.customUploadImg = function (files, insert) {
+        var data = new FormData();
+        data.append("file", files[0]);
+        $.ajaxSetup({
+            headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' } //laravle Token验证
+        });
+        $.ajax({
+            type: "POST",
+            url: "{{url('UploadImg')}}", //laravel 文件上传的流程见上一篇文章
+            data: data,
+            dataType: 'json',
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                insert(data.path);// insert 是获取图片 url 后，插入到编辑器的方法
+            }
+        })
+    };
+    editor.create();
+</script>
+</body>
 
+</html>

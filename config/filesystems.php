@@ -43,6 +43,7 @@ return [
 
     'disks' => [
 
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
@@ -63,6 +64,12 @@ return [
             'bucket' => env('AWS_BUCKET'),
         ],
 
+
+
+
+
     ],
 
 ];
+
+
