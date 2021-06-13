@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use _HumbugBox96d25ef69f91\phpDocumentor\Reflection\DocBlock\Tags\Param;
 use Illuminate\Support\Facades\DB;
-
 class Article extends Base
 {
     //
@@ -49,7 +47,7 @@ class Article extends Base
     }
 
     /**
-     * 获取标签 用于新增
+     *  新增文章
      * @return \Illuminate\Support\Collection
      */
     public  static  function  addArticle($data){
@@ -60,8 +58,7 @@ class Article extends Base
         if($article_count){//如果有数据说明文章已存在
             return 1;
         }
-        // 把markdown转html
-        $data['html'] = (new \Parsedown)->setSafeMode(true)->text($data['markdown']);
+
         $res=self::create($data);//使用create方法新增标签
         //本次新增标签信息写入log
         $admin_user=session('admin_user');

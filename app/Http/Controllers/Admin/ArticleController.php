@@ -3,8 +3,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Article as ArticleModel;
+use Illuminate\Support\Str;
 
-use Image;
+
 class ArticleController extends Controller
 {
     /**
@@ -42,6 +43,7 @@ class ArticleController extends Controller
         $tags=ArticleModel::tags();            //标签
         $author=session('admin_user')['name'];  //session('admin_user')是一个一维数组
         $assign   = compact('categorys', 'tags', 'author');
+
         return view('admin.article.article_add',$assign);
     }
 
@@ -50,24 +52,24 @@ class ArticleController extends Controller
      * @return  addArticle_add_code  0：默认  1：发布失败  2：发布成功  3：保存中
      * post
      */
-    public function addArticle(Request $request)
+    public function addArticle(Request $request )
     {
         if($request->isMethod('post')){
             $input = $request->except('s','_token');  //去除 s：路由地址 ，_token： 表单中包含一个隐藏的 CSRF 令牌字段
-
             dd($input);
+
             $data['category_id'] = intval($input['category_id']) ? intval($input['category_id']) : 0;
             $data['tag_id'] = intval($input['tag_id']) ? intval($input['tag_id']) : 0;
             $data['title'] = isset($input['title']) ? $input['title'] : "";
             $data['author'] = isset($input['author']) ? $input['author'] : "";
             $data['description'] = isset($input['desc']) ? $input['desc'] : "";
             $data['keywords'] = isset($input['keywords']) ? $input['keywords']: "";
-            $data['markdown'] = isset($input['markdown']) ? $input['markdown'] : "";
             $data['is_pull'] = intval($input['rec_index']) ? intval($input['rec_index']) : 0;
             $data['cover'] = isset($input['cover']) ? $input['cover'] : "";
             if ($request->hasFile('cover')) {
-                $data['cover'] = '/' . $request->file('cover')->store('uploads/article/' . date('Ymd', time()), 'public');
+                $data['cover']=$this->uploadCover($data['cover']);
             }
+
             $res=ArticleModel::addArticle($data);
             switch ($res) { //判断新增返回值
                 case 0:
@@ -97,7 +99,16 @@ class ArticleController extends Controller
      */
     public function showUpdatearticleWeb($article_id)
     {
-        return view('admin.article.article_update');
+
+        if(empty($article_id)){
+            return  redirect()->back()->withInput()->with('msg',非法访问);
+        }
+        $categorys=ArticleModel::categorys();  //分类
+        $tags=ArticleModel::tags();            //标签
+        $articles=ArticleModel::find($article_id);            //标签
+        $assign   = compact('categorys', 'tags', 'articles');
+
+        return view('admin.article.article_update',$assign);
     }
 
     /**
@@ -105,8 +116,9 @@ class ArticleController extends Controller
      * @param $article_id 更改文章
      * updateArticle_update_code  0：默认  1：更改失败  2：更改成功  3：保存中
      */
-    public function updateArticle($article_id)
+    public function updateArticle(Request $request)
     {
+        dd($request->toArray());
         dd('updateArticle.后台更改文章');
     }
 
@@ -139,7 +151,41 @@ class ArticleController extends Controller
     public function uploadArticleImage(Request $request)
     {
 
+        $file = $request->file('file');
+        //值例如 /uploads/images/article/20210613
+        $folder_name = "uploads/images/article/".date('Ymd/',time());
+        $upload_path = public_path() . "/" . $folder_name;
+        $extension = strtolower($file->getClientOriginalExtension()) ?: 'png';
+        $filename = Str::random(10).time().'.'. $extension;
+        //将图片移动到我们目标存储路径中
+        $file->move($upload_path , $filename);
+        //return "/".$folder_name.$filename;  //   /uploads/images/article/20210613
+        $path= "/".$folder_name.$filename;  //   /uploads/images/article/20210613
+        $data= [
+            'url'=>$path,
+            'alt'=> "图片文字说明",
+            'href'=> "跳转链接",
+        ];
+        return response()->json($data);
     }
 
+    /**
+     * 上传文章图片
+     *uploadArticleImage__upload_code 1：上传失败  2：上传成功
+     *
+     */
+    public function uploadCover ($file)
+    {
+        //值例如 /uploads/images/article/20210613
+        $folder_name = "uploads/images/article/".date('Ymd/',time());
+        $upload_path = public_path() . "/" . $folder_name;
+        $extension = strtolower($file->getClientOriginalExtension()) ?: 'png';
+        $filename = Str::random(10).time().'.'. $extension;
+        //将图片移动到我们目标存储路径中
+        $file->move($upload_path , $filename);
+        //return "/".$folder_name.$filename;  //   /uploads/images/article/20210613
+        $path= "/".$folder_name.$filename;  //   /uploads/images/article/20210613
+        return $path;
+    }
 
 }
