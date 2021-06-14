@@ -166,6 +166,8 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class, //加载Image
         App\Providers\ComposerServiceProvider::class,   //加载页面共享数据 （如共享页面导航栏、底部）
+
+
     
         /*
          * Package Service Providers...
@@ -229,7 +231,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Image' => Intervention\Image\Facades\Image::class, //加载Image 
+        'Image' => Intervention\Image\Facades\Image::class, //加载Image
+        'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,//Markdown解析器  把markdown转成html
     ],
 
 ];

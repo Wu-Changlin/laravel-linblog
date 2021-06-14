@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
+use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Http\Request;
 use App\Models\Article as ArticleModel;
 use Illuminate\Support\Str;
@@ -118,6 +119,9 @@ class ArticleController extends Controller
      */
     public function updateArticle(Request $request)
     {
+
+        $html= Markdown::convertToHtml($request->markdown);
+        dd($html);
         dd($request->toArray());
         dd('updateArticle.后台更改文章');
     }
