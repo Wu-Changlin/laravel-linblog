@@ -8,6 +8,13 @@
 
 @section('css')
     <link href="{{asset('admin/article/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('admin/article/editormd/css/editormd.min.css') }}">
+    <meta name="_token" content="{{ csrf_token() }}"/>
+    <style>
+        #lin-content{
+            z-index: 1000;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -129,12 +136,14 @@
                                             </td>
                                         </tr>
 
-                                        <tr>
-                                            <td align="right">内容</td>
-                                            <td align="left">
-                                                <div id="lin-content" name="content">
-                                                </div>
 
+
+                                        <tr>
+                                            <th>内容</th>
+                                            <td>
+                                                <div id="lin-content">
+                                                    <textarea name="markdown">{{ old('markdown') }}</textarea>
+                                                </div>
                                             </td>
                                         </tr>
 
@@ -149,43 +158,41 @@
                     </div>
                 </div>
             </div>
-
         </div>
         <!-- /Page Body -->
     </div>
     <!-- /Page Content -->
+
 @endsection
 
 @section('js')
     <script src="{{ asset('admin/article/bootstrap-fileinput.js')}}"></script>  {{--上传图片插件--}}
-    <script type="text/javascript" src="{{asset('admin/article/wangEditor.min.js')}}"></script>
+    <script src="{{ asset('admin/article/editormd/editormd.min.js') }}"></script>
 
-    <!-- 引入 wangEditor.min.js -->
     <script type="text/javascript">
-        var E = window.wangEditor;
-        var editor = new E('#lin-content')  // 两个参数也可以传入 elem 对象，class 选择器 ， 这个是将菜单与编辑分开 ，可以看文档
-        editor.config.pasteIgnoreImg = true; //开启文件上传服务器
-        editor.config.customUploadImg = function (files, insert) {
-            var data = new FormData();
-            data.append("file", files[0]);
-            $.ajaxSetup({
-                headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' } //laravle Token验证
+        var testEditor;
+        $(function() {
+            // You can custom @link base url.
+            editormd.urls.atLinkBase = "https://github.com/";
+
+            testEditor = editormd("lin-content", {
+                autoFocus : false,
+                width     : "100%",
+                height    : 720,
+                toc       : true,
+                //atLink    : false,    // disable @link
+                //emailLink : false,    // disable email address auto link
+                todoList  : true,
+                placeholder: "请输入内容",
+                toolbarAutoFixed: false,
+                path      : '{{ asset('/admin/article/editormd/lib') }}/',
+                emoji: true,
+                toolbarIcons : ['undo', 'redo', 'bold', 'del', 'italic', 'quote', 'uppercase', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'list-ul', 'list-ol', 'hr', 'link', 'reference-link', 'image', 'code', 'code-block', 'table', 'emoji', 'html-entities', 'watch', 'preview', 'search', 'fullscreen'],
+                imageUpload: true,
+                imageUploadURL : '{{url('admin/article/uploadArticleImage')}}',
             });
-            $.ajax({
-                type: "POST",
-                url: "{{url('admin/article/uploadArticleImage')}}", //laravel 文件上传的流程见上一篇文章
-                data: data,
-                dataType: 'json',
-                async: false,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function (data) {
-                    insert(data.url);// insert 是获取图片 url 后，插入到编辑器的方法
-                }
-            })
-        };
-        editor.create();
+        });
+
     </script>
 @endsection
 

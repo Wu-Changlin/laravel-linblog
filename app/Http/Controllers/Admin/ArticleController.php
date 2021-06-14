@@ -56,7 +56,7 @@ class ArticleController extends Controller
     {
         if($request->isMethod('post')){
             $input = $request->except('s','_token');  //去除 s：路由地址 ，_token： 表单中包含一个隐藏的 CSRF 令牌字段
-            dd($input);
+
 
             $data['category_id'] = intval($input['category_id']) ? intval($input['category_id']) : 0;
             $data['tag_id'] = intval($input['tag_id']) ? intval($input['tag_id']) : 0;
@@ -151,7 +151,8 @@ class ArticleController extends Controller
     public function uploadArticleImage(Request $request)
     {
 
-        $file = $request->file('file');
+        //$file = $request->file('file');
+        $file = $request->file('editormd-image-file');
         //值例如 /uploads/images/article/20210613
         $folder_name = "uploads/images/article/".date('Ymd/',time());
         $upload_path = public_path() . "/" . $folder_name;
@@ -161,10 +162,16 @@ class ArticleController extends Controller
         $file->move($upload_path , $filename);
         //return "/".$folder_name.$filename;  //   /uploads/images/article/20210613
         $path= "/".$folder_name.$filename;  //   /uploads/images/article/20210613
+//        $data= [
+//            'url'=>$path,
+//            'alt'=> "图片文字说明",
+//            'href'=> "跳转链接",
+//        ];
+
         $data= [
-            'url'=>$path,
-            'alt'=> "图片文字说明",
-            'href'=> "跳转链接",
+            'success'=>1,
+            'message'=> "图片文字说明",
+            'url'=> $path,
         ];
         return response()->json($data);
     }

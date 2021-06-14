@@ -8,9 +8,11 @@
 
 @section('css')
     <link href="{{asset('admin/article/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">
     <style>
         .w-e-text-container {
             height: auto !important;
+            width: 80% !important;
         }
 
         .w-e-toolbar{
@@ -95,7 +97,7 @@
                                         <tr>
                                             <td align="right">关键词</td>
                                             <td align="left">
-                                                <input name="Keywords" type="text" class="form-control" style="width:600px;" value="{{ $articles->keywords }}">
+                                                <input name="keywords" type="text" class="form-control" style="width:600px;" value="{{ $articles->keywords }}">
                                             </td>
                                         </tr>
 
@@ -148,10 +150,13 @@
                                             <td align="right">内容</td>
                                             <td align="left" >
 
-                                                <div  id="lin-content" name="content">
+                                                <div  id="lin-content" >
 
                                                 </div>
+                                                <textarea style="display: none" name="content" id="txtIntro"></textarea>
                                         </tr>
+
+
 
                                         </tbody>
                                     </table>
@@ -169,15 +174,24 @@
         <!-- /Page Body -->
     </div>
     <!-- /Page Content -->
+
+
+
+
 @endsection
 
 @section('js')
     <script src="{{ asset('admin/article/bootstrap-fileinput.js')}}"></script>  {{--上传图片插件--}}
     <script type="text/javascript" src="{{asset('admin/article/wangEditor.min.js')}}"></script>
+    <script src="http://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>
+    <script>
+        CKEDITOR.replace( 'editor' );
+    </script>
     <!-- 引入 wangEditor.min.js -->
     <script type="text/javascript">
         var E = window.wangEditor;
         var editor = new E('#lin-content')
+
 
         editor.config.pasteIgnoreImg = true; //开启文件上传服务器
         editor.config.customUploadImg = function (files, insert) {
@@ -198,9 +212,27 @@
                 success: function (data) {
                     insert(data.url);// insert 是获取图片 url 后，插入到编辑器的方法
                 }
+
             })
         };
-        editor.create();
+
+
+
+        var $content = $('#txtIntro');
+
+        // 监控wangEditor中的内容变化，并将html内容同步更新到 textarea
+        editor.config.onchange = function (html) {
+            $content.val(html);
+        }
+
+        editor.highlight = hljs;
+        editor.create()
+
+        // 初始化 textarea 的值
+        $content.val(editor.txt.html())
 
     </script>
 @endsection
+
+
+
