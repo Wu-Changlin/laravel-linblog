@@ -47,6 +47,7 @@
                         <div class="widget-body">
                             <div class="flip-scroll">
                                 <form action="{{ route('article.updateArticle') }}" method="post" enctype="multipart/form-data">
+                                    <input type="text" name="article_id" value="{{ $articles->article_id }}">
                                     {{ csrf_field() }}
                                     <table class="table table-bordered table-hover">
                                         <tbody>
@@ -145,7 +146,7 @@
                                             <th>内容</th>
                                             <td>
                                                 <div id="lin-content">
-                                                    <textarea name="markdown">{{ old('markdown') }}</textarea>
+                                                    <textarea name="markdown" >{{ $articles->markdown }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>

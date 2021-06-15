@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
-use GrahamCampbell\Markdown\Facades\Markdown;
+
 use Illuminate\Http\Request;
 use App\Models\Article as ArticleModel;
 use Illuminate\Support\Str;
@@ -49,28 +49,28 @@ class ArticleController extends Controller
     }
 
     /**
-     * 发布文章
-     * @return  addArticle_add_code  0：默认  1：发布失败  2：发布成功  3：保存中
-     * post
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse  0:数据为空, 1:文章已存在, 2:新增文章成功,其他：数据写入失败,新增文章失败
      */
     public function addArticle(Request $request )
     {
         if($request->isMethod('post')){
             $input = $request->except('s','_token');  //去除 s：路由地址 ，_token： 表单中包含一个隐藏的 CSRF 令牌字段
-
-
             $data['category_id'] = intval($input['category_id']) ? intval($input['category_id']) : 0;
             $data['tag_id'] = intval($input['tag_id']) ? intval($input['tag_id']) : 0;
             $data['title'] = isset($input['title']) ? $input['title'] : "";
             $data['author'] = isset($input['author']) ? $input['author'] : "";
             $data['description'] = isset($input['desc']) ? $input['desc'] : "";
             $data['keywords'] = isset($input['keywords']) ? $input['keywords']: "";
+            $data['markdown'] = isset($input['markdown']) ? $input['markdown']: "";
             $data['is_pull'] = intval($input['rec_index']) ? intval($input['rec_index']) : 0;
             $data['cover'] = isset($input['cover']) ? $input['cover'] : "";
             if ($request->hasFile('cover')) {
                 $data['cover']=$this->uploadCover($data['cover']);
             }
-
+            if($author=session('admin_user')['name']== $data['author']){
+                $data['author']=session('admin_user')['admin_id'];
+            }
             $res=ArticleModel::addArticle($data);
             switch ($res) { //判断新增返回值
                 case 0:
@@ -86,7 +86,7 @@ class ArticleController extends Controller
                     return redirect()->back()->withInput()->with('msg', '数据写入失败,新增文章失败');
             }
         }else{
-            return  redirect()->back()->withInput()->with('msg',非法访问);
+            return  redirect()->back()->withInput()->with('msg','非法访问');
         }
 
 
@@ -95,18 +95,18 @@ class ArticleController extends Controller
 
     /**
      * 显示更改文章页
-     * @param $article_id 更改文章
-     * update
+     * @param $article_id 更改文章id
+     *
      */
     public function showUpdatearticleWeb($article_id)
     {
 
         if(empty($article_id)){
-            return  redirect()->back()->withInput()->with('msg',非法访问);
+            return  redirect()->back()->withInput()->with('msg','非法访问');
         }
         $categorys=ArticleModel::categorys();  //分类
         $tags=ArticleModel::tags();            //标签
-        $articles=ArticleModel::find($article_id);            //标签
+        $articles=ArticleModel::find($article_id);            //文章
         $assign   = compact('categorys', 'tags', 'articles');
 
         return view('admin.article.article_update',$assign);
@@ -114,15 +114,46 @@ class ArticleController extends Controller
 
     /**
      * 更改文章
-     * @param $article_id 更改文章
-     * updateArticle_update_code  0：默认  1：更改失败  2：更改成功  3：保存中
+     * @param $article_id 更改文章id
+     * updateArticle_update_code
      */
     public function updateArticle(Request $request)
     {
-
-        $html= Markdown::convertToHtml($request->markdown);
-        dd($html);
-        dd($request->toArray());
+        if($request->isMethod('post')){
+            $input = $request->except('s','_token');  //去除 s：路由地址 ，_token： 表单中包含一个隐藏的 CSRF 令牌字段
+            $data['category_id'] = intval($input['category_id']) ? intval($input['category_id']) : 0;
+            $data['tag_id'] = intval($input['tag_id']) ? intval($input['tag_id']) : 0;
+            $data['article_id'] = intval($input['article_id']) ? intval($input['article_id']) : 0;
+            $data['title'] = isset($input['title']) ? $input['title'] : "";
+            $data['author'] = isset($input['author']) ? $input['author'] : "";
+            $data['description'] = isset($input['desc']) ? $input['desc'] : "";
+            $data['keywords'] = isset($input['keywords']) ? $input['keywords']: "";
+            $data['markdown'] = isset($input['markdown']) ? $input['markdown']: "";
+            $data['is_pull'] = intval($input['rec_index']) ? intval($input['rec_index']) : 0;
+            $data['cover'] = isset($input['cover']) ? $input['cover'] : "";
+            if ($request->hasFile('cover')) {
+                $data['cover']=$this->uploadCover($data['cover']);
+            }
+            if($author=session('admin_user')['name']== $data['author']){
+                $data['author_id']=session('admin_user')['admin_id'];
+            }
+            $res=ArticleModel::updateArticle($data);
+            switch ($res) { //判断新增返回值
+                case 0:
+                    return redirect()->back()->withInput()->with('msg', '数据为空');
+                    break;
+                case 1:
+                    return redirect()->back()->withInput()->with('msg', '保留');
+                    break;
+                case 2:
+                    return redirect()->route("article.showArticle")->with('msg', "修改文章成功");
+                    break;
+                default:
+                    return redirect()->back()->withInput()->with('msg', '数据写入失败,新增文章失败');
+            }
+        }else{
+            return  redirect()->back()->withInput()->with('msg','非法访问');
+        }
         dd('updateArticle.后台更改文章');
     }
 
