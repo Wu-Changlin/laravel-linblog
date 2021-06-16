@@ -41,10 +41,6 @@ class Category extends Base
 
         $category_res = self::find($data['category_id'],["pid","name", "keywords" ,"description","is_pull","type"]); //根据用户输入邮箱查询数据库分类信息
         $category_info=$category_res->toArray(); //集合转数组
-        //判断分类父id是否修改
-        if($data['pid'] ==$category_info['pid']){
-            array_pull($data, 'pid');
-        }
         //判断分类名是否修改
         if($data['name'] == $category_info['name']){
             array_pull($data, 'name');
@@ -54,6 +50,11 @@ class Category extends Base
                 return 1;
             }
         }
+        //判断分类父id是否修改
+        if($data['pid'] ==$category_info['pid']){
+            array_pull($data, 'pid');
+        }
+
         //判断分类关键词是否修改
         if($data['keywords'] == $category_info['keywords'] ){
             array_pull($data, 'keywords');

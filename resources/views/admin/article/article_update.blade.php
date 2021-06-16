@@ -47,7 +47,7 @@
                         <div class="widget-body">
                             <div class="flip-scroll">
                                 <form action="{{ route('article.updateArticle') }}" method="post" enctype="multipart/form-data">
-                                    <input type="text" name="article_id" value="{{ $articles->article_id }}">
+                                    <input type="text" name="article_id" value="{{ $articles->article_id }}" hidden>
                                     {{ csrf_field() }}
                                     <table class="table table-bordered table-hover">
                                         <tbody>

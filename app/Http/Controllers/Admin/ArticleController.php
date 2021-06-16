@@ -143,9 +143,12 @@ class ArticleController extends Controller
                     return redirect()->back()->withInput()->with('msg', '数据为空');
                     break;
                 case 1:
-                    return redirect()->back()->withInput()->with('msg', '保留');
+                    return redirect()->back()->withInput()->with('msg', '标题重复');
                     break;
                 case 2:
+                    return redirect()->back()->withInput()->with('msg', "保留");
+                    break;
+                case 3:
                     return redirect()->route("article.showArticle")->with('msg', "修改文章成功");
                     break;
                 default:
@@ -154,7 +157,7 @@ class ArticleController extends Controller
         }else{
             return  redirect()->back()->withInput()->with('msg','非法访问');
         }
-        dd('updateArticle.后台更改文章');
+
     }
 
     /**
@@ -164,7 +167,24 @@ class ArticleController extends Controller
      */
     public function deleteArticle($article_id)
     {
-        dd('deleteArticle.后台删除文章');
+
+        if(empty($article_id)){
+            return redirect()->back()->withInput()->with('msg', '非法访问');
+        }
+        $res=ArticleModel::deleteArticle($article_id);//执行删除
+        switch ($res) { //判断删除返回值
+            case 0:
+                return redirect()->back()->withInput()->with('msg', '数据为空');
+                break;
+            case 1:
+                return redirect()->back()->withInput()->with('msg', '文章不存在');
+                break;
+            case 2:
+                return redirect()->route("article.showArticle")->with('msg', "删除文章成功");
+                break;
+            default:
+                return redirect()->back()->withInput()->with('msg', '网络错误,删除文章失败');
+        }
     }
 
     /**
@@ -179,43 +199,42 @@ class ArticleController extends Controller
 
 
     /**
-     * 上传文章图片
-     *uploadArticleImage__upload_code 1：上传失败  2：上传成功
-     *
+     * 上传文章中的图片
+     * @param Request $request    上传文章中的图片
+     * @return \Illuminate\Http\JsonResponse   上传成功信息（1）
      */
+
     public function uploadArticleImage(Request $request)
     {
-
-        //$file = $request->file('file');
-        $file = $request->file('editormd-image-file');
-        //值例如 /uploads/images/article/20210613
-        $folder_name = "uploads/images/article/".date('Ymd/',time());
-        $upload_path = public_path() . "/" . $folder_name;
-        $extension = strtolower($file->getClientOriginalExtension()) ?: 'png';
-        $filename = Str::random(10).time().'.'. $extension;
-        //将图片移动到我们目标存储路径中
-        $file->move($upload_path , $filename);
-        //return "/".$folder_name.$filename;  //   /uploads/images/article/20210613
-        $path= "/".$folder_name.$filename;  //   /uploads/images/article/20210613
-//        $data= [
-//            'url'=>$path,
-//            'alt'=> "图片文字说明",
-//            'href'=> "跳转链接",
-//        ];
-
-        $data= [
-            'success'=>1,
-            'message'=> "图片文字说明",
-            'url'=> $path,
+        //editormd的上传图片返回格式
+        $data = [
+            'success' => 1,
+            'message' => 'success',
+            'url'     => '',
         ];
+        //判断上传图片是否存在
+        if ($request->hasFile('editormd-image-file')) {
+            $file = $request->file('editormd-image-file');
+            //值例如 /uploads/images/article/20210613
+            $folder_name = "uploads/images/article/".date('Ymd/',time());
+            $upload_path = public_path() . "/" . $folder_name;
+            $extension = strtolower($file->getClientOriginalExtension()) ?: 'png';
+            $filename = Str::random(10).time().'.'. $extension;
+            //将图片移动到我们目标存储路径中
+            $file->move($upload_path , $filename);
+            //return "/".$folder_name.$filename;  //   /uploads/images/article/20210613
+            $data['url']= "/".$folder_name.$filename;  //   /uploads/images/article/20210613
+        }
         return response()->json($data);
     }
 
     /**
-     * 上传文章图片
-     *uploadArticleImage__upload_code 1：上传失败  2：上传成功
-     *
+     *上传文章封面图
+     * @param $file    上传封面图
+     * @return string  图片路径
      */
+
+
     public function uploadCover ($file)
     {
         //值例如 /uploads/images/article/20210613
