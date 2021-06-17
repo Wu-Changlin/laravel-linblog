@@ -38,7 +38,7 @@
                                {{ csrf_field() }}
                                 <input type="hidden" name="id" value="{{ $data->tag_id }}">
                                 <div class="form-group">
-                                    <label for="username" class="col-sm-2 control-label no-padding-right">上级栏目</label>
+                                    <label for="username" class="col-sm-2 control-label no-padding-right">所属栏目</label>
                                     <div class="col-sm-6">
                                             <select name="category_id">
                                                 @foreach($category as $v)
@@ -49,21 +49,21 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="username" class="col-sm-2 control-label no-padding-right">栏目名称</label>
+                                    <label for="username" class="col-sm-2 control-label no-padding-right">标签名称</label>
                                     <div class="col-sm-6">
                                         <input class="form-control" placeholder="" name="name" required="" type="text" value="{{ $data->name }}" >
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="username" class="col-sm-2 control-label no-padding-right">栏目关键词</label>
+                                    <label for="username" class="col-sm-2 control-label no-padding-right">标签关键词</label>
                                     <div class="col-sm-6">
                                         <input class="form-control" placeholder="" name="keywords" type="text" value="{{ $data->keywords }}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="username" class="col-sm-2 control-label no-padding-right">栏目描述</label>
+                                    <label for="username" class="col-sm-2 control-label no-padding-right">标签描述</label>
                                     <div class="col-sm-6">
                                         <textarea name="description" class="form-control" >{{ $data->description }}</textarea>
                                     </div>
@@ -74,19 +74,18 @@
                                     <div class="col-sm-6">
                                         <div class="radio" style="float:left;margin-right:10px;">
                                             <label>
-                                                <input name="rec_index" value="1" @if( $data->is_pull=='1') checked="checked"  @endif type="radio">
+                                                <input name="is_pull" value="1" @if( $data->is_pull == 1) checked="checked"  @endif type="radio">
                                                 <span class="text">是</span>
                                             </label>
                                         </div>
                                         <div class="radio" style="float:left;margin-right:10px;">
                                             <label>
-                                                <input name="rec_index" value="2"  @if( $data->is_pull=='2') checked="checked"  @endif  type="radio">
+                                                <input name="is_pull" value="2"  @if( $data->is_pull == 2) checked="checked"  @endif  type="radio">
                                                 <span class="text">否</span>
                                             </label>
                                         </div>
                                     </div>
                                 </div>
-
 
 
                                 <div class="form-group">

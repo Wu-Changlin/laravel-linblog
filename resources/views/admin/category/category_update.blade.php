@@ -72,13 +72,13 @@
                                     <div class="col-sm-6">
                                         <div class="radio" style="float:left;margin-right:10px;">
                                             <label>
-                                                <input name="rec_index" value="1" @if( $data->is_pull=='1') checked="checked"  @endif type="radio">
+                                                <input name="is_pull" value="1" @if( $data->is_pull == 1) checked="checked"  @endif type="radio">
                                                 <span class="text">是</span>
                                             </label>
                                         </div>
                                         <div class="radio" style="float:left;margin-right:10px;">
                                             <label>
-                                                <input name="rec_index" value="2"  @if( $data->is_pull=='2') checked="checked"  @endif  type="radio">
+                                                <input name="is_pull" value="2"  @if( $data->is_pull == 2) checked="checked"  @endif  type="radio">
                                                 <span class="text">否</span>
                                             </label>
                                         </div>

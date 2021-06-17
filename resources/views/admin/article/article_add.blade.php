@@ -99,7 +99,7 @@
                                         <tr>
                                             <td align="right">描述</td>
                                             <td align="left">
-                                                <textarea name="desc" class="form-control"style="width:600px;">我范围范围 </textarea>
+                                                <textarea name="description" class="form-control"style="width:600px;">我范围范围 </textarea>
 
                                             </td>
                                         </tr>
@@ -108,11 +108,11 @@
                                             <td align="right">下架</td>
                                             <td align="left">
                                                 <label style="margin-right:15px;">
-                                                    <input name="rec_index" value="1" type="radio">
+                                                    <input name="is_pull" value="1" type="radio">
                                                     <span class="text">是</span>
                                                 </label>
                                                 <label style="margin-right:15px;">
-                                                    <input name="rec_index" value="2" type="radio" checked="checked" >
+                                                    <input name="is_pull" value="2" type="radio" checked="checked" >
                                                     <span class="text">否</span>
                                                 </label>
                                             </td>

@@ -18,6 +18,7 @@ class Tag extends Base
         $cate_tag =DB::table('tags')
             ->join('categorys', 'tags.category_id', '=', 'categorys.category_id')
             ->select('categorys.name as  category_name','categorys.category_id', 'tags.tag_id','tags.name','tags.keywords','tags.description','tags.is_pull')
+            ->orderBy('tags.created_at', 'desc')
             ->get();
         return  $cate_tag;
     }
@@ -70,39 +71,19 @@ class Tag extends Base
         if(empty($data)){ //如果$data为空直接返回
             return 0;
         }
-        $tag_res = self::find($data['tag_id'],["category_id","name", "keywords" ,"description","is_pull"]); //查询该标签信息
+        $tag_res = self::find($data['tag_id'],["tag_id","category_id","name", "keywords" ,"description","is_pull"]); //查询该标签信息
         $tag_info=$tag_res->toArray(); //集合转数组
-        //判断分类id是否修改
-        if($data['category_id'] ==$tag_info['category_id']){
-            array_pull($data, 'category_id');
+        //判断字段是否需要修改
+        $edit_info = array_diff_assoc($data,$tag_info); //1:返回[]空数组，说明2个数组相同 2:返回非空数组（数据相同字段已去除，剩下需要修改的字段数据），说明$data数据和数据库数据不一致，需要执行修改
+        if (!$edit_info) {//空数组说明没有修改字段值，返回1
+            return 1;
         }
         //判断标签名是否修改
-        if($data['name'] == $tag_info['name']){
-            array_pull($data, 'name');
-        }else{
-            $tag_name_count = self::where('name',$data['name'])->count(); //根据用户输入标签名查询数据库标签表标签名
-            if($tag_name_count){//如果有数据说明标签已存在
-                return 1;
-            }
+        $tag_name_count = self::where('name',$data['name'])->count(); //根据用户输入标签名查询数据库标签表标签名
+        if($tag_name_count){//如果有数据说明标签已存在
+            return 3;
         }
-        //判断标签关键词是否修改
-        if($data['keywords'] == $tag_info['keywords'] ){
-            array_pull($data, 'keywords');
-        }
-        //判断标签描述是否修改
-        if($data['description'] == $tag_info['description']){
-            array_pull($data, 'description');
-        }
-        //判断标签是否下架
-        if($data['is_pull'] == $tag_info['is_pull']){
-            array_pull($data, 'is_pull');
-        }
-        //判断是否有需要修改的信息
-        if(! isset($data['category_id']) && ! isset($data['name']) && ! isset($data['keywords'])  && ! isset($data['description']) && ! isset($data['is_pull']) ){
-            return 2;
-        }
-
-        self::where('tag_id',$data['tag_id'])->update($data);
+        self::where('tag_id',$data['tag_id'])->update($edit_info);
         //本次修改标签信息写入log
         $admin_user=session('admin_user');
         $admin_log['last_login_ip']=$admin_user['last_login_ip'];    //管理员IP
@@ -112,7 +93,7 @@ class Tag extends Base
         $admin_log['exec_object_id']=$data['tag_id'];    //执行操作对象id
         $admin_log['created_at']=date('Y-m-d H:i:s', time());//执行操作创建时间
         self::addAadminLog($admin_log);
-        return 3;
+        return 2;
     }
 
     /**

@@ -60,16 +60,18 @@ class ArticleController extends Controller
             $data['tag_id'] = intval($input['tag_id']) ? intval($input['tag_id']) : 0;
             $data['title'] = isset($input['title']) ? $input['title'] : "";
             $data['author'] = isset($input['author']) ? $input['author'] : "";
-            $data['description'] = isset($input['desc']) ? $input['desc'] : "";
+            $data['description'] = isset($input['description']) ? $input['description'] : "";
             $data['keywords'] = isset($input['keywords']) ? $input['keywords']: "";
             $data['markdown'] = isset($input['markdown']) ? $input['markdown']: "";
-            $data['is_pull'] = intval($input['rec_index']) ? intval($input['rec_index']) : 0;
+            $data['is_pull'] = intval($input['is_pull']) ? intval($input['is_pull']) : 0;
             $data['cover'] = isset($input['cover']) ? $input['cover'] : "";
             if ($request->hasFile('cover')) {
                 $data['cover']=$this->uploadCover($data['cover']);
             }
             if($author=session('admin_user')['name']== $data['author']){
-                $data['author']=session('admin_user')['admin_id'];
+                $data['author_id']=session('admin_user')['admin_id'];
+            }else{
+                $data['author_id']=0;
             }
             $res=ArticleModel::addArticle($data);
             switch ($res) { //判断新增返回值
@@ -126,16 +128,18 @@ class ArticleController extends Controller
             $data['article_id'] = intval($input['article_id']) ? intval($input['article_id']) : 0;
             $data['title'] = isset($input['title']) ? $input['title'] : "";
             $data['author'] = isset($input['author']) ? $input['author'] : "";
-            $data['description'] = isset($input['desc']) ? $input['desc'] : "";
+            $data['description'] = isset($input['description']) ? $input['description'] : "";
             $data['keywords'] = isset($input['keywords']) ? $input['keywords']: "";
             $data['markdown'] = isset($input['markdown']) ? $input['markdown']: "";
-            $data['is_pull'] = intval($input['rec_index']) ? intval($input['rec_index']) : 0;
+            $data['is_pull'] = intval($input['is_pull']) ? intval($input['is_pull']) : 0;
             $data['cover'] = isset($input['cover']) ? $input['cover'] : "";
             if ($request->hasFile('cover')) {
                 $data['cover']=$this->uploadCover($data['cover']);
             }
             if($author=session('admin_user')['name']== $data['author']){
                 $data['author_id']=session('admin_user')['admin_id'];
+            }else{
+                $data['author_id']=0;
             }
             $res=ArticleModel::updateArticle($data);
             switch ($res) { //判断新增返回值
@@ -143,13 +147,13 @@ class ArticleController extends Controller
                     return redirect()->back()->withInput()->with('msg', '数据为空');
                     break;
                 case 1:
-                    return redirect()->back()->withInput()->with('msg', '标题重复');
+                    return redirect()->back()->withInput()->with('msg', "保留，没有修改内容");
                     break;
                 case 2:
-                    return redirect()->back()->withInput()->with('msg', "保留");
+                    return redirect()->route("article.showArticle")->with('msg', "修改文章成功");
                     break;
                 case 3:
-                    return redirect()->route("article.showArticle")->with('msg', "修改文章成功");
+                    return redirect()->back()->withInput()->with('msg', "标题已存在");
                     break;
                 default:
                     return redirect()->back()->withInput()->with('msg', '数据写入失败,新增文章失败');

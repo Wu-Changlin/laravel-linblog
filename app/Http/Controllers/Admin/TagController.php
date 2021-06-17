@@ -58,7 +58,7 @@ class TagController extends Controller
             $data['name'] = isset($input['name']) ? $input['name'] : "";
             $data['keywords'] = isset($input['keywords']) ? $input['keywords'] : "";
             $data['description'] = isset($input['description']) ? $input['description'] : "";
-            $data['is_pull'] = intval($input['rec_index']) ? intval($input['rec_index']) : 0;
+            $data['is_pull'] = intval($input['is_pull']) ? intval($input['is_pull']) : 0;
             $data['category_id'] = intval($input['category_id']) ? intval($input['category_id']) : 0;
         }else{
             return redirect()->back()->withInput()->with('msg', '非法访问');
@@ -111,7 +111,7 @@ class TagController extends Controller
             $data['name'] = isset($input['name']) ? $input['name'] : "";
             $data['keywords'] = isset($input['keywords']) ? $input['keywords'] : "";
             $data['description'] = isset($input['description']) ? $input['description'] : "";
-            $data['is_pull'] = intval($input['rec_index']) ? intval($input['rec_index']) : 0;
+            $data['is_pull'] = intval($input['is_pull']) ? intval($input['is_pull']) : 0;
         }else{
             return redirect()->back()->withInput()->with('msg', '非法请求');
         }
@@ -121,16 +121,16 @@ class TagController extends Controller
                 return redirect()->back()->withInput()->with('msg', '数据为空');
                 break;
             case 1:
-                return redirect()->back()->withInput()->with('msg', '分类已存在');
-                break;
-            case 2:
                 return redirect()->back()->withInput()->with('msg', "保留");
                 break;
+            case 2:
+                return redirect()->route("tag.showTag")->with('msg', "更改标签信息成功");
+                break;
             case 3:
-                return redirect()->route("tag.showTag")->with('msg', "更改分类信息成功");
+                return redirect()->back()->withInput()->with('msg', '标签已存在');
                 break;
             default:
-                return redirect()->back()->withInput()->with('msg', '数据写入失败,更改分类信息失败');
+                return redirect()->back()->withInput()->with('msg', '数据写入失败,更改标签信息失败');
         }
     }
 

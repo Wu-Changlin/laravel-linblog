@@ -69,7 +69,7 @@ class CategoryController extends Controller
             $data['name'] = isset($input['name']) ? $input['name'] : "";
             $data['keywords'] = isset($input['keywords']) ? $input['keywords'] : "";
             $data['description'] = isset($input['description']) ? $input['description'] : "";
-            $data['is_pull'] = intval($input['rec_index']) ? intval($input['rec_index']) : 0;
+            $data['is_pull'] = intval($input['is_pull']) ? intval($input['is_pull']) : 0;
             $data['type'] = intval($input['type']) ? intval($input['type']) : 0;
 
         }else{
@@ -124,7 +124,7 @@ class CategoryController extends Controller
             $data['name'] = isset($input['name']) ? $input['name'] : "";
             $data['keywords'] = isset($input['keywords']) ? $input['keywords'] : "";
             $data['description'] = isset($input['description']) ? $input['description'] : "";
-            $data['is_pull'] = intval($input['rec_index']) ? intval($input['rec_index']) : 0;
+            $data['is_pull'] = intval($input['is_pull']) ? intval($input['is_pull']) : 0;
             $data['type'] = intval($input['type']) ? intval($input['type']) : 0;
         }else{
             return redirect()->back()->withInput()->with('msg', '非法请求');
@@ -135,13 +135,13 @@ class CategoryController extends Controller
                 return redirect()->back()->withInput()->with('msg', '数据为空');
                 break;
             case 1:
-                return redirect()->back()->withInput()->with('msg', '分类已存在');
-                break;
-            case 2:
                 return redirect()->back()->withInput()->with('msg', "保留");
                 break;
-            case 3:
+            case 2:
                 return redirect()->route("category.index")->with('msg', "更改分类信息成功");
+                break;
+            case 3:
+                return redirect()->back()->withInput()->with('msg', '分类已存在');
                 break;
             default:
                 return redirect()->back()->withInput()->with('msg', '数据写入失败,更改分类信息失败');

@@ -73,13 +73,13 @@
                                     <div class="col-sm-6">
                                         <div class="radio" style="float:left;margin-right:10px;">
                                             <label>
-                                                <input name="rec_index" value="1" type="radio">
+                                                <input name="is_pull" value="1" type="radio">
                                                 <span class="text">是</span>
                                             </label>
                                         </div>
                                         <div class="radio" style="float:left;margin-right:10px;">
                                             <label>
-                                                <input name="rec_index" value="2" class="inverted" checked="checked" type="radio">
+                                                <input name="is_pull" value="2" class="inverted" checked="checked" type="radio">
                                                 <span class="text">否</span>
                                             </label>
                                         </div>

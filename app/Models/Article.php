@@ -5,7 +5,7 @@ namespace App\Models;
 use GrahamCampbell\Markdown\Facades\Markdown;
 
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
+
 use \Illuminate\Support\Facades\File;
 
 class Article extends Base
@@ -22,14 +22,15 @@ class Article extends Base
             ->join('categorys', 'articles.category_id', '=', 'categorys.category_id')
             ->join('tags', 'articles.tag_id', '=', 'tags.tag_id')
             ->select('categorys.name as  category_name','categorys.category_id', 'tags.tag_id','tags.name as tag_name','articles.article_id','articles.title','articles.author','articles.is_pull','articles.Visits','articles.cover')
+            ->orderBy('articles.created_at', 'desc')
             ->get();
         return  $cate_tag_article;
     }
 
 
     /**
-     * 获取分类 用于新增
-     * @return \Illuminate\Support\Collection
+     * 获取分类 用于新增文章选择
+     * @return \Illuminate\Support\Collection 上架的所有分类
      */
     public  static  function  categorys(){
         $categarys =DB::table('categorys')
@@ -40,8 +41,8 @@ class Article extends Base
     }
 
     /**
-     * 获取标签 用于新增
-     * @return \Illuminate\Support\Collection
+     * 获取标签 用于新增文章选择
+     * @return \Illuminate\Support\Collection 上架的所有标签
      */
     public  static  function  tags(){
         $tags =DB::table('tags')
@@ -51,21 +52,25 @@ class Article extends Base
         return  $tags;
     }
 
-    /**
-     *  新增文章
-     * @return \Illuminate\Support\Collection
+    /**新增文章
+     * @param $data
+     * @return int 0：$data为空，1：文章标题已存在，2：成功新增文章
      */
+
     public  static  function  addArticle($data){
-        if(empty($data)){
+        if(empty($data)){//如果$data为空
            return 0;
         }
         $article_count = self::where('title',$data['title'])->count(); //根据用户输入标题查询数据库文章表标题字段
         if($article_count){//如果有数据说明文章已存在
             return 1;
         }
-        $data['html']= Markdown::convertToHtml($data['markdown']);
-
-        $res=self::create($data);//使用create方法新增标签
+        if(!empty($data['markdown'])){//如果$data['markdown']有数据，则转html
+            $data['html']= Markdown::convertToHtml($data['markdown']);//markdown转html
+        }else{
+            $data['html']="";
+        }
+        $res=self::create($data);//使用create新增文章
         //本次新增标签信息写入log
         $admin_user=session('admin_user');
         $admin_log['last_login_ip']=$admin_user['last_login_ip'];    //管理员IP
@@ -83,60 +88,24 @@ class Article extends Base
      * @return \Illuminate\Support\Collection
      */
     public  static  function  updateArticle($data){
-        if(empty($data)){
+        if(empty($data)){//如果$data为空
             return 0;
         }
-//
-        $article_res = self::find($data['article_id'],["category_id","tag_id","title","author" ,"description","keywords","markdown","is_pull","cover"]); //根据用户输入邮箱查询数据库分类信息
+        $article_res = self::find($data['article_id'],["category_id","tag_id","article_id","title","author" ,"description","keywords","markdown","is_pull","cover","author_id"]); //根据文章id查询数据库文章信息
         $article_info=$article_res->toArray(); //集合转数组
-
-        //判断分类父id是否修改
-        if($data['title'] ==$article_info['title']){
-            array_pull($data, 'title');
-        }else{
-            $article_count = self::where('title',$data['title'])->count(); //根据用户输入标题查询数据库文章表标题字段
-            if($article_count){//如果有数据说明文章已存在
-                return 1;
-            }
+        //判断字段是否需要修改
+        $edit_info = array_diff_assoc($data,$article_info); //1:返回[]空数组，说明2个数组相同 2:返回非空数组（数据相同字段已去除，剩下需要修改的字段数据），说明$data数据和数据库数据不一致，需要执行修改
+        if (!$edit_info) {//空数组说明没有修改字段值，返回1
+           return 1;
         }
-        //判断分类父id是否修改
-        if($data['category_id'] ==$article_info['category_id']){
-            array_pull($data, 'category_id');
+        $article_count = self::where('title',$data['title'])->count(); //根据用户输入标题查询数据库文章表标题字段
+        if($article_count){//如果有数据说明文章标题已存在
+            return 3;
         }
-        //判断分类名是否修改
-        if($data['tag_id'] == $article_info['tag_id']){
-            array_pull($data, 'tag_id');
+        if(!empty($edit_info['markdown'])){//如果$data['markdown']有数据，则转html
+            $edit_info['html']= Markdown::convertToHtml($data['markdown']);//markdown转html
         }
-        //判断分类关键词是否修改
-        if($data['author'] == $article_info['author'] ){
-            array_pull($data, 'author');
-        }
-        //判断分类关键词是否修改
-        if($data['keywords'] == $article_info['keywords'] ){
-            array_pull($data, 'keywords');
-        }
-        //判断分类描述是否修改
-        if($data['description'] == $article_info['description']){
-            array_pull($data, 'description');
-        }
-        //判断分类类型是否修改
-        if($data['markdown'] ==$article_info['markdown']){
-            array_pull($data, 'markdown');
-        }
-        //判断分类是否下架
-        if($data['is_pull'] == $article_info['is_pull']){
-            array_pull($data, 'is_pull');
-        }
-
-        //判断是否有需要修改的信息
-        if(! isset($data['title']) && ! isset($data['category_id'])   && ! isset($data['tag_id']) && ! isset($data['keywords'])  && ! isset($data['description'])   && ! isset($data['markdown']) && ! isset($data['is_pull']) && ! isset($data['type'])){
-            return 2;
-        }
-
-
-        $data['html']= Markdown::convertToHtml($data['markdown']);
-        self::find($data['article_id'])->update($data);//使用update方法修改文章
-
+        self::find($data['article_id'])->update($edit_info);//使用update方法修改文章
         //本次新增标签信息写入log
         $admin_user=session('admin_user');
         $admin_log['last_login_ip']=$admin_user['last_login_ip'];    //管理员IP
@@ -146,7 +115,7 @@ class Article extends Base
         $admin_log['exec_object_id']=$data['article_id'];        //执行操作对象id
         $admin_log['created_at']=date('Y-m-d H:i:s', time());//执行操作创建时间
         self::addAadminLog($admin_log);
-        return 3;
+        return 2;
 
     }
 
@@ -162,17 +131,20 @@ class Article extends Base
         }
         $article_info = self::find($article_id,["markdown","cover"]); //查询包含图片路径的信息
         $preg = '/(?<=\()+\/uploads\/images\/article\/+[^\)]+/';// 匹配括号里面的内容的正则表达式 markdown里的图片路径：(/uploads/images/article/20210616/DkCGWaGQTm1623848364.png)
-        preg_match_all($preg, $article_info->markdown, $allImg);//这里匹配所有的img
-
-        $result = array_reduce($allImg, function ($result, $value) {
+        preg_match_all($preg, $article_info->markdown, $allImg);//这里匹配指定文章/uploads/images/article/的img
+        //二维数组转一维
+        $allImg = array_reduce($allImg, function ($result, $value) {
             return array_merge($result, array_values($value));
         }, array());
-        $path="dzCyMdhqK21623848377.png";
-
-        File::delete($path);
-        dd('dd');
+        array_push($allImg,$article_info->cover);//把封面图入栈
+        //循环删除图片
+        foreach ($allImg as $key=>$v){
+            if(file_exists(public_path() . "/" .$v)){
+                unlink(public_path() . "/" .$v);
+            }
+        }
         self::where('article_id','=',$article_id)->delete();
-        //本次删除分类信息写入log
+        //本次删除文章信息写入log
         $admin_user=session('admin_user');
         $admin_log['last_login_ip']=$admin_user['last_login_ip'];    //管理员IP
         $admin_log['admin_id']=$admin_user['admin_id'];  //管理员id
