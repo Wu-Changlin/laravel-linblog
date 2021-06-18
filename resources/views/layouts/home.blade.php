@@ -1,376 +1,347 @@
-<!doctype html>
-<html lang="en">
-
-<head>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head >
     <meta charset="UTF-8">
-    <title>白俊遥博客,技术博客,个人博客模板,php博客系统</title>
-    <meta name="keywords" content="博客,个人博客,博客模板,个人博客模板,技术博客,博客系统,laravel博客,php博客" />
-    <meta name="description" content="白俊遥的php博客,个人技术博客,分享免费个人博客模板,开源一些thinkphp,laravel相关的博客系统项目,bjy,blog和bjy,admin官网,写一些技术文章." />
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <meta name="author" content="baijunyao,baijunyao@baijunyao.com">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href=" {{asset('home/dist/css/app.css')}}">
-    <link href="{{asset('css/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-</head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONESTAR-首页</title>
+    <link rel="stylesheet" href="../static/css/app.css" th:href="@{/css/app.css}">
+    <!-- <link href="../static/images/me.jpg" th:href="@{/images/me.jpg}" rel="icon" type="image/x-ico"> -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css"> -->
+    <link rel="stylesheet" href="../static/lib/semantic/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
+   <style type="text/css">
 
+   </style>
+
+
+</head>
 <body>
-<!-- 顶部导航开始 -->
-<header id="b-public-nav" class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">
-                <div class="hidden-xs b-nav-background"></div>
-                <ul class="b-logo-code">
-                    <li class="b-lc-start">&lt;?php</li>
-                    <li class="b-lc-echo">echo</li>
-                </ul>
-                <p class="b-logo-word">'白俊遥博客'</p>
-                <p class="b-logo-end">;</p>
+
+
+<!--导航-->
+<nav class="gird-header">
+  <div class="ui container">
+    <div class="ui inverted secondary stackable menu">
+      <h2 class="ui olive header item" style="font-family: STSong">ONESTAR</h2>
+      <!--<div class="right m-item item m-mobile-hide">-->
+        <a href="#" class="m-item item m-mobile-hide "><i class="home icon"></i>首页</a>
+        <a href="#" class="m-item item m-mobile-hide"><i class="clone outline icon"></i>分类</a>
+        <a href="#" class="m-item item m-mobile-hide"><i class="clock icon"></i>时间轴</a>
+        <a href="#" class="m-item item m-mobile-hide"><i class="music icon"></i>音乐盒</a>
+        <a href="#" class="m-item item m-mobile-hide"><i class="book icon"></i>留言板</a>
+        <a href="#" class="m-item item m-mobile-hide"><i class="pencil alternate icon"></i>友人帐</a>
+        <a href="#" class="m-item item m-mobile-hide"><i class="image icon"></i>照片墙</a>
+        <a href="#" class="m-item item m-mobile-hide"><i class="info icon"></i>关于我</a>
+      <!--</div>-->
+      <div class="right m-item item m-mobile-hide">
+        <form name="search" action="#" method="post" target="_blank">
+          <div class="ui icon transparent input m-margin-tb-tiny" style="color: white">
+            <input style="color: white" type="text" name="query" placeholder="Search....">
+            <i onclick="document.forms['search'].submit()" class="search link icon"></i>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+    <i class="sidebar icon"></i>
+  </a>
+</nav>
+
+
+<!--顶部图片-->
+<div class="m-bg-type_outer" style="width: 100%;height: 50%">
+  <img src="../static/images/bg.jpg" alt="" class="ui m-bg image" style="width: 100%;height: 100%">
+  <div class="m-bg-class_cover">
+    <div class="ui container" style="position: relative ;bottom: -540px;">
+      <h2 class="m-font-size-title-large" align="center">Markdown编辑</h2>
+      <div class="ui container" align="center">
+        <div class="ui horizontal link list" align="center">
+          <div class="item">
+            <div class="ui orange basic label" style="font-size: 7px">原创</div>
+          </div>
+          <div class="item">
+            <i class="user outline outline icon m-font-size-text-mini"></i>
+            <a href="#" style="color: #ffffff;font-size: 18px">oneStar</a>
+          </div>
+          <div class="item">
+            <i class="calendar icon m-font-size-text-mini"></i>
+            <span class="m-font-size-text-mini">2020-01-01</span>
+          </div>
+          <div class="item">
+            <i class="clone icon m-font-size-text-mini"></i>
+            <a href="#" target="_blank" style="color: #ffffff;font-size: 16px">我的故事</a>
+          </div>
+          <div class="item">
+            <i class="eye icon m-font-size-text-mini"></i> <span class="m-font-size-text-mini">2222</span>
+          </div>
+          <div class="item">
+            <i class="comment outline icon m-font-size-text-mini"></i>
+            <span class="m-font-size-text-mini">2222</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!--最新推荐-->
+<div class="ui m-padded-tb-large">
+    <div class="ui m-container-small m-opacity">
+        <div class="ui secondary segment " align="center">
+            <i class="bookmark icon"></i>最新推荐
+        </div>
+    </div>
+    <div class="ui stackable m-container-mini m-opacity grid">
+        <div class="m-margin-tb-tiny four wide column">
+            <a href="#" class="class_outer" target="_blank">
+                <img src="../static/images/backimg1.jpg" alt="" class="ui rounded image">
+                <span class="class_cover" >
+                     <h4 class="m-font-size-blog-text m-margin-tb-tiny">大圣，此去欲何?</h4>
+                  </span>
             </a>
         </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav b-nav-parent">
-                <li class="hidden-xs b-nav-mobile"></li>
-                <li class="b-nav-cname   b-nav-active ">
-                    <a href="/">首页</a>
-                </li>
-                <li class="b-nav-cname ">
-                    <a href="https://baijunyao.com/category/27">PHP</a>
-                </li>
-                <li class="b-nav-cname ">
-                    <a href="https://baijunyao.com/category/28">前端</a>
-                </li>
-                <li class="b-nav-cname ">
-                    <a href="https://baijunyao.com/category/29">Linux</a>
-                </li>
-                <li class="b-nav-cname ">
-                    <a href="https://baijunyao.com/category/30">技术之外</a>
-                </li>
-                <li class="b-nav-cname ">
-                    <a href="https://baijunyao.com/category/31">乱七八糟</a>
-                </li>
-                <li class="b-nav-cname ">
-                    <a href="https://baijunyao.com/chat">随言碎语</a>
-                </li>
-                <li class="b-nav-cname hidden-sm  ">
-                    <a href="https://baijunyao.com/git">开源项目</a>
-                </li>
-            </ul>
-            <ul id="b-login-word" class="nav navbar-nav navbar-right">
-                <li class="b-nav-cname b-nav-login">
-                    <div class="hidden-xs b-login-mobile"></div>
-                    <a class="js-login-btn" href="javascript:;">登录</a>
-                </li>
-            </ul>
+        <div class="m-margin-tb-tiny four wide column">
+            <a href="#" class="class_outer" target="_blank">
+                <img src="../static/images/backimg1.jpg" alt="" class="ui rounded image">
+                <span class="class_cover" >
+                     <h4 class="m-font-size-blog-text m-margin-tb-tiny">此去欲何?</h4>
+                  </span>
+            </a>
         </div>
-    </div>
-</header>
-<!-- 顶部导航结束 -->
-<div class="b-h-70"></div>
-<div id="b-content" class="container">
-    <div class="row">
-        <!-- 左侧列表开始 -->
-        <div class="col-xs-12 col-md-12 col-lg-8">
-            <!-- 循环文章列表开始 -->
-            <div class="row b-one-article">
-                <h3 class="col-xs-12 col-md-12 col-lg-12">
-                    <a class="b-oa-title" href="https://baijunyao.com/article/154" target="_blank">laravel下TNTSearch+jieba-php实现全文搜索</a>
-                </h3>
-                <div class="col-xs-12 col-md-12 col-lg-12 b-date">
-                    <ul class="row">
-                        <li class="col-xs-5 col-md-2 col-lg-3">
-                            <i class="fa fa-user"></i> 白俊遥
-                        </li>
-                        <li class="col-xs-7 col-md-3 col-lg-3">
-                            <i class="fa fa-calendar"></i> 2018-05-27 14:37:39
-                        </li>
-                        <li class="col-xs-5 col-md-2 col-lg-2">
-                            <i class="fa fa-list-alt"></i> <a href="https://baijunyao.com/category/27" target="_blank">PHP</a>
-                        </li>
-                        <li class="col-xs-7 col-md-5 col-lg-4 "><i class="fa fa-tags"></i>
-                            <a class="b-tag-name" href="https://baijunyao.com/tag/42" target="_blank">laravel</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-xs-12 col-md-12 col-lg-12">
-                    <div class="row">
-                        <!-- 文章封面图片开始 -->
-                        <div class="col-sm-6 col-md-6 col-lg-4 hidden-xs">
-                            <figure class="b-oa-pic b-style1">
-                                <a href="https://baijunyao.com/article/154" target="_blank">
-                                    <img src="https://baijunyao.com/uploads/article/20180527/5b0a5232d696f.jpg" alt="白俊遥博客" title="白俊遥博客">
-                                </a>
-                                <figcaption>
-                                    <a href="https://baijunyao.com/article/154" target="_blank"></a>
-                                </figcaption>
-                            </figure>
-                        </div>
-                        <!-- 文章封面图片结束 -->
-                        <!-- 文章描述开始 -->
-                        <div class="col-xs-12 col-sm-6  col-md-6 col-lg-8 b-des-read">
-                            上篇文章我们简单介绍了全文搜索的方案；；TNTSearch+jiebaphp这套组合可以在不依赖第三方的情况下实现中文全文搜索；特别的适合博客这种小项目；我新建一个项目用于演示；```bashlaravel new tntsearch```创建一个文章表和文章模型；```bashphp artisan make:model Models/Article m...
-                        </div>
-                        <!-- 文章描述结束 -->
-                    </div>
-                </div>
-                <a class=" b-readall" href="https://baijunyao.com/article/154" target="_blank">阅读全文</a>
-            </div>
-            <div class="row b-one-article">
-                <h3 class="col-xs-12 col-md-12 col-lg-12">
-                    <a class="b-oa-title" href="https://baijunyao.com/article/145" target="_blank">php编辑word内容通过unoconv调用LibreOffice输出pdf打印</a>
-                </h3>
-                <div class="col-xs-12 col-md-12 col-lg-12 b-date">
-                    <ul class="row">
-                        <li class="col-xs-5 col-md-2 col-lg-3">
-                            <i class="fa fa-user"></i> 白俊遥
-                        </li>
-                        <li class="col-xs-7 col-md-3 col-lg-3">
-                            <i class="fa fa-calendar"></i> 2018-03-25 21:58:21
-                        </li>
-                        <li class="col-xs-5 col-md-2 col-lg-2">
-                            <i class="fa fa-list-alt"></i> <a href="https://baijunyao.com/category/27" target="_blank">PHP</a>
-                        </li>
-                        <li class="col-xs-7 col-md-5 col-lg-4 "><i class="fa fa-tags"></i>
-                            <a class="b-tag-name" href="https://baijunyao.com/tag/51" target="_blank">word</a>
-                            <a class="b-tag-name" href="https://baijunyao.com/tag/52" target="_blank">pdf</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-xs-12 col-md-12 col-lg-12">
-                    <div class="row">
-                        <!-- 文章封面图片开始 -->
-                        <div class="col-sm-6 col-md-6 col-lg-4 hidden-xs">
-                            <figure class="b-oa-pic b-style1">
-                                <a href="https://baijunyao.com/article/145" target="_blank">
-                                    <img src="https://baijunyao.com/uploads/article/20180325/5ab7aaf894623.jpeg" alt="白俊遥博客" title="白俊遥博客">
-                                </a>
-                                <figcaption>
-                                    <a href="https://baijunyao.com/article/145" target="_blank"></a>
-                                </figcaption>
-                            </figure>
-                        </div>
-                        <!-- 文章封面图片结束 -->
-                        <!-- 文章描述开始 -->
-                        <div class="col-xs-12 col-sm-6  col-md-6 col-lg-8 b-des-read">
-                            关于我把 word 和 pdf 来回整的故事；我有一段血泪史；惊天地；泣鬼神；痛彻心扉；穿越前世今生；今天我准备熬夜把它控诉一遍；之前有一些愚蠢的人类给了伟大的程序猿一份 word 文档；里面就一段文字；需求是能动态的替换其中的部分内容；然后转成 pdf 供用户下载；这简单啊；还要啥 word 文档啊；直接手动把内容复制出来；放好占位符用 php...
-                        </div>
-                        <!-- 文章描述结束 -->
-                    </div>
-                </div>
-                <a class=" b-readall" href="https://baijunyao.com/article/145" target="_blank">阅读全文</a>
-            </div>
-            <!-- 循环文章列表结束 -->
-            <!-- 列表分页开始 -->
-            <div class="row">
-                <div class="col-xs-12 col-md-12 col-lg-12 b-page text-center">
-                    <ul class="pagination">
-                        <li class="disabled"><span>上一页</span></li>
-                        <li class="active"><span>1</span></li>
-                        <li><a href="https://baijunyao.com?page=2">2</a></li>
-                        <li><a href="https://baijunyao.com?page=3">3</a></li>
-                        <li><a href="https://baijunyao.com?page=4">4</a></li>
-                        <li><a href="https://baijunyao.com?page=5">5</a></li>
-                        <li><a href="https://baijunyao.com?page=6">6</a></li>
-                        <li><a href="https://baijunyao.com?page=7">7</a></li>
-                        <li><a href="https://baijunyao.com?page=8">8</a></li>
-                        <li class="disabled"><span>...</span></li>
-                        <li><a href="https://baijunyao.com?page=13">13</a></li>
-                        <li><a href="https://baijunyao.com?page=14">14</a></li>
-                        <li><a href="https://baijunyao.com?page=2" rel="next">下一页</a></li>
-                    </ul>
-                </div>
-            </div>
-            <!-- 列表分页结束 -->
-        </div>
-        <!-- 左侧列表结束 -->
-        <!-- 通用右部区域开始 -->
-        <div id="b-public-right" class="col-lg-4 hidden-xs hidden-sm hidden-md">
-            <div class="b-search">
-                <form class="form-inline" role="form" action="https://baijunyao.com/search" method="get">
-                    {{ csrf_field() }}
-                    <input class="b-search-text" type="text" name="wd">
-                    <input class="b-search-submit" type="submit" value="全站搜索">
-                </form>
-            </div>
-            <div class="b-qun">
-                <h4 class="b-title">加入组织</h4>
-                <ul class="b-all-tname">
-                    <li class="b-qun-or-code">
-                        <img src="" alt="QQ">
-                    </li>
-                    <li class="b-qun-word">
-                        <p class="b-qun-nuber">
-                            1. 手Q扫左侧二维码
-                        </p>
-                        <p class="b-qun-nuber">
-                            2. 搜Q群：88199093
-                        </p>
-                        <p class="b-qun-code">
-                            3. 点击<a href="https://shang.qq.com/wpa/qunwpa?idkey=bba3fea90444ee6caf1fb1366027873fe14e86bada254d41ce67768fadd729ee" target="_blank" rel="nofollow"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="白俊遥博客群" title="白俊遥博客群"></a>
-                        </p>
-                        <p class="b-qun-article">
-                            <a href="https://baijunyao.com/article/124" target="_blank">创建QQ群及捐赠渠道</a>
-                        </p>
-                    </li>
-                </ul>
-            </div>
-            <div class="b-tags">
-                <h4 class="b-title">热门标签</h4>
-                <ul class="b-all-tname">
-                    <li class="b-tname">
-                        <a class="tstyle-1" href="https://baijunyao.com/tag/20">Linux (7)</a>
-                    </li>
-                    <li class="b-tname">
-                        <a class="tstyle-2" href="https://baijunyao.com/tag/21">Centos (3)</a>
-                    </li>
-                    <li class="b-tname">
-                        <a class="tstyle-3" href="https://baijunyao.com/tag/22">Apache (5)</a>
-                    </li>
-                    <li class="b-tname">
-                        <a class="tstyle-4" href="https://baijunyao.com/tag/23">虚拟主机 (5)</a>
-                    </li>
-                    <li class="b-tname">
-                        <a class="tstyle-1" href="https://baijunyao.com/tag/24">wamp (3)</a>
-                    </li>
-                    <li class="b-tname">
-                        <a class="tstyle-2" href="https://baijunyao.com/tag/25">励志 (2)</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="b-recommend">
-                <h4 class="b-title">置顶推荐</h4>
-                <p class="b-recommend-p">
-                    <a class="b-recommend-a" href="https://baijunyao.com/article/131" target="_blank"><span class="fa fa-th-list b-black"></span> 最适合入门的laravel初级教程(一)序言</a>
-                </p>
-            </div>
-            <div class="b-comment-list">
-                <h4 class="b-title">最新评论</h4>
-                <div>
-                    <ul class="b-new-comment ">
-                        <img class="b-head-img js-head-img"  alt="taoguangc">
-                        <li class="b-nickname">
-                            taoguangc<span>1天前</span>
-                        </li>
-                        <li class="b-nc-article">
-                            在<a href="https://baijunyao.com/article/132" target="_blank">本地开发自定义域名后缀</a>中评论
-                        </li>
-                        <li class="b-content">
-                            我懒癌。。。不写后缀。
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="b-link">
-                <h4 class="b-title">友情链接</h4>
-                <p>
-                    <a class="b-link-a" href="https://baijunyao.com" target="_blank">
-                        <span class="fa fa-link b-black"></span> 白俊遥博客
-                    </a>
-                </p>
-            </div>
-        </div>
-        <!-- 通用右部区域结束 -->
     </div>
 </div>
-<!-- 主体部分结束 -->
 
-<!-- 通用底部开始 -->
-<footer id="b-foot">
-    <div class="container">
-        <div class="row b-content">
-            <dl class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-                <dt>权益</dt>
-                <dd>许可协议：<a href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh">CC BY-NC 4.0</a></dd>
-                <dd>版权所有：© 2014-2018 baijunyao.com</dd>
-                <dd>网站备案：豫ICP备14009546号-3</dd>
-                <dd>联系邮箱：<a href="mailto:baijunyao@baijunyao.com">baijunyao@baijunyao.com</a></dd>
-            </dl>
 
-            <dl class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-                <dt>架构</dt>
-                <dd>项目名称：<a rel="nofollow" href="https://github.com/baijunyao/laravel-bjyblog" target="_blank">laravel-bjyblog</a></dd>
-                <dd>版本分支：v5.5.2.0-test</dd>
-                <dd>项目作者：<a href="https://baijunyao.com">白俊遥</a></dd>
-                <dd>主题名称：<a rel="nofollow" href="https://github.com/baijunyao/blog-theme-blueberry">blog-theme-blueberry</a></dd>
-                <dd>主题作者：<a href="https://baijunyao.com">白俊遥</a></dd>
-            </dl>
+<!--中间内容-->
+<div class="m-padded-tb-big animated fadeIn">
+    <div class="ui container">
+        <div class="ui stackable grid">
+            <!--博客内容-->
+            <div class="ui vertical segment">
+                <div class="ui m-container-small m-opacity">
+                    <div class="ui secondary segment " align="center">
+                        <i class="bookmark icon"></i>最新文章
+                    </div>
+                </div>
+                <!--博文列表-->
+                <div class="ui padded segment m-padded-tb-large m-opacity">
+                    <div class="ui large aligned mobile reversed stackable grid">
+                        <!--博文信息-->
+                        <div class="eleven wide column ">
+                            <h3 class="ui header" ><a href="#" target="_blank" class="m-black">大圣，此去欲何?</a></h3>
+                            <p class="m-text m-margin-top-max">戴上金箍，没法爱你；放下金箍，没法保护你。我知道上天不会给我第二次机会，曾经我们说好的永远，原来也仅仅只有，十二画，而已。“大圣，此去欲何?”“踏南天，碎凌霄。”“若一去不回……”“便一去不回” 其实很多时候，我们都是有机会的，最后真正放弃的，是我们自己。......</p>
+                            <div class="ui m-margin-top-max grid">
+                                <div class="eleven wide column">
+                                    <div class="ui mini horizontal link list">
+                                        <div class="item">
+                                            <img src="../static/images/me.jpg"  alt="" class="ui avatar image">
+                                            <div class="content"><a href="#" target="_blank" class="header" >oneStar</a></div>
+                                        </div>
+                                        <div class="item">
+                                            <i class="calendar icon"></i><span>2020-01-01</span>
+                                        </div>
+                                        <div class="item">
+                                            <i class="eye icon"></i> <span>2222</span>
+                                        </div>
+                                        <div class="item">
+                                            <i class="comment outline icon"></i> <span>2222</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="right aligned five wide column">
+                                    <a href="#" target="_blank" class="ui teal basic label m-padded-tiny m-text-thin">好文</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--博文图片-->
+                        <div class="five wide column">
+                            <a href="#" target="_blank">
+                                <img src="../static/images/backimg1.jpg" alt="" class="ui rounded image">
+                            </a>
+                        </div>
 
-            <dl class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                <dt>统计</dt>
-                <dd>文章总数：140</dd>
-                <dd>评论总数：3581</dd>
-                <dd>登录用户：2920</dd>
-                <dd>随言碎语：38</dd>
-            </dl>
+                    </div>
+                </div>
+            </div>
+            <!--分页-->
+
+<div class="row">
+
+    <div class="col-xs-12 col-md-12 col-lg-12 b-page text-center">
+    <ul class="pagination">
+        <li class="disabled"><span>上一页</span></li>
+        <li class="active"><span>1</span></li>
+        <li><a href="https://baijunyao.com?page=2">2</a></li>
+        <li><a href="https://baijunyao.com?page=3">3</a></li>
+        <li><a href="https://baijunyao.com?page=4">4</a></li>
+        <li><a href="https://baijunyao.com?page=5">5</a></li>
+        <li><a href="https://baijunyao.com?page=6">6</a></li>
+        <li><a href="https://baijunyao.com?page=7">7</a></li>
+        <li><a href="https://baijunyao.com?page=8">8</a></li>
+        <li><a href="https://baijunyao.com?page=9">9</a></li>
+        <li><a href="https://baijunyao.com?page=10">10</a></li>
+        <li class="disabled"><span>...</span></li>
+        <li><a href="https://baijunyao.com?page=19">19</a></li>
+        <li><a href="https://baijunyao.com?page=20">20</a></li>
+        <li><a href="https://baijunyao.com?page=2" rel="next">下一页</a></li>
+    </ul>
+    </div>
+</div>
+
+ 
+
         </div>
     </div>
-    <a class="go-top fa fa-angle-up animated jello" href="javascript:;"></a>
+
+</div>
+
+
+<!--置顶图标-->
+<div class="m-padded-tb-large m-fixed m-right-bottom">
+    <a href="#" class="ui icon button"><i class="chevron up icon"></i> </a>
+</div>
+
+
+
+<br>
+<br>
+<br>
+<!--底部栏-->
+<footer class="ui inverted vertical segment m-padded-tb-massive m-opacity">
+    <!--容器-->
+    <div class="ui center aligned container">
+        <div class="ui inverted divided stackable grid">
+            <div class="four wide column">
+                <div style="font-size: large;font-weight: bold" class="ui inverted m-text-thin m-text-spaced m-margin-top-max" >联系我</div>
+                <div class="ui inverted link list">
+                    <div href="#" class="m-text-thin">Email：onestarlr@hotmail.com</div>
+                    <div href="#" class="m-text-thin">QQ：316392836</div>
+                </div>
+            </div>
+
+            <div class="four wide column" >
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <!--微信二维码-->
+                        <div style="font-size: large;font-weight: bold" class="ui inverted m-text-thin m-text-spaced " >关注公众号</div>
+                        <img src="../static/images/oneStar.jpg" th:src="@{/images/oneStar.jpg}"  class="ui m-margin-top rounded image" alt="" style="width: 110px">
+                    </div>
+                </div>
+            </div>
+
+            <div class="four wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <!--微信二维码-->
+                        <div style="font-size: large;font-weight: bold" class="ui inverted m-text-thin m-text-spaced " >问题交流（QQ群）</div>
+                        <img src="../static/images/QQ-question.jpg" th:src="@{/images/QQ-question.jpg}"  class="ui m-margin-top rounded image" alt="" style="width: 110px">
+                    </div>
+                </div>
+            </div>
+            <!--博客运行时间统计-->
+            <div class="four wide column">
+                <div style="font-size: large;font-weight: bold" class="ui inverted  m-text-thin m-text-spaced m-margin-top">客栈信息</div>
+                <!--<p id="htmer_time" class="item m-text-thin"></p>-->
+                <div id="blog-message">
+                    <div class="ui inverted link list" style="align-content: center;margin-top: 10px">
+                        <div class="m-text-thin" style="text-align: left;margin-left: 75px;">
+                            文章总数： <h2 class="ui orange header m-inline-block m-margin-top-null" style="font-size:medium;"> 14 </h2> 篇
+                        </div>
+                        <div class="m-text-thin" style="text-align: left;margin-left: 75px">
+                            访问总数： <h2 class="ui orange header m-inline-block m-margin-top-null" style="font-size:medium;"> 14 </h2> 次
+                        </div>
+                        <div class="m-text-thin" style="text-align: left;margin-left: 75px">
+                            评论总数： <h2 class="ui orange header m-inline-block m-margin-top-null" style="font-size:medium;"> 14 </h2> 条
+                        </div>
+                        <div class="m-text-thin" style="text-align: left;margin-left: 75px">
+                            留言总数： <h2 class="ui orange header m-inline-block m-margin-top-null" style="font-size:medium;"> 14 </h2> 条
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <div style="color: #F08047;margin-top: -18px" class="ui inverted m-text-thin m-text-spaced">我的客栈已营业：<span id="htmer_time" class="item m-text-thin"></span> (*๓´╰╯`๓)</div>
+        <a rel="nofollow" href="http://www.beian.miit.gov.cn" target="_blank">赣ICP备20004408号-1</a>
+    </div>
+    </div>
+
 </footer>
-<!-- 通用底部结束 -->
-
-<!-- 登录模态框开始 -->
-<div class="modal fade" id="b-modal-login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content row">
-            <div class="col-xs-12 col-md-12 col-lg-12">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title b-ta-center" id="myModalLabel">无需注册，用以下帐号即可直接登录</h4>
-                </div>
-            </div>
-            <div class="col-xs-12 col-md-12 col-lg-12 b-login-row">
-                <ul class="row">
-                    <li class="col-xs-6 col-md-4 col-lg-4 b-login-img">
-                        <a href="https://baijunyao.com/auth/oauth/redirectToProvider/qq"><img src="https://baijunyao.com/images/home/qq-login.png" alt="QQ登录" title="QQ登录"></a>
-                    </li>
-                    <li class="col-xs-6 col-md-4 col-lg-4 b-login-img">
-                        <a href="https://baijunyao.com/auth/oauth/redirectToProvider/weibo"><img src="https://baijunyao.com/images/home/sina-login.png" alt="微博登录" title="微博登录"></a>
-                    </li>
-                    <li class="col-xs-6 col-md-4 col-lg-4 b-login-img">
-                        <a href="https://baijunyao.com/auth/oauth/redirectToProvider/github"><img src="https://baijunyao.com/images/home/github-login.jpg" alt="github登录" title="github登录"></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- 登录模态框结束 -->
 
 
-</body>
-<script src="{{asset('home/dist/js/app.js')}}"></script>
-<script src="{{asset('home/statics/jquery-2.2.4/jquery.min.js')}}"></script>
-<script src="{{asset('js/toastr.min.js')}}"></script>  {{--弹窗提示框样式--}}
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script> -->
+<script src="../static/js/jquery.min.js"></script>
+<script src="../static/lib/semantic/semantic.min.js"></script>
+<script src="../static/lib/waypoints/jquery.waypoints.min.js" th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+
 <script>
-    // 弹窗提示框样式
-    toastr.options = {
-        "closeButton": true,
-        "debug": false,
-        "positionClass": "toast-top-center",
-        "onclick": null,
-        "showDuration": "1000",
-        "hideDuration": "1000",
-        "timeOut": "5000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut",
-        "progressBar": true
+
+    // $('#newblog-container').load(/*[[@{/footer/newblog}]]*/"/footer/newblog");
+
+
+    // 运行时间统计
+    function secondToDate(second) {
+        if (!second) {
+            return 0;
+        }
+        var time = new Array(0, 0, 0, 0, 0);
+        if (second >= 365 * 24 * 3600) {
+            time[0] = parseInt(second / (365 * 24 * 3600));
+            second %= 365 * 24 * 3600;
+        }
+        if (second >= 24 * 3600) {
+            time[1] = parseInt(second / (24 * 3600));
+            second %= 24 * 3600;
+        }
+        if (second >= 3600) {
+            time[2] = parseInt(second / 3600);
+            second %= 3600;
+        }
+        if (second >= 60) {
+            time[3] = parseInt(second / 60);
+            second %= 60;
+        }
+        if (second > 0) {
+            time[4] = second;
+        }
+        return time;
     }
+    function setTime() {
+        /*此处为网站的创建时间*/
+        var create_time = Math.round(new Date(Date.UTC(2020, 01, 25, 15, 15, 15)).getTime() / 1000);
+        var timestamp = Math.round((new Date().getTime() + 8 * 60 * 60 * 1000) / 1000);
+        currentTime = secondToDate((timestamp - create_time));
+        currentTimeHtml = currentTime[0] + '年' + currentTime[1] + '天'
+            + currentTime[2] + '时' + currentTime[3] + '分' + currentTime[4]
+            + '秒';
+        document.getElementById("htmer_time").innerHTML = currentTimeHtml;
+    }
+    setInterval(setTime, 1000);
+
+
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-show');
+
+    });
+
+    
+    // 导航栏显示
+    // var waypoint = new Waypoint({
+    //     element: document.getElementById('waypoint'),
+    //     // handler: function(direction) {
+    //     //     if (direction == 'down') {
+    //     //         $('#nav').show(500);
+    //     //     } else {
+    //     //         $('#nav').hide(500);
+    //     //     }
+    //     //     console.log('Scrolled to waypoint!  ' + direction);
+    //     // }
+    // })
 </script>
-<script>
-    @if (count($errors) > 0)
-        @foreach ($errors->all() as $error)
-        toastr.error("{{ $error }}");
-        @endforeach
-    @endif
-</script>
+</body>
 </html>
