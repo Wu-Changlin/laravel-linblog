@@ -1,24 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head >
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ONESTAR-首页</title>
-    <link rel="stylesheet" href="../static/css/app.css" th:href="@{/css/app.css}">
-    <!-- <link href="../static/images/me.jpg" th:href="@{/images/me.jpg}" rel="icon" type="image/x-ico"> -->
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css"> -->
-    <link rel="stylesheet" href="../static/lib/semantic/semantic.min.css">
-    <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
-   <style type="text/css">
-
-   </style>
-
-
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>@yield('title')</title>
+    <meta name="keywords" content=" @yield('keywords')" />
+    <meta name="description" content=" @yield('description')"/>
+    <!--Basic Styles-->
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}" th:href="@{/css/app.css}">
+    <link rel="stylesheet" href="{{ asset('home/static/semantic/semantic.min.css') }}">
+    <link rel="stylesheet" href="{{asset('home/css/me.css')}}" th:href="@{/home/css/me.css}">
 </head>
 <body>
 
 
-<!--导航-->
+<!--导航开始-->
 <nav class="gird-header">
   <div class="ui container">
     <div class="ui inverted secondary stackable menu">
@@ -47,11 +45,11 @@
     <i class="sidebar icon"></i>
   </a>
 </nav>
+<!--导航结束-->
 
-
-<!--顶部图片-->
+<!--顶部图片开始-->
 <div class="m-bg-type_outer" style="width: 100%;height: 50%">
-  <img src="../static/images/bg.jpg" alt="" class="ui m-bg image" style="width: 100%;height: 100%">
+  <img src="{{ asset('home/images/bg.jpg') }}" alt="" class="ui m-bg image" style="width: 100%;height: 100%">
   <div class="m-bg-class_cover">
     <div class="ui container" style="position: relative ;bottom: -540px;">
       <h2 class="m-font-size-title-large" align="center">Markdown编辑</h2>
@@ -84,132 +82,16 @@
     </div>
   </div>
 </div>
+<!--顶部图片结束-->
 
-
-
-<!--最新推荐-->
-<div class="ui m-padded-tb-large">
-    <div class="ui m-container-small m-opacity">
-        <div class="ui secondary segment " align="center">
-            <i class="bookmark icon"></i>最新推荐
-        </div>
-    </div>
-    <div class="ui stackable m-container-mini m-opacity grid">
-        <div class="m-margin-tb-tiny four wide column">
-            <a href="#" class="class_outer" target="_blank">
-                <img src="../static/images/backimg1.jpg" alt="" class="ui rounded image">
-                <span class="class_cover" >
-                     <h4 class="m-font-size-blog-text m-margin-tb-tiny">大圣，此去欲何?</h4>
-                  </span>
-            </a>
-        </div>
-        <div class="m-margin-tb-tiny four wide column">
-            <a href="#" class="class_outer" target="_blank">
-                <img src="../static/images/backimg1.jpg" alt="" class="ui rounded image">
-                <span class="class_cover" >
-                     <h4 class="m-font-size-blog-text m-margin-tb-tiny">此去欲何?</h4>
-                  </span>
-            </a>
-        </div>
-    </div>
-</div>
-
-
-<!--中间内容-->
-<div class="m-padded-tb-big animated fadeIn">
-    <div class="ui container">
-        <div class="ui stackable grid">
-            <!--博客内容-->
-            <div class="ui vertical segment">
-                <div class="ui m-container-small m-opacity">
-                    <div class="ui secondary segment " align="center">
-                        <i class="bookmark icon"></i>最新文章
-                    </div>
-                </div>
-                <!--博文列表-->
-                <div class="ui padded segment m-padded-tb-large m-opacity">
-                    <div class="ui large aligned mobile reversed stackable grid">
-                        <!--博文信息-->
-                        <div class="eleven wide column ">
-                            <h3 class="ui header" ><a href="#" target="_blank" class="m-black">大圣，此去欲何?</a></h3>
-                            <p class="m-text m-margin-top-max">戴上金箍，没法爱你；放下金箍，没法保护你。我知道上天不会给我第二次机会，曾经我们说好的永远，原来也仅仅只有，十二画，而已。“大圣，此去欲何?”“踏南天，碎凌霄。”“若一去不回……”“便一去不回” 其实很多时候，我们都是有机会的，最后真正放弃的，是我们自己。......</p>
-                            <div class="ui m-margin-top-max grid">
-                                <div class="eleven wide column">
-                                    <div class="ui mini horizontal link list">
-                                        <div class="item">
-                                            <img src="../static/images/me.jpg"  alt="" class="ui avatar image">
-                                            <div class="content"><a href="#" target="_blank" class="header" >oneStar</a></div>
-                                        </div>
-                                        <div class="item">
-                                            <i class="calendar icon"></i><span>2020-01-01</span>
-                                        </div>
-                                        <div class="item">
-                                            <i class="eye icon"></i> <span>2222</span>
-                                        </div>
-                                        <div class="item">
-                                            <i class="comment outline icon"></i> <span>2222</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="right aligned five wide column">
-                                    <a href="#" target="_blank" class="ui teal basic label m-padded-tiny m-text-thin">好文</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!--博文图片-->
-                        <div class="five wide column">
-                            <a href="#" target="_blank">
-                                <img src="../static/images/backimg1.jpg" alt="" class="ui rounded image">
-                            </a>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <!--分页-->
-
-<div class="row">
-
-    <div class="col-xs-12 col-md-12 col-lg-12 b-page text-center">
-    <ul class="pagination">
-        <li class="disabled"><span>上一页</span></li>
-        <li class="active"><span>1</span></li>
-        <li><a href="https://baijunyao.com?page=2">2</a></li>
-        <li><a href="https://baijunyao.com?page=3">3</a></li>
-        <li><a href="https://baijunyao.com?page=4">4</a></li>
-        <li><a href="https://baijunyao.com?page=5">5</a></li>
-        <li><a href="https://baijunyao.com?page=6">6</a></li>
-        <li><a href="https://baijunyao.com?page=7">7</a></li>
-        <li><a href="https://baijunyao.com?page=8">8</a></li>
-        <li><a href="https://baijunyao.com?page=9">9</a></li>
-        <li><a href="https://baijunyao.com?page=10">10</a></li>
-        <li class="disabled"><span>...</span></li>
-        <li><a href="https://baijunyao.com?page=19">19</a></li>
-        <li><a href="https://baijunyao.com?page=20">20</a></li>
-        <li><a href="https://baijunyao.com?page=2" rel="next">下一页</a></li>
-    </ul>
-    </div>
-</div>
-
- 
-
-        </div>
-    </div>
-
-</div>
-
-
-<!--置顶图标-->
-<div class="m-padded-tb-large m-fixed m-right-bottom">
-    <a href="#" class="ui icon button"><i class="chevron up icon"></i> </a>
-</div>
-
-
+<!--子页面填充开始-->
+@yield('content')
+<!--子页面填充结束-->
 
 <br>
 <br>
 <br>
-<!--底部栏-->
+<!--底部栏开始-->
 <footer class="ui inverted vertical segment m-padded-tb-massive m-opacity">
     <!--容器-->
     <div class="ui center aligned container">
@@ -227,7 +109,7 @@
                     <div class="item">
                         <!--微信二维码-->
                         <div style="font-size: large;font-weight: bold" class="ui inverted m-text-thin m-text-spaced " >关注公众号</div>
-                        <img src="../static/images/oneStar.jpg" th:src="@{/images/oneStar.jpg}"  class="ui m-margin-top rounded image" alt="" style="width: 110px">
+                        <img src="{{ asset('home/images/oneStar.jpg') }}" th:src="@{/home/images/oneStar.jpg}"  class="ui m-margin-top rounded image" alt="" style="width: 110px">
                     </div>
                 </div>
             </div>
@@ -237,7 +119,7 @@
                     <div class="item">
                         <!--微信二维码-->
                         <div style="font-size: large;font-weight: bold" class="ui inverted m-text-thin m-text-spaced " >问题交流（QQ群）</div>
-                        <img src="../static/images/QQ-question.jpg" th:src="@{/images/QQ-question.jpg}"  class="ui m-margin-top rounded image" alt="" style="width: 110px">
+                        <img src="{{ asset('home/images/QQ-question.jpg') }}" th:src="@{/home/images/QQ-question.jpg}"  class="ui m-margin-top rounded image" alt="" style="width: 110px">
                     </div>
                 </div>
             </div>
@@ -270,14 +152,13 @@
     </div>
 
 </footer>
+<!--底部栏结束-->
 
 
 
-<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script> -->
-<script src="../static/js/jquery.min.js"></script>
-<script src="../static/lib/semantic/semantic.min.js"></script>
-<script src="../static/lib/waypoints/jquery.waypoints.min.js" th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+<script src="{{ asset('home/js/jquery.min.js') }}"></script>
+<script src="{{ asset('home/static/semantic/semantic.min.js') }}"></script>
+<script src="{{ asset('home/static/waypoints/jquery.waypoints.min.js') }}" th:src="@{/home/static/waypoints/jquery.waypoints.min.js}"></script>
 
 <script>
 

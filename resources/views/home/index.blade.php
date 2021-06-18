@@ -9,119 +9,125 @@
 
 
 @section('content')
-<!-- 左侧列表开始 -->
-<div class="col-xs-12 col-md-12 col-lg-8">
-    <!-- 循环文章列表开始 -->
-    <div class="row b-one-article">
-        <h3 class="col-xs-12 col-md-12 col-lg-12">
-            <a class="b-oa-title" href="https://baijunyao.com/article/154" target="_blank">laravel下TNTSearch+jieba-php实现全文搜索</a>
-        </h3>
-        <div class="col-xs-12 col-md-12 col-lg-12 b-date">
-            <ul class="row">
-                <li class="col-xs-5 col-md-2 col-lg-3">
-                    <i class="fa fa-user"></i> 白俊遥
-                </li>
-                <li class="col-xs-7 col-md-3 col-lg-3">
-                    <i class="fa fa-calendar"></i> 2018-05-27 14:37:39
-                </li>
-                <li class="col-xs-5 col-md-2 col-lg-2">
-                    <i class="fa fa-list-alt"></i> <a href="https://baijunyao.com/category/27" target="_blank">PHP</a>
-                </li>
-                <li class="col-xs-7 col-md-5 col-lg-4 "><i class="fa fa-tags"></i>
-                    <a class="b-tag-name" href="https://baijunyao.com/tag/42" target="_blank">laravel</a>
-                </li>
-            </ul>
-        </div>
-        <div class="col-xs-12 col-md-12 col-lg-12">
-            <div class="row">
-                <!-- 文章封面图片开始 -->
-                <div class="col-sm-6 col-md-6 col-lg-4 hidden-xs">
-                    <figure class="b-oa-pic b-style1">
-                        <a href="https://baijunyao.com/article/154" target="_blank">
-                            <img src="https://baijunyao.com/uploads/article/20180527/5b0a5232d696f.jpg" alt="白俊遥博客" title="白俊遥博客">
-                        </a>
-                        <figcaption>
-                            <a href="https://baijunyao.com/article/154" target="_blank"></a>
-                        </figcaption>
-                    </figure>
-                </div>
-                <!-- 文章封面图片结束 -->
-                <!-- 文章描述开始 -->
-                <div class="col-xs-12 col-sm-6  col-md-6 col-lg-8 b-des-read">
-                    上篇文章我们简单介绍了全文搜索的方案；；TNTSearch+jiebaphp这套组合可以在不依赖第三方的情况下实现中文全文搜索；特别的适合博客这种小项目；我新建一个项目用于演示；```bashlaravel new tntsearch```创建一个文章表和文章模型；```bashphp artisan make:model Models/Article m...
-                </div>
-                <!-- 文章描述结束 -->
+<!-- 首页内容开始 -->
+
+    <!--最新推荐开始-->
+    <div class="ui m-padded-tb-large">
+        <div class="ui m-container-small m-opacity">
+            <div class="ui secondary segment " align="center">
+                <i class="bookmark icon"></i>最新推荐
             </div>
         </div>
-        <a class=" b-readall" href="https://baijunyao.com/article/154" target="_blank">阅读全文</a>
-    </div>
-    <div class="row b-one-article">
-        <h3 class="col-xs-12 col-md-12 col-lg-12">
-            <a class="b-oa-title" href="https://baijunyao.com/article/145" target="_blank">php编辑word内容通过unoconv调用LibreOffice输出pdf打印</a>
-        </h3>
-        <div class="col-xs-12 col-md-12 col-lg-12 b-date">
-            <ul class="row">
-                <li class="col-xs-5 col-md-2 col-lg-3">
-                    <i class="fa fa-user"></i> 白俊遥
-                </li>
-                <li class="col-xs-7 col-md-3 col-lg-3">
-                    <i class="fa fa-calendar"></i> 2018-03-25 21:58:21
-                </li>
-                <li class="col-xs-5 col-md-2 col-lg-2">
-                    <i class="fa fa-list-alt"></i> <a href="https://baijunyao.com/category/27" target="_blank">PHP</a>
-                </li>
-                <li class="col-xs-7 col-md-5 col-lg-4 "><i class="fa fa-tags"></i>
-                    <a class="b-tag-name" href="https://baijunyao.com/tag/51" target="_blank">word</a>
-                    <a class="b-tag-name" href="https://baijunyao.com/tag/52" target="_blank">pdf</a>
-                </li>
-            </ul>
-        </div>
-        <div class="col-xs-12 col-md-12 col-lg-12">
-            <div class="row">
-                <!-- 文章封面图片开始 -->
-                <div class="col-sm-6 col-md-6 col-lg-4 hidden-xs">
-                    <figure class="b-oa-pic b-style1">
-                        <a href="https://baijunyao.com/article/145" target="_blank">
-                            <img src="https://baijunyao.com/uploads/article/20180325/5ab7aaf894623.jpeg" alt="白俊遥博客" title="白俊遥博客">
-                        </a>
-                        <figcaption>
-                            <a href="https://baijunyao.com/article/145" target="_blank"></a>
-                        </figcaption>
-                    </figure>
-                </div>
-                <!-- 文章封面图片结束 -->
-                <!-- 文章描述开始 -->
-                <div class="col-xs-12 col-sm-6  col-md-6 col-lg-8 b-des-read">
-                    关于我把 word 和 pdf 来回整的故事；我有一段血泪史；惊天地；泣鬼神；痛彻心扉；穿越前世今生；今天我准备熬夜把它控诉一遍；之前有一些愚蠢的人类给了伟大的程序猿一份 word 文档；里面就一段文字；需求是能动态的替换其中的部分内容；然后转成 pdf 供用户下载；这简单啊；还要啥 word 文档啊；直接手动把内容复制出来；放好占位符用 php...
-                </div>
-                <!-- 文章描述结束 -->
+        <div class="ui stackable m-container-mini m-opacity grid">
+            <div class="m-margin-tb-tiny four wide column">
+                <a href="#" class="class_outer" target="_blank">
+                    <img src="{{ asset('home/images/backimg1.jpg') }}" alt="" class="ui rounded image">
+                    <span class="class_cover" >
+                         <h4 class="m-font-size-blog-text m-margin-tb-tiny">大圣，此去欲何?</h4>
+                      </span>
+                </a>
+            </div>
+            <div class="m-margin-tb-tiny four wide column">
+                <a href="#" class="class_outer" target="_blank">
+                    <img src="{{ asset('home/images/backimg1.jpg') }}" alt="" class="ui rounded image">
+                    <span class="class_cover" >
+                         <h4 class="m-font-size-blog-text m-margin-tb-tiny">此去欲何?</h4>
+                      </span>
+                </a>
             </div>
         </div>
-        <a class=" b-readall" href="https://baijunyao.com/article/145" target="_blank">阅读全文</a>
     </div>
-    <!-- 循环文章列表结束 -->
-    <!-- 列表分页开始 -->
-    <div class="row">
-        <div class="col-xs-12 col-md-12 col-lg-12 b-page text-center">
-            <ul class="pagination">
-                <li class="disabled"><span>上一页</span></li>
-                <li class="active"><span>1</span></li>
-                <li><a href="https://baijunyao.com?page=2">2</a></li>
-                <li><a href="https://baijunyao.com?page=3">3</a></li>
-                <li><a href="https://baijunyao.com?page=4">4</a></li>
-                <li><a href="https://baijunyao.com?page=5">5</a></li>
-                <li><a href="https://baijunyao.com?page=6">6</a></li>
-                <li><a href="https://baijunyao.com?page=7">7</a></li>
-                <li><a href="https://baijunyao.com?page=8">8</a></li>
-                <li class="disabled"><span>...</span></li>
-                <li><a href="https://baijunyao.com?page=13">13</a></li>
-                <li><a href="https://baijunyao.com?page=14">14</a></li>
-                <li><a href="https://baijunyao.com?page=2" rel="next">下一页</a></li>
-            </ul>
+    <!--最新推荐结束-->
+
+    <!--居中内容开始-->
+    <div class="m-padded-tb-big animated fadeIn">
+        <div class="ui container">
+            <div class="ui stackable grid">
+                <!--博客内容-->
+                <div class="ui vertical segment">
+                    <div class="ui m-container-small m-opacity">
+                        <div class="ui secondary segment " align="center">
+                            <i class="bookmark icon"></i>最新文章
+                        </div>
+                    </div>
+                    <!--博文列表-->
+                    <div class="ui padded segment m-padded-tb-large m-opacity">
+                        <div class="ui large aligned mobile reversed stackable grid">
+                            <!--博文信息-->
+                            <div class="eleven wide column ">
+                                <h3 class="ui header" ><a href="#" target="_blank" class="m-black">大圣，此去欲何?</a></h3>
+                                <p class="m-text m-margin-top-max">戴上金箍，没法爱你；放下金箍，没法保护你。我知道上天不会给我第二次机会，曾经我们说好的永远，原来也仅仅只有，十二画，而已。“大圣，此去欲何?”“踏南天，碎凌霄。”“若一去不回……”“便一去不回” 其实很多时候，我们都是有机会的，最后真正放弃的，是我们自己。......</p>
+                                <div class="ui m-margin-top-max grid">
+                                    <div class="eleven wide column">
+                                        <div class="ui mini horizontal link list">
+                                            <div class="item">
+                                                <img src=" {{ asset('home/images/me.jpg ') }}"  alt="" class="ui avatar image">
+                                                <div class="content"><a href="#" target="_blank" class="header" >oneStar</a></div>
+                                            </div>
+                                            <div class="item">
+                                                <i class="calendar icon"></i><span>2020-01-01</span>
+                                            </div>
+                                            <div class="item">
+                                                <i class="eye icon"></i> <span>2222</span>
+                                            </div>
+                                            <div class="item">
+                                                <i class="comment outline icon"></i> <span>2222</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="right aligned five wide column">
+                                        <a href="#" target="_blank" class="ui teal basic label m-padded-tiny m-text-thin">好文</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--博文图片-->
+                            <div class="five wide column">
+                                <a href="#" target="_blank">
+                                    <img src=" {{ asset('home/images/backimg1.jpg ') }}" alt="" class="ui rounded image">
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!--分页-->
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 col-lg-12 b-page text-center">
+                        <ul class="pagination">
+                            <li class="disabled"><span>上一页</span></li>
+                            <li class="active"><span>1</span></li>
+                            <li><a href="https://baijunyao.com?page=2">2</a></li>
+                            <li><a href="https://baijunyao.com?page=3">3</a></li>
+                            <li><a href="https://baijunyao.com?page=4">4</a></li>
+                            <li><a href="https://baijunyao.com?page=5">5</a></li>
+                            <li><a href="https://baijunyao.com?page=6">6</a></li>
+                            <li><a href="https://baijunyao.com?page=7">7</a></li>
+                            <li><a href="https://baijunyao.com?page=8">8</a></li>
+                            <li><a href="https://baijunyao.com?page=9">9</a></li>
+                            <li><a href="https://baijunyao.com?page=10">10</a></li>
+                            <li class="disabled"><span>...</span></li>
+                            <li><a href="https://baijunyao.com?page=19">19</a></li>
+                            <li><a href="https://baijunyao.com?page=20">20</a></li>
+                            <li><a href="https://baijunyao.com?page=2" rel="next">下一页</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+
+
+            </div>
         </div>
+
     </div>
-    <!-- 列表分页结束 -->
-</div>
-<!-- 左侧列表结束 -->
+    <!--居中内容结束-->
+
+    <!--置顶图标开始-->
+    <div class="m-padded-tb-large m-fixed m-right-bottom">
+        <a href="#" class="ui icon button"><i class="chevron up icon"></i> </a>
+    </div>
+    <!--置顶图标结束-->
+
+<!-- 首页内容结束 -->
 @endsection
 

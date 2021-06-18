@@ -1,1051 +1,514 @@
 @extends('layouts.home')
 
-@section('title', '最适合入门的Laravel初级教程(十)集合Collections - 白俊遥博客,技术博客,个人博客模板,php博客系统,设计模式')
+@section('title', 'Markdown编辑')
 
-@section('keywords', 'laravel,collect,collection,集合')
+@section('keywords', 'Markdown')
 
-@section('description', '我们从数据库查出来了数据；但是我们发现它并不是我们以为的数组形式；这就要讲讲 collection 对象了；laravel 中 collection 是比数组更高等公民般的存在；我们可以像对待数组一样的来操作 collection；而且它还能以链式操作的方式便捷易读的处理数据；所有文字都苍白；所有语言都无力；咱直接举几筐栗子更直观的来讲解；我们定义一个数组；...')
+@section('description', '一、关于 Typo.cssp { color: red }p { color: red }Typo.css 的目的是，在一致化浏览器排版效果的同时，构建最适合中文阅读的网页排版。现状和如何去做：排版是一个麻烦的问题 # 附录一，需要精心设计，而这个设计却是常被视觉设计师所忽略的。前端工程师更常看到这样的问题，但不便变更。因为在多个 OS 的不同浏览器渲染不同，改动需要多的时间做回归测试，所以改变变得更困难。而像我们一般使用的 Yahoo、Eric Meyer 和 Alice base.css 中采用 Reset 都没有很好地考虑中文排版。Typo.css 要做的就是解决中文排版的问题。')
 
 
-<!-- 左侧文章开始 -->
+
 @section('content')
-<div class="col-xs-12 col-md-12 col-lg-8">
 
-    <div class="row b-article">
-        <h1 class="col-xs-12 col-md-12 col-lg-12 b-title">最适合入门的Laravel初级教程(十)集合Collections</h1>
-        <div class="col-xs-12 col-md-12 col-lg-12">
-            <ul class="row b-metadata">
-                <li class="col-xs-5 col-md-2 col-lg-3"><i class="fa fa-user"></i> 白俊遥</li>
-                <li class="col-xs-7 col-md-3 col-lg-3"><i class="fa fa-calendar"></i> 2018-02-04 16:13:21</li>
-                <li class="col-xs-5 col-md-2 col-lg-2"><i class="fa fa-list-alt"></i> <a href="https://baijunyao.com/category/27">PHP</a>
-                <li class="col-xs-7 col-md-5 col-lg-4 "><i class="fa fa-tags"></i>
-                    <a class="b-tag-name" href="https://baijunyao.com/tag/42">Laravel</a>
-                </li>
-            </ul>
-        </div>
-        <div class="col-xs-12 col-md-12 col-lg-12 b-content-word">
-            <div class="js-content"><p>我们从数据库查出来了数据；<br>但是我们发现它并不是我们以为的数组形式；<br><img src="https://baijunyao.com/uploads/article/20180205/5a7731072b108.jpg" alt="" title=""><br>这就要讲讲 collection 对象了；<br>laravel 中 collection 是比数组更高等公民般的存在；<br>我们可以像对待数组一样的来操作 collection；<br>而且它还能以链式操作的方式便捷易读的处理数据；<br>所有文字都苍白；所有语言都无力；<br>咱直接举几筐栗子更直观的来讲解；</p><p>我们定义一个数组；</p><pre><code class="lang-php">        $array = [
-            '', '帅', '白', 0, '俊', false, '遥', null, '博', '客'
-        ];</code></pre><p>把上面这个数组变成 cllection 很简单；<br>直接调用 <code>collect</code> 函数即可；</p><pre><code class="lang-php">        $collect = collect($array);</code></pre><p>然后我们就能像数组一样取值循环了；</p><pre><code class="lang-php">        dump($collect[0]);
-        foreach ($collect as $K =&gt; $v) {
-            dump($v);
-        }</code></pre><p>但如果仅仅是这就不值得追捧了；<br>下面才是见证奇迹的时候；<br>我有这么一系列操作；<br>把 <code>$array</code> 中的帅字去掉；<br>接着过滤掉其中为假的值；<br>最后用 <code>-</code> 连接起来拼成 '白俊遥博客';<br>我们先用数组函数来实现；</p><pre><code class="lang-php">        // unset() 删除 '帅' 字
-        // array_filter() 过滤为假的值
-        // implode() 用 - 连接
-        unset($array[1]);
-        dump(implode('-', array_filter($array)));</code></pre><p>我们再用 collect 再实现一遍；</p><pre><code class="lang-php">        // forget() 删除 '帅字'
-        // filter() 过滤为假的值
-        // implode() 用 - 连接
-        dump($collect-&gt;forget(1)-&gt;filter()-&gt;implode('-'));</code></pre><p>两种方式打印出来的结果是一样的；<br><img src="https://baijunyao.com/uploads/article/20180205/5a7731128781b.jpg" alt="" title=""><br>如果操作再复杂点；<br>都用函数一层一层的的套的话；<br>想想都让人崩溃；<br>还是链式操作即直观又美观；<br>有木有再次开始感受到 laravel 的优雅了；<br>这只是拿出了 3 个方法示例；<br>collection 其实有一大堆的功能可以供我们使用；<br><img src="https://baijunyao.com//uploads/article/20180205/5a77311da5c99.jpg" alt="" title=""><br>完整的文档链接在这里；<br>童鞋们可以挨个自行体验了；<br><a href="https://d.laravel-china.org/docs/5.5/collections#method-reverse">Laravel 的集合 Collection</a><br>由于从数据库取出的数据本身就是一个 collection ;<br>所以可以直接使用这些方法；</p><pre><code class="lang-php">DB::table('articles')-&gt;where('id', '&gt;', 1)-&gt;get()-&gt;pluck('title')-&gt;implode('-');</code></pre><p>我当年刚学 laravel 的时候还是习惯数组；<br>所以每次都用 <code>-&gt;toArray()</code> 把 collection 转成数组了；<br>甚至都在改造框架以达到从数据库取出来直接是数组的数据类型；<br>直到后来我慢慢了理解 collection 的强大；<br>才深深的明白了我的愚蠢；<br>所以我特意把 collection 拎出来写一篇文章；<br>希望能引导童鞋们正确并善于使用集合；</p></div>
-            <p class="b-h-20"></p>
-            <p class="b-copyright">
-                本文为白俊遥原创文章,转载无需和我联系,但请注明来自<a href="http://baijunyao.com">白俊遥博客</a>https://baijunyao.com 欢迎捐赠赞赏加入组织<a href="https://baijunyao.com/article/124">创建QQ群及捐赠渠道</a>
-            </p>
-            <div class="b-share-plugin">
-                <div id="b-share-js"></div>
-            </div>
-            <ul class="b-prev-next">
-                <li class="b-prev">
-                    上一篇：
-                    <a href="https://baijunyao.com/article/140">最适合入门的Laravel初级教程(九)数据库查询Query Builder</a>
+    <div id="waypoint" class="m-margin- animated fadeIn">
+        <div class="ui container m-opacity box-shadow-max">
+            <!--内容-->
+            <div class="ui attached padded segment">
 
-                </li>
-                <li class="b-next">
-                    下一篇：
-                    <a href="https://baijunyao.com/article/142">最适合入门的Laravel初级教程(十一)模型Eloquent ORM</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <!-- 引入通用评论开始 -->
-    <script>
-        var userEmail='';
-        tuzkiNumber=1;
-    </script>
-    <div class="row b-like">
-        <div class="col-xs-12 col-md-12 col-lg-12">
-            <ul class="row">
-                <div class="col-xs-2 col-md-1 col-lg-1 b-thumbs-up">
-                    <i class="fa fa-thumbs-up b-liked  hidden " data-article-id="141"></i>
-                    <i class="fa fa-thumbs-o-up " data-article-id="141"></i>
+
+                <!--中间主要内容部分-->
+                <div id="content" class="typo  typo-selection js-toc-content m-padded-lr-responsive m-padded-tb-large">
+
+                    <h2 id="section1">一、关于 <i class="serif">Typo.css</i></h2>
+
+                    <pre class=" language-css"><code class=" language-css"><span class="token selector">p </span><span class="token punctuation">{</span> <span class="token property">color</span><span class="token punctuation">:</span> red <span class="token punctuation">}</span></code></pre>
+
+                    <pre class=" language-css"><code class=" language-css"><span class="token selector">p </span><span class="token punctuation">{</span> <span class="token property">color</span><span class="token punctuation">:</span> red <span class="token punctuation">}</span></code></pre>
+
+                    <p><i class="serif">Typo.css</i> 的目的是，在一致化浏览器排版效果的同时，构建最适合中文阅读的网页排版。</p>
+                    <h4>现状和如何去做：</h4>
+
+                    <p class="typo-first">排版是一个麻烦的问题 <sup><a href="#appendix1"># 附录一</a></sup>，需要精心设计，而这个设计却是常被视觉设计师所忽略的。前端工程师更常看到这样的问题，但不便变更。因为在多个 OS 中的不同浏览器渲染不同，改动需要多的时间做回归测试，所以改变变得更困难。而像我们一般使用的
+                        Yahoo、Eric Meyer 和 Alice base.css 中采用的 Reset 都没有很好地考虑中文排版。<i class="serif">Typo.css</i> 要做的就是解决中文排版的问题。</p>
+
+                    <p><strong><i class="serif">Typo.css</i> 测试于如下平台：</strong></p>
+                    <table class="ui table" summary="Typo.css 的测试平台列表">
+                        <thead>
+                        <tr>
+                            <th>OS/浏览器</th>
+                            <th>Firefox</th>
+                            <th>Chrome</th>
+                            <th>Safari</th>
+                            <th>Opera</th>
+                            <th>IE9</th>
+                            <th>IE8</th>
+                            <th>IE7</th>
+                            <th>IE6</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>OS X</td>
+                            <td>✔</td>
+                            <td>✔</td>
+                            <td>✔</td>
+                            <td>✔</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Win 7</td>
+                            <td>✔</td>
+                            <td>✔</td>
+                            <td>✔</td>
+                            <td>✔</td>
+                            <td>✔</td>
+                            <td>✔</td>
+                            <td>✔</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Win XP</td>
+                            <td>✔</td>
+                            <td>✔</td>
+                            <td>✔</td>
+                            <td>✔</td>
+                            <td>-</td>
+                            <td>✔</td>
+                            <td>✔</td>
+                            <td>✔</td>
+                        </tr>
+                        <tr>
+                            <td>Ubuntu</td>
+                            <td>✔</td>
+                            <td>✔</td>
+                            <td>-</td>
+                            <td>✔</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <h4>中文排版的重点和难点</h4>
+
+                    <p>在中文排版中，HTML4 的很多标准在语义在都有照顾到。但从视觉效果上，却很难利用单独的 CSS 来实现，像<abbr title="在文字下多加一个点">着重号</abbr>（例：这里<em class="typo-em">强调一下</em>）。在 HTML4 中，专名号标签（<code>&lt;u&gt;</code>）已经被放弃，而
+                        HTML5 被<a href="http://html5doctor.com/u-element/">重新提起</a>。<i class="serif">Typo.css</i> 也根据实际情况提供相应的方案。我们重要要注意的两点是：</p>
+                    <ol>
+                        <li>语义：语义对应的用法和样式是否与中文排版一致</li>
+                        <li>表现：在各浏览器中的字体、大小和缩放是否如排版预期</li>
+                    </ol>
+                    <p>对于这些，<i class="serif">Typo.css</i> 排版项目的中文偏重注意点，都添加在附录中，详见：</p>
+                    <blockquote>
+                        <b>附录一</b>：<a href="#appendix1"><i class="serif">Typo.css</i> 排版偏重点</a>
+                    </blockquote>
+
+                    <p>目前已有像百姓网等全面使用 <i class="serif">Typo.css</i> 的项目，测试平台的覆盖，特别是在<abbr title="手机、平板电脑等移动平台">移动端</abbr>上还没有覆盖完主流平台，希望有能力的同学能加入测试行列，或者加入到 <i class="serif">Typo.css</i>
+                        的开发。加入方法：<a href="https://github.com/sofish/Typo.css">参与 <i class="serif">Typo.css</i> 开发</a>。如有批评、建议和意见，也随时欢迎给在 Github 直接提 <a href="https://github.com/sofish/Typo.css/issues">issues</a>，或给<abbr title="Sofish Lin, author of Typo.css" role="author">我</abbr>发<a href="mailto:sofish@icloud.com">邮件</a>。</p>
+
+
+                    <h2 id="section2">二、排版实例：</h2>
+
+                    <p>提供2个排版实例，第一个中文实例来自于来自于<cite class="typo-unique">张燕婴</cite>的《论语》，由于古文排版涉及到的元素比较多，所以采用《论语》中《学而》的第一篇作为排版实例介绍；第2个来自到经典的
+                        Lorem Ipsum，并加入了一些代码和列表等比较具有代表性的排版元素。</p>
+
+                    <h3 id="section2-1">例1：论语学而篇第一</h3>
+
+                    <p>
+                        <small><b>作者：</b><abbr title="名丘，字仲尼">孔子</abbr>（
+                            <time>前551年9月28日－前479年4月11日</time>
+                            ）
+                        </small>
+                    </p>
+
+                    <h4>本篇引语</h4>
+
+                    <p>
+                        《学而》是《论语》第一篇的篇名。《论语》中各篇一般都是以第一章的前二三个字作为该篇的篇名。《学而》一篇包括16章，内容涉及诸多方面。其中重点是「吾日三省吾身」；「节用而爱人，使民以时」；「礼之用，和为贵」以及仁、孝、信等道德范畴。 </p>
+
+                    <h4>原文</h4>
+
+                    <p>子曰：「学而时习之，不亦说乎？有朋自远方来，不亦乐乎？人不知，而不愠，不亦君子乎？」 </p>
+
+                    <h4>译文</h4>
+
+                    <p>孔子说：「学了又时常温习和练习，不是很愉快吗？有志同道合的人从远方来，不是很令人高兴的吗？人家不了解我，我也不怨恨、恼怒，不也是一个有德的君子吗？」 </p>
+
+                    <h4>评析</h4>
+
+                    <p>宋代著名学者<u class="typo-u">朱熹</u>对此章评价极高，说它是「入道之门，积德之基」。本章这三句话是人们非常熟悉的。历来的解释都是：学了以后，又时常温习和练习，不也高兴吗等等。三句话，一句一个意思，前后句子也没有什么连贯性。但也有人认为这样解释不符合原义，指出这里的「学」不是指学习，而是指学说或主张；「时」不能解为时常，而是时代或社会的意思，「习」不是温习，而是使用，引申为采用。而且，这三句话不是孤立的，而是前后相互连贯的。这三句的意思是：自己的学说，要是被社会采用了，那就太高兴了；退一步说，要是没有被社会所采用，可是很多朋友赞同<abbr title="张燕婴">我</abbr>的学说，纷纷到我这里来讨论问题，我也感到快乐；再退一步说，即使社会不采用，人们也不理解我，我也不怨恨，这样做，不也就是君子吗？（见《齐鲁学刊》1986年第6期文）这种解释可以自圆其说，而且也有一定的道理，供读者在理解本章内容时参考。
+                    </p>
+
+                    <p>此外，在对「人不知，而不愠」一句的解释中，也有人认为，「人不知」的后面没有宾语，人家不知道什么呢？当时因为孔子有说话的特定环境，他不需要说出知道什么，别人就可以理解了，却给后人留下一个谜。有人说，这一句是接上一句说的，从远方来的朋友向我求教，我告诉他，他还不懂，我却不怨恨。这样，「人不知」就是「人家不知道我所讲述的」了。这样的解释似乎有些牵强。</p>
+
+                    <p>总之，本章提出以学习为乐事，做到人不知而不愠，反映出孔子学而不厌、诲人不倦、注重修养、严格要求自己的主张。这些思想主张在《论语》书中多处可见，有助于对第一章内容的深入了解。</p>
+
+                    <h3 id="section2-2">例2：英文排版</h3>
+
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+                        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
+                        type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining
+                        essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                        passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem
+                        Ipsum.</p>
+                    <blockquote>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </blockquote>
+
+                    <h4>The standard Lorem Ipsum passage, used since the 1500s</h4>
+
+                    <p>"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                        occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+
+                    <h4>Section 1.10.32 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC</h4>
+
+                    <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam,
+                        eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam
+                        voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
+                        voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
+                        velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim
+                        ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi
+                        consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur,
+                        vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</p>
+
+                    <h4>List style in action</h4>
+                    <ul>
+                        <li>If you wish to succeed, you should use persistence as your good friend, experience as your reference, prudence as
+                            your brother and hope as your sentry.
+                            <p>如果你希望成功，当以恒心为良友，以经验为参谋，以谨慎为兄弟，以希望为哨兵。</p>
+                        </li>
+                        <li>Sometimes one pays most for the things one gets for nothing.
+                            <p>有时候一个人为不花钱得到的东西付出的代价最高。</p>
+                        </li>
+                        <li>Only those who have the patience to do simple things perfectly ever acquire the skill to do difficult things
+                            easily.
+                            <p>只有有耐心圆满完成简单工作的人，才能够轻而易举的完成困难的事。</p>
+                        </li>
+                    </ul>
+
+                    <h4>You may want to create a perfect <code>&lt;hr /&gt;</code> line, despite the fact that there will never have one
+                    </h4>
+                    <hr>
+                    <p><abbr title="法国作家罗切福考尔德">La Racheforcauld</abbr> said:
+                        <mark>"Few things are impossible in themselves; and it is often for want of will, rather than of means, that man fails
+                            to succeed".
+                        </mark>
+                        You just need to follow the browser's behavior, and set a right <code>margin</code> to it。it will works nice as the
+                        demo you're watching now. The following code is the best way to render typo in Chinese:
+                    </p>
+                    <pre class=" language-css"><code class=" language-css">
+<span class="token comment" spellcheck="true">/* 标题应该更贴紧内容，并与其他块区分，margin 值要相应做优化 */</span>
+<span class="token selector">h1,h2,h3,h4,h5,h6 </span><span class="token punctuation">{</span>
+    <span class="token property">line-height</span><span class="token punctuation">:</span><span class="token number">1</span><span class="token punctuation">;</span><span class="token property">font-family</span><span class="token punctuation">:</span>Arial,sans-serif<span class="token punctuation">;</span><span class="token property">margin</span><span class="token punctuation">:</span><span class="token number">1.4</span>em <span class="token number">0</span> <span class="token number">0.8</span>em<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token selector">h1</span><span class="token punctuation">{</span><span class="token property">font-size</span><span class="token punctuation">:</span><span class="token number">1.8</span>em<span class="token punctuation">;</span><span class="token punctuation">}</span>
+<span class="token selector">h2</span><span class="token punctuation">{</span><span class="token property">font-size</span><span class="token punctuation">:</span><span class="token number">1.6</span>em<span class="token punctuation">;</span><span class="token punctuation">}</span>
+<span class="token selector">h3</span><span class="token punctuation">{</span><span class="token property">font-size</span><span class="token punctuation">:</span><span class="token number">1.4</span>em<span class="token punctuation">;</span><span class="token punctuation">}</span>
+<span class="token selector">h4</span><span class="token punctuation">{</span><span class="token property">font-size</span><span class="token punctuation">:</span><span class="token number">1.2</span>em<span class="token punctuation">;</span><span class="token punctuation">}</span>
+<span class="token selector">h5,h6</span><span class="token punctuation">{</span><span class="token property">font-size</span><span class="token punctuation">:</span><span class="token number">1</span>em<span class="token punctuation">;</span><span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">/* 现代排版：保证块/段落之间的空白隔行 */</span>
+<span class="token selector"><span class="token class">.typo</span> p, <span class="token class">.typo</span> pre, <span class="token class">.typo</span> ul, <span class="token class">.typo</span> ol, <span class="token class">.typo</span> dl, <span class="token class">.typo</span> form, <span class="token class">.typo</span> hr </span><span class="token punctuation">{</span>
+    <span class="token property">margin</span><span class="token punctuation">:</span><span class="token number">1</span>em <span class="token number">0</span> <span class="token number">0.6</span>em<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+                    <h3 id="section3">三、附录</h3>
+
+                    <h5 id="appendix1">1、<i class="serif">Typo.css</i> 排版偏重点</h5>
+                    <table class="ui table" summary="Typo.css 排版偏重点">
+                        <thead>
+                        <tr>
+                            <th>类型</th>
+                            <th>语义</th>
+                            <th>标签</th>
+                            <th>注意点</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th rowspan="15">基础标签</th>
+                            <td>标题</td>
+                            <td><code>h1</code> ～ <code>h6</code></td>
+                            <td>全局不强制大小，<code>.typo</code> 中标题与其对应的内容应紧贴，并且有相应的大小设置</td>
+                        </tr>
+                        <tr>
+                            <td>上、下标</td>
+                            <td><code>sup</code>/<code>sub</code></td>
+                            <td>保持与 MicroSoft Office Word 等程序的日常排版一致</td>
+                        </tr>
+                        <tr>
+                            <td>引用</td>
+                            <td><code>blockquote</code></td>
+                            <td>显示/嵌套样式</td>
+                        </tr>
+                        <tr>
+                            <td>缩写</td>
+                            <td><code>abbr</code></td>
+                            <td>是否都有下划线，鼠标 <code>hover</code> 是否为帮助手势</td>
+                        </tr>
+                        <tr>
+                            <td>分割线</td>
+                            <td><code>hr</code></td>
+                            <td>显示的 <code>padding</code> 和 <code>margin</code>正确</td>
+                        </tr>
+                        <tr>
+                            <td>列表</td>
+                            <td><code>ul</code>/<code>ol</code>/<code>dl</code></td>
+                            <td>在全局没有 <code>list-style</code>，在 .<code>typo</code> 中对齐正确</td>
+                        </tr>
+                        <tr>
+                            <td>定义列表</td>
+                            <td><code>dl</code></td>
+                            <td>全局 <code>padding</code> 和 <code>margin</code>为0， .<code>typo</code> 中对齐正确</td>
+                        </tr>
+                        <tr>
+                            <td>选项</td>
+                            <td><code>input[type=radio[, checkbox]]</code></td>
+                            <td>与其他 <code>form</code> 元素排版时是否居中</td>
+                        </tr>
+                        <tr>
+                            <td>斜体</td>
+                            <td><code>i</code></td>
+                            <td>只设置一种斜体，让 <code>em</code> 和 <code>cite</code> 显示为正体</td>
+                        </tr>
+                        <tr>
+                            <td>强调</td>
+                            <td><code>em</code></td>
+                            <td>在全局显示正体，在 <code>.typo</code> 中显示与 <code>b</code> 和 <code>strong</code> 的样式一致，为粗体</td>
+                        </tr>
+                        <tr>
+                            <td>加强</td>
+                            <td><code>strong/b</code></td>
+                            <td>显示为粗体</td>
+                        </tr>
+                        <tr>
+                            <td>标记</td>
+                            <td><code>mark</code></td>
+                            <td>类似荧光笔</td>
+                        </tr>
+                        <tr>
+                            <td>印刷</td>
+                            <td><code>small</code></td>
+                            <td>保持为正确字体的 80% 大小，颜色设置为浅灰色</td>
+                        </tr>
+                        <tr>
+                            <td>表格</td>
+                            <td><code>table</code></td>
+                            <td>全局不显示线条，在 <code>table</code> 中显示表格外框，并且表头有浅灰背景</td>
+                        </tr>
+                        <tr>
+                            <td>代码</td>
+                            <td><code>pre</code>/<code>code</code></td>
+                            <td>字体使用 <code>courier</code> 系字体，保持与 <code>serif</code> 有比较一致的显示效果</td>
+                        </tr>
+                        <tr>
+                            <th rowspan="5">特殊符号</th>
+                            <td>着重号</td>
+                            <td><em class="typo-em">在文字下加点</em></td>
+                            <td>在支持 <code>:after</code> 和 <code>:before</code> 的浏览器可以做渐进增强实现</td>
+                        </tr>
+                        <tr>
+                            <td>专名号</td>
+                            <td><u>林建锋</u></td>
+                            <td>专名号，有下划线，使用 <code>u</code> 或都 <code>.typo-u</code> 类</td>
+                        </tr>
+                        <tr>
+                            <td>破折号</td>
+                            <td>——</td>
+                            <td>保持一划，而非两划</td>
+                        </tr>
+                        <tr>
+                            <td>人民币</td>
+                            <td>¥</td>
+                            <td>使用两平等线的符号，或者 HTML 实体符号 <code>&amp;yen;</code></td>
+                        </tr>
+                        <tr>
+                            <td>删除符</td>
+                            <td>
+                                <del>已删除（deleted）</del>
+                            </td>
+                            <td>一致化各浏览器显示，中英混排正确</td>
+                        </tr>
+                        <tr>
+                            <th rowspan="3">加强类</th>
+                            <td>专名号</td>
+                            <td><code>.typo-u</code></td>
+                            <td>由于 <code>u</code> 被 HTML4 放弃，在向后兼容上推荐使用 <code>.typo-u</code></td>
+                        </tr>
+                        <tr>
+                            <td>着重符</td>
+                            <td><code>.typo-em</code></td>
+                            <td>利用 <code>:after</code> 和 <code>:before</code> 实现着重符</td>
+                        </tr>
+                        <tr>
+                            <td>清除浮动</td>
+                            <td><code>.clearfix</code></td>
+                            <td>与一般 CSS Reset 保持一对致 API</td>
+                        </tr>
+                        <tr>
+                            <th rowspan="5">注意点</th>
+                            <td colspan="3">（1）中英文混排行高/行距</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">（2）上下标在 IE 中显示效果</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">（3）块/段落分割空白是否符合设计原则</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">（4）input 多余空间问题</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">（5）默认字体色彩，目前采用 <code>#333</code> 在各种浏览显示比较好</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <h5 id="appendix2">2、开源许可</h5>
+
                 </div>
-                <ul class="col-xs-10 col-md-11 col-lg-11 js-like-box">
-                </ul>
-            </ul>
+
+                <div class="ui horizontal divider">end</div>
+
+
+                <!--赞赏-->
+                <div>
+                    <div class="ui center aligned basic segment">
+                        <button id="payButton" class="ui orange basic circular button visible">赞赏</button>
+                        <div class="ui payQR flowing popup bottom center transition visible" style="inset: 49.6px auto auto 181.1px; display: block !important;">
+                            <div class="ui orange basic label">
+                                <div class="ui images" style="font-size: inherit !important;">
+                                    <div class="image">
+                                        <img src="{{asset('home/images/zhifupay.jpg')}}" th:src="@{/home/images/zhifupay.jpg}" alt="" class="ui rounded bordered image" style="width: 120px">
+                                        <div>支付宝</div>
+                                    </div>
+                                    <div class="image">
+                                        <img src="{{ asset('home/images/wechatpay.jpg')}}" th:src="@{home/images/wechatpay.jpg}" alt="" class="ui rounded bordered image" style="width: 120px">
+                                        <div>微信</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div></div>
+
+                </div>
+
+            </div>
+            <div id="goto" class="ui attached positive message">
+                <!--博客信息-->
+                <div class="ui middle aligned grid">
+                    <div class="nine wide column">
+                        <ui class="list">
+                            <li>作者：<span>ONESTAR</span><a href="#" target="_blank">（联系作者）</a></li>
+                            <li>发表时间：<span>2020-01-02 09:08</span></li>
+                            <li>版权声明：自由转载-非商用-非衍生-保持署名（创意共享3.0许可证）</li>
+                            <li>转载声明：如果是转载栈主转载的文章，请附上原文链接</li>
+                            <li>公众号转载：请在文末添加作者公众号二维码（公众号二维码见右边，欢迎关注）</li>
+                        </ui>
+                    </div>
+                    <!--微信公众号-->
+                    <div class="seven wide column">
+                        <img src="{{ asset('home/images/oneStar1.jpg') }}" th:src="@{/home/images/oneStar1.jpg}" alt="" class="ui right floated rounded bordered image" style="width: 707px">
+                    </div>
+                </div>
+            </div>
+            <div class="ui bottom attached segment">
+                <!--评论区域列表-->
+                <div id="comment-container" class="ui teal segment">
+                    <div>
+                        <div class="ui threaded comments" style="max-width: 100%;">
+                            <h3 class="ui dividing header">评论</h3>
+                            <div class="comment">
+                                <a class="avatar">
+                                    <img src="{{ asset('home/images/avatar.png') }}">
+                                </a>
+                                <div class="content">
+                                    <a class="author">
+                                        <span>Matt</span>
+                                        <div class="ui mini basic teal left pointing label m-padded-mini">栈主</div>
+                                    </a>
+                                    <div class="metadata">
+                                        <span class="date">Today at 5:42PM</span>
+                                    </div>
+                                    <div class="text">
+                                        How artistic!
+                                    </div>
+                                    <div class="actions">
+                                        <a class="reply" data-commentid="1" data-commentnickname="Matt" onclick="reply(this)">回复</a>
+                                        <a class="delete" href="#" onclick="return confirm('确定要删除该评论吗？三思啊! 删了可就没了！')" th:if="${session.user}">删除</a>
+
+                                    </div>
+                                </div>
+                                <!--子集评论-->
+                                <div class="comments">
+                                    <div class="comment">
+                                        <a class="avatar">
+                                            <img src="{{ asset('home/images/avatar.png') }}">
+                                        </a>
+                                        <div class="content">
+                                            <a class="author">
+                                                <span>小红</span>
+                                                <div class="ui mini basic teal left pointing label m-padded-mini">栈主</div>
+                                                &nbsp;<span class="m-teal">@ 小白</span>
+                                            </a>
+                                            <div class="metadata">
+                                                <span class="date">Today at 5:42PM</span>
+                                            </div>
+                                            <div class="text">
+                                                How artistic!
+                                            </div>
+                                            <div class="actions">
+                                                <a class="reply" data-commentid="1" data-commentnickname="Matt" onclick="reply(this)">回复</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div id="comment-form" class="ui form">
+                    <input type="hidden" name="blogId">
+                    <input type="hidden" name="parentComment.id" value="-1">
+                    <div class="field">
+                        <textarea name="content" placeholder="请输入评论信息..."></textarea>
+                    </div>
+                    <div class="fields">
+                        <div class="field m-mobile-wide m-margin-bottom-small">
+                            <div class="ui left icon input">
+                                <i class="user icon"></i>
+                                <input type="text" name="nickname" placeholder="姓名">
+                            </div>
+                        </div>
+                        <div class="field m-mobile-wide m-margin-bottom-small">
+                            <div class="ui left icon input">
+                                <i class="mail icon"></i>
+                                <input type="text" name="email" placeholder="邮箱">
+                            </div>
+                        </div>
+                        <div class="field  m-margin-bottom-small m-mobile-wide">
+                            <button id="commentpost-btn" type="button" class="ui teal button m-mobile-wide"><i class="edit icon"></i>发布</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
-<!--    <div class="row b-comment">-->
-<!--        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 b-comment-box">-->
-<!--            <img class="b-head-img" src="https://baijunyao.com/images/home/default_head_img.gif" alt="白俊遥博客" title="白俊遥博客">-->
-<!--            <div class="b-box-textarea">-->
-<!--                <div class="b-box-content js-hint" >请先登录后发表评论</div>-->
-<!--                <ul class="b-emote-submit">-->
-<!--                    <li class="b-emote">-->
-<!--                        <i class="fa fa-smile-o js-get-tuzki"></i>-->
-<!--                        <input class="form-control b-email" type="text" name="email" placeholder="接收回复的邮箱" value="">-->
-<!--                        <div class="b-tuzki">-->
-<!---->
-<!--                        </div>-->
-<!--                    </li>-->
-<!--                    <li class="b-submit-button">-->
-<!--                        <input class="js-comment-btn" type="button" value="提 交" article_id="141" parent_id="0" depth="0">-->
-<!--                    </li>-->
-<!--                    <li class="b-clear-float"></li>-->
-<!--                </ul>-->
-<!--            </div>-->
-<!--            <div class="b-clear-float"></div>-->
-<!--        </div>-->
-<!--        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 b-comment-title">-->
-<!--            <ul class="row">-->
-<!--                <li class="col-xs-6 col-sm-6 col-md-6 col-lg-6">latest comments</li>-->
-<!--                <li class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right">总共<span>34</span>条评论</li>-->
-<!--            </ul>-->
-<!--        </div>-->
-<!--        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 b-user-comment">-->
-<!---->
-<!--            <div id="comment-4245" class="row b-user b-depth-padding-0  b-parent ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/3435.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">随心。 <i class="fa fa-qq"></i></span>：大佬，如果是做微信小程序之类的，就不能在视图中设置{{csrf_field()}}这个来防止外站提交了，这个时候该怎么做呢<img src="https://baijunyao.com/statics/emote/tuzki/10.gif" title="瞌睡" alt="白俊遥博客">-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2019-02-20 09:58:19-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id=""-->
-<!--                           comment_id="4245"-->
-<!--                           username="随心。"-->
-<!--                           depth="0"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!---->
-<!--            <div id="comment-4314" class="row b-user b-depth-padding-1 ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/49.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">建奇A <i class="fa fa-qq"></i></span>：小程序属于api类操作，用户信息提交的时候要带上uid和token等加密参数 来验证用户是否合法用户，验证参数可以放到body体也可以放到header头-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2019-03-30 11:03:35-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id="4245"-->
-<!--                           comment_id="4314"-->
-<!--                           username="建奇A"-->
-<!--                           depth="1"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div class="row">-->
-<!--                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
-<!--                    <div class="b-border"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div id="comment-4012" class="row b-user b-depth-padding-0  b-parent ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/2622.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">天青色等烟雨 <i class="fa fa-qq"></i></span>：很棒的文章！支持！-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-10-05 14:18:02-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id=""-->
-<!--                           comment_id="4012"-->
-<!--                           username="天青色等烟雨"-->
-<!--                           depth="0"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div class="row">-->
-<!--                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
-<!--                    <div class="b-border"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div id="comment-3830" class="row b-user b-depth-padding-0  b-parent ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/2946.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">花舞千魂殇 <i class="fa fa-weibo"></i></span>：我也是 一看到集合就想转为数组 ， 但是经过阿婆主介绍 发现这个集合真的很潮啊-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-08-01 01:23:16-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id=""-->
-<!--                           comment_id="3830"-->
-<!--                           username="花舞千魂殇"-->
-<!--                           depth="0"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div class="row">-->
-<!--                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
-<!--                    <div class="b-border"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div id="comment-3324" class="row b-user b-depth-padding-0  b-parent ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/2500.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">老铁 echo(&quot;&quot;); <i class="fa fa-qq"></i></span>：666啊-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-03-04 01:53:00-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id=""-->
-<!--                           comment_id="3324"-->
-<!--                           username="老铁 echo(&quot;&quot;);"-->
-<!--                           depth="0"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div class="row">-->
-<!--                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
-<!--                    <div class="b-border"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div id="comment-3323" class="row b-user b-depth-padding-0  b-parent ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/2498.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">心雨 <i class="fa fa-qq"></i></span>：4bcb76924cfd670d92010a19f6af5a4d感谢分享分-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-03-03 09:44:18-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id=""-->
-<!--                           comment_id="3323"-->
-<!--                           username="心雨"-->
-<!--                           depth="0"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div class="row">-->
-<!--                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
-<!--                    <div class="b-border"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div id="comment-3322" class="row b-user b-depth-padding-0  b-parent ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/2498.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">心雨 <i class="fa fa-qq"></i></span>：6f92c250d196793b6475f0d3f2dd3cc2感谢分享-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-03-03 09:43:09-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id=""-->
-<!--                           comment_id="3322"-->
-<!--                           username="心雨"-->
-<!--                           depth="0"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div class="row">-->
-<!--                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
-<!--                    <div class="b-border"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div id="comment-3321" class="row b-user b-depth-padding-0  b-parent ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/2151.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">二十三岁的九局下半丶 <i class="fa fa-weibo"></i></span>：元宵节快乐！！！-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-03-02 07:49:59-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id=""-->
-<!--                           comment_id="3321"-->
-<!--                           username="二十三岁的九局下半丶"-->
-<!--                           depth="0"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!---->
-<!--            <div id="comment-3330" class="row b-user b-depth-padding-1 ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/1.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                    <img class="b-crown" src="https://baijunyao.com/images/home/crown.png" alt="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">云淡风晴 <i class="fa fa-qq"></i></span>：同乐；哈哈；-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-03-04 14:29:48-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id="3321"-->
-<!--                           comment_id="3330"-->
-<!--                           username="云淡风晴"-->
-<!--                           depth="1"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div class="row">-->
-<!--                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
-<!--                    <div class="b-border"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div id="comment-3320" class="row b-user b-depth-padding-0  b-parent ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/2493.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">mrhopelee <i class="fa fa-github"></i></span>：从一看到十,很棒的入门文章,感谢~-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-03-02 07:37:58-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id=""-->
-<!--                           comment_id="3320"-->
-<!--                           username="mrhopelee"-->
-<!--                           depth="0"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!---->
-<!--            <div id="comment-3926" class="row b-user b-depth-padding-1 ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/912.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">=͟͟͞͞若=͟͟͞͞水 <i class="fa fa-qq"></i></span>：+1-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-08-24 03:54:05-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id="3320"-->
-<!--                           comment_id="3926"-->
-<!--                           username="=͟͟͞͞若=͟͟͞͞水"-->
-<!--                           depth="1"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div class="row">-->
-<!--                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
-<!--                    <div class="b-border"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div id="comment-3319" class="row b-user b-depth-padding-0  b-parent ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/2495.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">cantinzing <i class="fa fa-github"></i></span>：坐等更新-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-03-02 02:40:19-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id=""-->
-<!--                           comment_id="3319"-->
-<!--                           username="cantinzing"-->
-<!--                           depth="0"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!---->
-<!--            <div id="comment-3331" class="row b-user b-depth-padding-1 ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/1.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                    <img class="b-crown" src="https://baijunyao.com/images/home/crown.png" alt="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">云淡风晴 <i class="fa fa-qq"></i></span>：不用等了；更新完了；-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-03-04 14:30:02-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id="3319"-->
-<!--                           comment_id="3331"-->
-<!--                           username="云淡风晴"-->
-<!--                           depth="1"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div class="row">-->
-<!--                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
-<!--                    <div class="b-border"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div id="comment-3316" class="row b-user b-depth-padding-0  b-parent ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/2490.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">yymmhh <i class="fa fa-github"></i></span>：<img src="https://baijunyao.com/statics/emote/tuzki/31.gif" title="扔桌子" alt="白俊遥博客">laravel中的集合功能强大的一笔-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-02-28 11:52:36-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id=""-->
-<!--                           comment_id="3316"-->
-<!--                           username="yymmhh"-->
-<!--                           depth="0"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div class="row">-->
-<!--                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
-<!--                    <div class="b-border"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div id="comment-3312" class="row b-user b-depth-padding-0  b-parent ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/2039.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">加藤非 <i class="fa fa-qq"></i></span>：非常谢谢大佬分享-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-02-27 13:46:15-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id=""-->
-<!--                           comment_id="3312"-->
-<!--                           username="加藤非"-->
-<!--                           depth="0"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div class="row">-->
-<!--                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
-<!--                    <div class="b-border"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div id="comment-3309" class="row b-user b-depth-padding-0  b-parent ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/2472.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">徐逸以轩  <i class="fa fa-qq"></i></span>：感谢分享-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-02-25 13:28:19-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id=""-->
-<!--                           comment_id="3309"-->
-<!--                           username="徐逸以轩 "-->
-<!--                           depth="0"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div class="row">-->
-<!--                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
-<!--                    <div class="b-border"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div id="comment-3308" class="row b-user b-depth-padding-0  b-parent ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/2479.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">国飞Zhang。 <i class="fa fa-qq"></i></span>：b645c683ae94c55de46d50bde1477ae3   出现这个代码怎么回事-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-02-24 08:42:01-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id=""-->
-<!--                           comment_id="3308"-->
-<!--                           username="国飞Zhang。"-->
-<!--                           depth="0"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div class="row">-->
-<!--                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
-<!--                    <div class="b-border"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div id="comment-3304" class="row b-user b-depth-padding-0  b-parent ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/2474.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">青衫拂袖 <i class="fa fa-qq"></i></span>：<img src="https://baijunyao.com/statics/emote/tuzki/39.gif" title="在笼子里" alt="白俊遥博客">-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-02-23 14:40:54-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id=""-->
-<!--                           comment_id="3304"-->
-<!--                           username="青衫拂袖"-->
-<!--                           depth="0"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!---->
-<!--            <div id="comment-3313" class="row b-user b-depth-padding-1 ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/2039.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">加藤非 <i class="fa fa-qq"></i></span>：哈哈哈-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-02-27 13:50:22-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id="3304"-->
-<!--                           comment_id="3313"-->
-<!--                           username="加藤非"-->
-<!--                           depth="1"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div class="row">-->
-<!--                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
-<!--                    <div class="b-border"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div id="comment-3298" class="row b-user b-depth-padding-0  b-parent ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/2456.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">等待 <i class="fa fa-qq"></i></span>：哈哈哈-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-02-12 16:23:28-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id=""-->
-<!--                           comment_id="3298"-->
-<!--                           username="等待"-->
-<!--                           depth="0"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div class="row">-->
-<!--                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
-<!--                    <div class="b-border"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div id="comment-3290" class="row b-user b-depth-padding-0  b-parent ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/2449.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">为人生而奋斗！ <i class="fa fa-qq"></i></span>：不错啊-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-02-09 14:32:16-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id=""-->
-<!--                           comment_id="3290"-->
-<!--                           username="为人生而奋斗！"-->
-<!--                           depth="0"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div class="row">-->
-<!--                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
-<!--                    <div class="b-border"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div id="comment-3289" class="row b-user b-depth-padding-0  b-parent ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/2448.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">flyingdreams1111 <i class="fa fa-github"></i></span>：博主,后续还会有嘛?前头的已学完-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-02-09 12:35:08-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id=""-->
-<!--                           comment_id="3289"-->
-<!--                           username="flyingdreams1111"-->
-<!--                           depth="0"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!---->
-<!--            <div id="comment-3332" class="row b-user b-depth-padding-1 ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/1.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                    <img class="b-crown" src="https://baijunyao.com/images/home/crown.png" alt="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">云淡风晴 <i class="fa fa-qq"></i></span>：更新完了；-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-03-04 14:30:24-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id="3289"-->
-<!--                           comment_id="3332"-->
-<!--                           username="云淡风晴"-->
-<!--                           depth="1"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div class="row">-->
-<!--                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
-<!--                    <div class="b-border"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div id="comment-3272" class="row b-user b-depth-padding-0  b-parent ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/2440.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">Jerry <i class="fa fa-qq"></i></span>：<img src="https://baijunyao.com/statics/emote/tuzki/2.gif" title="Love" alt="白俊遥博客">-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-02-08 07:16:35-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id=""-->
-<!--                           comment_id="3272"-->
-<!--                           username="Jerry"-->
-<!--                           depth="0"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div class="row">-->
-<!--                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
-<!--                    <div class="b-border"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div id="comment-3268" class="row b-user b-depth-padding-0  b-parent ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/470.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">快乐远〖航〗 <i class="fa fa-qq"></i></span>：相当透彻-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-02-06 12:13:35-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id=""-->
-<!--                           comment_id="3268"-->
-<!--                           username="快乐远〖航〗"-->
-<!--                           depth="0"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div class="row">-->
-<!--                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
-<!--                    <div class="b-border"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div id="comment-3267" class="row b-user b-depth-padding-0  b-parent ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/2428.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">J <i class="fa fa-qq"></i></span>：<img src="https://baijunyao.com/statics/emote/tuzki/2.gif" title="Love" alt="白俊遥博客">-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-02-06 09:38:31-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id=""-->
-<!--                           comment_id="3267"-->
-<!--                           username="J"-->
-<!--                           depth="0"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!---->
-<!--            <div id="comment-3273" class="row b-user b-depth-padding-1 ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/2410.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">uw <i class="fa fa-qq"></i></span>：<img src="https://baijunyao.com/statics/emote/tuzki/6.gif" title="顶" alt="白俊遥博客">-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-02-08 07:58:31-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id="3267"-->
-<!--                           comment_id="3273"-->
-<!--                           username="uw"-->
-<!--                           depth="1"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!---->
-<!--            <div id="comment-3280" class="row b-user b-depth-padding-1 ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/2447.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">你 <i class="fa fa-qq"></i></span>：想看一下你这边的回复是无限级的吗？-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-02-09 10:53:40-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id="3267"-->
-<!--                           comment_id="3280"-->
-<!--                           username="你"-->
-<!--                           depth="1"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!---->
-<!--            <div id="comment-3305" class="row b-user b-depth-padding-1 ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/2477.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">i++ <i class="fa fa-qq"></i></span>：是的吧-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-02-24 06:31:32-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id="3267"-->
-<!--                           comment_id="3305"-->
-<!--                           username="i++"-->
-<!--                           depth="1"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div class="row">-->
-<!--                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
-<!--                    <div class="b-border"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div id="comment-3263" class="row b-user b-depth-padding-0  b-parent ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/12.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">null <i class="fa fa-qq"></i></span>：<img src="https://baijunyao.com/statics/emote/tuzki/2.gif" title="Love" alt="白俊遥博客"> 腻害-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-02-05 09:52:15-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id=""-->
-<!--                           comment_id="3263"-->
-<!--                           username="null"-->
-<!--                           depth="0"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div class="row">-->
-<!--                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
-<!--                    <div class="b-border"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div id="comment-3262" class="row b-user b-depth-padding-0  b-parent ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/2423.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">微链源码网 <i class="fa fa-weibo"></i></span>：5G云网络-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-02-05 07:52:25-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id=""-->
-<!--                           comment_id="3262"-->
-<!--                           username="微链源码网"-->
-<!--                           depth="0"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div class="row">-->
-<!--                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
-<!--                    <div class="b-border"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div id="comment-3261" class="row b-user b-depth-padding-0  b-parent ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/1274.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">nothing. <i class="fa fa-qq"></i></span>：厉害-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-02-05 04:03:29-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id=""-->
-<!--                           comment_id="3261"-->
-<!--                           username="nothing."-->
-<!--                           depth="0"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div class="row">-->
-<!--                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
-<!--                    <div class="b-border"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <div id="comment-3259" class="row b-user b-depth-padding-0  b-parent ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/2422.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">木-微博 <i class="fa fa-weibo"></i></span>：<img src="https://baijunyao.com/statics/emote/tuzki/2.gif" title="Love" alt="白俊遥博客">-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-02-04 17:29:46-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id=""-->
-<!--                           comment_id="3259"-->
-<!--                           username="木-微博"-->
-<!--                           depth="0"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!---->
-<!--            <div id="comment-3411" class="row b-user b-depth-padding-1 ">-->
-<!--                <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 b-pic-col">-->
-<!--                    <img class="b-user-pic bjy-lazyload" src="https://baijunyao.com/images/default/avatar.jpg" data-src="https://baijunyao.com/uploads/avatar/2572.jpg" alt="白俊遥博客" title="白俊遥博客">-->
-<!--                </div>-->
-<!--                <div class="col-xs-10 col-sm-11 col-md-11 col-lg-11 b-content-col b-cc-first">-->
-<!--                    <p class="b-content">-->
-<!--                        <span class="b-user-name">火你大哥 <i class="fa fa-qq"></i></span>：<img src="https://baijunyao.com/statics/emote/tuzki/2.gif" title="Love" alt="白俊遥博客">看看-->
-<!--                    </p>-->
-<!--                    <p class="b-date">-->
-<!--                        2018-03-21 12:59:46-->
-<!--                        <a class="js-reply"-->
-<!--                           href="javascript:;"-->
-<!--                           article_id="141"-->
-<!--                           parent_id="3259"-->
-<!--                           comment_id="3411"-->
-<!--                           username="火你大哥"-->
-<!--                           depth="1"-->
-<!--                        >回复</a>-->
-<!--                    </p>-->
-<!--                    <div class="b-clear-float"></div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--        </div>-->
-<!--    </div>-->
-    <!-- 引入通用评论结束 -->
-</div>
-<!-- 左侧文章结束 -->
+
 @endsection
 
 @section('js')
 
 
 
-<script src="{{asset('home/statics/layer-2.4/layer.js')}}"></script>
+
 @endsection
