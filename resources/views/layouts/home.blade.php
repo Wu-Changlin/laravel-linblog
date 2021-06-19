@@ -20,7 +20,7 @@
 <nav class="gird-header">
   <div class="ui container">
     <div class="ui inverted secondary stackable menu">
-      <h2 class="ui olive header item" style="font-family: STSong">ONESTAR</h2>
+      <h2 class="ui olive header item" style="font-family: STSong">Lin</h2>
       <!--<div class="right m-item item m-mobile-hide">-->
         <a href="#" class="m-item item m-mobile-hide "><i class="home icon"></i>首页</a>
         <a href="#" class="m-item item m-mobile-hide"><i class="clone outline icon"></i>分类</a>
@@ -52,30 +52,11 @@
   <img src="{{ asset('home/images/bg.jpg') }}" alt="" class="ui m-bg image" style="width: 100%;height: 100%">
   <div class="m-bg-class_cover">
     <div class="ui container" style="position: relative ;bottom: -540px;">
-      <h2 class="m-font-size-title-large" align="center">Markdown编辑</h2>
+      <h2 class="m-font-size-title-large" align="center">古之燧火，今之星火，明之你我；点燃思想火炬，照亮别人,温暖自己。</h2>
       <div class="ui container" align="center">
         <div class="ui horizontal link list" align="center">
           <div class="item">
-            <div class="ui orange basic label" style="font-size: 7px">原创</div>
-          </div>
-          <div class="item">
-            <i class="user outline outline icon m-font-size-text-mini"></i>
-            <a href="#" style="color: #ffffff;font-size: 18px">oneStar</a>
-          </div>
-          <div class="item">
-            <i class="calendar icon m-font-size-text-mini"></i>
-            <span class="m-font-size-text-mini">2020-01-01</span>
-          </div>
-          <div class="item">
-            <i class="clone icon m-font-size-text-mini"></i>
-            <a href="#" target="_blank" style="color: #ffffff;font-size: 16px">我的故事</a>
-          </div>
-          <div class="item">
-            <i class="eye icon m-font-size-text-mini"></i> <span class="m-font-size-text-mini">2222</span>
-          </div>
-          <div class="item">
-            <i class="comment outline icon m-font-size-text-mini"></i>
-            <span class="m-font-size-text-mini">2222</span>
+            <a href="#" style="color: #ffffff;font-size: 18px">没有人相当英雄，但总要有人去完成使命。</a>
           </div>
         </div>
       </div>
@@ -207,7 +188,6 @@
 
     $('.menu.toggle').click(function () {
         $('.m-item').toggleClass('m-mobile-show');
-
     });
 
     

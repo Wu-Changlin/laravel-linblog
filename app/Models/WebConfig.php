@@ -3,7 +3,7 @@
 namespace App\Models;
 
 
-class Config extends Base
+class WebConfig extends Base
 {
     //
     protected $primaryKey='config_id';

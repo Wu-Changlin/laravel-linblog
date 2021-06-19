@@ -1,15 +1,16 @@
 <?php
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
+use App\Models\WebConfig;
 use Illuminate\Http\Request;
-use App\Models\Config as ConfigModel;
+
 
 /**
  * Class WebController      网站配置  （网站标题、关键字、描述）
  * @package App\Http\Controllers\Admin
  */
 
-class WebController extends Controller
+class WebConfigController extends Controller
 {
     /**
      *showWebConfig        显示网站配置
@@ -17,7 +18,7 @@ class WebController extends Controller
      */
     public function showWebConfig()
     {
-        $data=ConfigModel::all();
+        $data=WebConfig::all();
         $assion=compact('data');
         dd($assion);
         //dd('showWebConfig.显示网站配置');

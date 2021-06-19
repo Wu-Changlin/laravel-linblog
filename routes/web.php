@@ -164,13 +164,13 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login')->group(fun
     // 网站配置管理
     Route::prefix('web')->group(function () {
         // 网站配置列表   http://192.168.164.134:1133/admin/web/showWebConfig
-        Route::get('showWebConfig', 'WebController@showWebConfig');
+        Route::get('showWebConfig', 'WebConfigController@showWebConfig');
         //添加网站配置    http://192.168.164.134:1133/admin/web/addWebConfig
-        Route::get('addWebConfig', 'WebController@addWebConfig');
+        Route::get('addWebConfig', 'WebConfigController@addWebConfig');
         // 更新网站配置   http://192.168.164.134:1133/admin/web/updateWebConfig/1
-        Route::get('updateWebConfig/{id}', 'WebController@updateWebConfig');
+        Route::get('updateWebConfig/{id}', 'WebConfigController@updateWebConfig');
         // 删除网站配置   http://192.168.164.134:1133/admin/web/deleteWebConfig/1
-        Route::get('deleteWebConfig/{id}', 'WebController@deleteWebConfig');
+        Route::get('deleteWebConfig/{id}', 'WebConfigController@deleteWebConfig');
     });
 
 

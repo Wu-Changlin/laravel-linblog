@@ -64,6 +64,7 @@ class ArticleController extends Controller
             $data['keywords'] = isset($input['keywords']) ? $input['keywords']: "";
             $data['markdown'] = isset($input['markdown']) ? $input['markdown']: "";
             $data['is_pull'] = intval($input['is_pull']) ? intval($input['is_pull']) : 0;
+            $data['is_top'] = intval($input['is_top']) ? intval($input['is_top']) : 0;
             $data['cover'] = isset($input['cover']) ? $input['cover'] : "";
             if ($request->hasFile('cover')) {
                 $data['cover']=$this->uploadCover($data['cover']);
@@ -132,6 +133,7 @@ class ArticleController extends Controller
             $data['keywords'] = isset($input['keywords']) ? $input['keywords']: "";
             $data['markdown'] = isset($input['markdown']) ? $input['markdown']: "";
             $data['is_pull'] = intval($input['is_pull']) ? intval($input['is_pull']) : 0;
+            $data['is_top'] = intval($input['is_top']) ? intval($input['is_top']) : 0;
             $data['cover'] = isset($input['cover']) ? $input['cover'] : "";
             if ($request->hasFile('cover')) {
                 $data['cover']=$this->uploadCover($data['cover']);
