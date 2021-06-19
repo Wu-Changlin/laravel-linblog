@@ -28,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
                 'web_config'=>$web_config
 
             ];
-            dd($assign);
+//            dd($assign);
             $view->with($assign);
         });
 

@@ -11,8 +11,27 @@
 @section('content')
 <!-- 首页内容开始 -->
 
+
+    <!--顶部图片开始-->
+    <div id="top_img" class="m-bg-type_outer" style="width: 100%;height: 50%">
+        <img src="{{ asset('home/images/bg.jpg') }}" alt="" class="ui m-bg image" style="width: 100%;height: 100%">
+        <div class="m-bg-class_cover">
+            <div class="ui container" style="position: relative ;bottom: -540px;">
+                <h2 class="m-font-size-title-large" align="center">古之燧火，今之星火，明之你我；点燃思想火炬，照亮别人,温暖自己。</h2>
+                <div class="ui container" align="center">
+                    <div class="ui horizontal link list" align="center">
+                        <div class="item">
+                            <a href="#" style="color: #ffffff;font-size: 18px">没有人相当英雄，但总要有人去完成使命。</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--顶部图片结束-->
+
     <!--最新推荐开始-->
-    <div class="ui m-padded-tb-large">
+    <div   class="ui m-padded-tb-large">
         <div class="ui m-container-small m-opacity">
             <div class="ui secondary segment " align="center">
                 <i class="bookmark icon"></i>最新推荐
@@ -87,6 +106,8 @@
                                 </a>
                             </div>
 
+
+
                         </div>
                     </div>
                 </div>
@@ -122,11 +143,14 @@
     </div>
     <!--居中内容结束-->
 
-    <!--置顶图标开始-->
+
+
+    <!--置顶图标-->
     <div class="m-padded-tb-large m-fixed m-right-bottom">
         <a href="#" class="ui icon button"><i class="chevron up icon"></i> </a>
     </div>
     <!--置顶图标结束-->
+
 
 <!-- 首页内容结束 -->
 @endsection

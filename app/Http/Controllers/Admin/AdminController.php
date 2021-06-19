@@ -133,13 +133,13 @@ class AdminController extends Controller
                 return redirect()->back()->withInput()->with('msg', '数据为空');
                 break;
             case 1:
-                return redirect()->back()->withInput()->with('msg', '邮箱已注册');
-                break;
-            case 2:
                 return redirect()->back()->withInput()->with('msg', "保留");
                 break;
-            case 3:
+            case 2:
                 return redirect()->route("admin.showAdminUser")->with('msg', "更改管理员信息成功");
+                break;
+            case 3:
+                return redirect()->back()->withInput()->with('msg', '邮箱已注册');
                 break;
             case 4:
                 return  redirect()->route("login.index")->with('msg','更改管理员密码成功,注销登录');

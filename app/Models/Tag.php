@@ -79,9 +79,11 @@ class Tag extends Base
             return 1;
         }
         //判断标签名是否修改
-        $tag_name_count = self::where('name',$data['name'])->count(); //根据用户输入标签名查询数据库标签表标签名
-        if($tag_name_count){//如果有数据说明标签已存在
-            return 3;
+        if(!empty($edit_info['name'])){
+            $tag_name_count = self::where('name',$data['name'])->count(); //根据用户输入标签名查询数据库标签表标签名
+            if($tag_name_count){//如果有数据说明标签已存在
+                return 3;
+            }
         }
         self::where('tag_id',$data['tag_id'])->update($edit_info);
         //本次修改标签信息写入log

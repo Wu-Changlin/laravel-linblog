@@ -50,9 +50,11 @@ class Category extends Base
         if (!$edit_info) {//空数组说明没有修改字段值，返回1
             return 1;
         }
-        $category_name_count = self::where('name',$data['name'])->count(); //根据用户输入分类名查询数据库分类表分类信息
-        if($category_name_count){//如果有数据说明分类已存在
-            return 3;
+        if(!empty($edit_info['name'])){
+            $category_name_count = self::where('name',$data['name'])->count(); //根据用户输入分类名查询数据库分类表分类信息
+            if($category_name_count){//如果有数据说明分类已存在
+                return 3;
+            }
         }
         self::where('category_id',$data['category_id'])->update($edit_info); //执行修改分类操作
         //本次修改分类信息写入log

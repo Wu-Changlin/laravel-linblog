@@ -80,35 +80,27 @@ class Admin extends Base
         if(empty($data)){ //如果$data为空直接返回
             return 0;
         }
-        $admin_user = self::find($data['admin_id'],["name","email","password"]); //查询该管理员信息
+        $admin_user = self::find($data['admin_id'],["admin_id","name","email","password"]); //查询该管理员信息
         $admin_info=$admin_user->toArray(); //集合转数组
-        //判断昵称是否修改
-        if($data['name'] ==$admin_info['name']){
-            array_pull($data, 'name');
+        //判断字段是否需要修改
+        $edit_info = array_diff_assoc($data,$admin_info); //1:返回[]空数组，说明2个数组相同 2:返回非空数组（数据相同字段已去除，剩下需要修改的字段数据），说明$data数据和数据库数据不一致，需要执行修改
+        if (!$edit_info) {//空数组说明没有修改字段值，返回1
+            return 1;
         }
-        //判断邮箱是否修改
-        if($data['email'] == $admin_info['email']){
-            array_pull($data, 'email');
-        }else{
+        if(!empty($edit_info['email'])){//如果有新邮箱
             $admin_count = self::where('email',$data['email'])->count(); //根据用户输入邮箱查询数据库管理员邮箱信息
             if($admin_count){//如果有数据说明邮箱已注册
-                return 1;
+                return 3;
             }
         }
-        //判断密码是否修改
-        if($data['password'] == $admin_info['password'] ){
-            array_pull($data, 'password');
-        }elseif (Hash::check($data['password'],$admin_info['password']) ){
-            array_pull($data, 'password');
-        }else{
-            $data['password']=Hash::make($data['password']); //对字符串密码hash加密
+        if(!empty($edit_info['password'])){//如果有新密码
+            if (Hash::check($data['password'],$admin_info['password']) ){
+                array_pull($edit_info, 'password');
+            }else{
+                $edit_info['password']=Hash::make($data['password']); //对字符串密码hash加密
+                }
         }
-        //判断是否有需要修改的信息
-        if(! isset($data['name']) && ! isset($data['email']) && ! isset($data['password']) ){
-            return 2;
-        }
-        self::where('admin_id',$data['admin_id'])->update($data);
-
+        self::where('admin_id',$data['admin_id'])->update($edit_info);
         //本次修改管理员信息写入log
         $admin_user=session('admin_user');
         $admin_log['last_login_ip']=$admin_user['last_login_ip'];    //管理员IP
@@ -134,7 +126,7 @@ class Admin extends Base
 
 
         self::addAadminLog($admin_log);
-        return 3;
+        return 2;
     }
 
     /**

@@ -91,16 +91,18 @@ class Article extends Base
         if(empty($data)){//如果$data为空
             return 0;
         }
-        $article_res = self::find($data['article_id'],["category_id","tag_id","article_id","title","author" ,"description","keywords","markdown","is_pull","cover","author_id"]); //根据文章id查询数据库文章信息
+        $article_res = self::find($data['article_id'],["category_id","tag_id","article_id","title","author" ,"description","keywords","markdown","is_pull","cover","author_id","is_top"]); //根据文章id查询数据库文章信息
         $article_info=$article_res->toArray(); //集合转数组
         //判断字段是否需要修改
         $edit_info = array_diff_assoc($data,$article_info); //1:返回[]空数组，说明2个数组相同 2:返回非空数组（数据相同字段已去除，剩下需要修改的字段数据），说明$data数据和数据库数据不一致，需要执行修改
         if (!$edit_info) {//空数组说明没有修改字段值，返回1
            return 1;
         }
-        $article_count = self::where('title',$data['title'])->count(); //根据用户输入标题查询数据库文章表标题字段
-        if($article_count){//如果有数据说明文章标题已存在
-            return 3;
+        if(!empty($edit_info['title'])){//如果有新标题
+            $article_count = self::where('title',$data['title'])->count(); //根据用户输入标题查询数据库文章表标题字
+            if($article_count){//如果有数据说明文章标题已存在
+                return 3;
+            }
         }
         if(!empty($edit_info['markdown'])){//如果$data['markdown']有数据，则转html
             $edit_info['html']= Markdown::convertToHtml($data['markdown']);//markdown转html

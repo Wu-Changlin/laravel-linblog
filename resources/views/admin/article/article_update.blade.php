@@ -151,6 +151,21 @@
                                             </td>
                                         </tr>
 
+
+                                        <tr>
+                                            <td align="right">推荐置顶</td>
+                                            <td align="left">
+                                                <label style="margin-right:15px;">
+                                                    <input name="is_top" value="1" type="radio" @if( $articles->is_top == 1) checked="checked"  @endif>
+                                                    <span class="text">否</span>
+                                                </label>
+                                                <label style="margin-right:15px;">
+                                                    <input name="is_top" value="2" type="radio"  @if( $articles->is_top == 2) checked="checked"  @endif>
+                                                    <span class="text">是</span>
+                                                </label>
+                                            </td>
+                                        </tr>
+
                                         </tbody>
                                     </table>
                                     <div>

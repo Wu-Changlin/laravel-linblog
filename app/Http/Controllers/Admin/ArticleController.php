@@ -124,6 +124,8 @@ class ArticleController extends Controller
     {
         if($request->isMethod('post')){
             $input = $request->except('s','_token');  //去除 s：路由地址 ，_token： 表单中包含一个隐藏的 CSRF 令牌字段
+
+
             $data['category_id'] = intval($input['category_id']) ? intval($input['category_id']) : 0;
             $data['tag_id'] = intval($input['tag_id']) ? intval($input['tag_id']) : 0;
             $data['article_id'] = intval($input['article_id']) ? intval($input['article_id']) : 0;
@@ -143,7 +145,9 @@ class ArticleController extends Controller
             }else{
                 $data['author_id']=0;
             }
+
             $res=ArticleModel::updateArticle($data);
+
             switch ($res) { //判断新增返回值
                 case 0:
                     return redirect()->back()->withInput()->with('msg', '数据为空');
@@ -152,7 +156,7 @@ class ArticleController extends Controller
                     return redirect()->back()->withInput()->with('msg', "保留，没有修改内容");
                     break;
                 case 2:
-                    return redirect()->route("article.showArticle")->with('msg', "修改文章成功");
+                    return redirect()->back()->withInput()->with('msg', "修改文章成功");
                     break;
                 case 3:
                     return redirect()->back()->withInput()->with('msg', "标题已存在");

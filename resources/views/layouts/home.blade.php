@@ -12,12 +12,13 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}" th:href="@{/css/app.css}">
     <link rel="stylesheet" href="{{ asset('home/static/semantic/semantic.min.css') }}">
     <link rel="stylesheet" href="{{asset('home/css/me.css')}}" th:href="@{/home/css/me.css}">
+    @yield('css')
 </head>
 <body>
 
 
 <!--导航开始-->
-<nav class="gird-header">
+<nav  class="gird-header">
   <div class="ui container">
     <div class="ui inverted secondary stackable menu">
       <h2 class="ui olive header item" style="font-family: STSong">Lin</h2>
@@ -47,23 +48,6 @@
 </nav>
 <!--导航结束-->
 
-<!--顶部图片开始-->
-<div class="m-bg-type_outer" style="width: 100%;height: 50%">
-  <img src="{{ asset('home/images/bg.jpg') }}" alt="" class="ui m-bg image" style="width: 100%;height: 100%">
-  <div class="m-bg-class_cover">
-    <div class="ui container" style="position: relative ;bottom: -540px;">
-      <h2 class="m-font-size-title-large" align="center">古之燧火，今之星火，明之你我；点燃思想火炬，照亮别人,温暖自己。</h2>
-      <div class="ui container" align="center">
-        <div class="ui horizontal link list" align="center">
-          <div class="item">
-            <a href="#" style="color: #ffffff;font-size: 18px">没有人相当英雄，但总要有人去完成使命。</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!--顶部图片结束-->
 
 <!--子页面填充开始-->
 @yield('content')
@@ -73,67 +57,106 @@
 <br>
 <br>
 <!--底部栏开始-->
-<footer class="ui inverted vertical segment m-padded-tb-massive m-opacity">
-    <!--容器-->
-    <div class="ui center aligned container">
-        <div class="ui inverted divided stackable grid">
-            <div class="four wide column">
-                <div style="font-size: large;font-weight: bold" class="ui inverted m-text-thin m-text-spaced m-margin-top-max" >联系我</div>
-                <div class="ui inverted link list">
-                    <div href="#" class="m-text-thin">Email：onestarlr@hotmail.com</div>
-                    <div href="#" class="m-text-thin">QQ：316392836</div>
-                </div>
-            </div>
+{{--<footer class="ui inverted vertical segment m-padded-tb-massive m-opacity">--}}
+{{--    <!--容器-->--}}
+{{--    <div class="ui center aligned container">--}}
+{{--        <div class="ui inverted divided stackable grid">--}}
+{{--            <div class="four wide column">--}}
+{{--                <div style="font-size: large;font-weight: bold" class="ui inverted m-text-thin m-text-spaced m-margin-top-max" >联系我</div>--}}
+{{--                <div class="ui inverted link list">--}}
+{{--                    <div href="#" class="m-text-thin">Email：onestarlr@hotmail.com</div>--}}
+{{--                    <div href="#" class="m-text-thin">QQ：316392836</div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
 
-            <div class="four wide column" >
-                <div class="ui inverted link list">
-                    <div class="item">
-                        <!--微信二维码-->
-                        <div style="font-size: large;font-weight: bold" class="ui inverted m-text-thin m-text-spaced " >关注公众号</div>
-                        <img src="{{ asset('home/images/oneStar.jpg') }}" th:src="@{/home/images/oneStar.jpg}"  class="ui m-margin-top rounded image" alt="" style="width: 110px">
-                    </div>
-                </div>
-            </div>
+{{--            <div class="four wide column" >--}}
+{{--                <div class="ui inverted link list">--}}
+{{--                    <div class="item">--}}
+{{--                        <!--微信二维码-->--}}
+{{--                        <div style="font-size: large;font-weight: bold" class="ui inverted m-text-thin m-text-spaced " >关注公众号</div>--}}
+{{--                        <img src="{{ asset('home/images/oneStar.jpg') }}" th:src="@{/home/images/oneStar.jpg}"  class="ui m-margin-top rounded image" alt="" style="width: 110px">--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
 
-            <div class="four wide column">
-                <div class="ui inverted link list">
-                    <div class="item">
-                        <!--微信二维码-->
-                        <div style="font-size: large;font-weight: bold" class="ui inverted m-text-thin m-text-spaced " >问题交流（QQ群）</div>
-                        <img src="{{ asset('home/images/QQ-question.jpg') }}" th:src="@{/home/images/QQ-question.jpg}"  class="ui m-margin-top rounded image" alt="" style="width: 110px">
-                    </div>
-                </div>
-            </div>
-            <!--博客运行时间统计-->
-            <div class="four wide column">
-                <div style="font-size: large;font-weight: bold" class="ui inverted  m-text-thin m-text-spaced m-margin-top">客栈信息</div>
-                <!--<p id="htmer_time" class="item m-text-thin"></p>-->
-                <div id="blog-message">
-                    <div class="ui inverted link list" style="align-content: center;margin-top: 10px">
-                        <div class="m-text-thin" style="text-align: left;margin-left: 75px;">
-                            文章总数： <h2 class="ui orange header m-inline-block m-margin-top-null" style="font-size:medium;"> 14 </h2> 篇
-                        </div>
-                        <div class="m-text-thin" style="text-align: left;margin-left: 75px">
-                            访问总数： <h2 class="ui orange header m-inline-block m-margin-top-null" style="font-size:medium;"> 14 </h2> 次
-                        </div>
-                        <div class="m-text-thin" style="text-align: left;margin-left: 75px">
-                            评论总数： <h2 class="ui orange header m-inline-block m-margin-top-null" style="font-size:medium;"> 14 </h2> 条
-                        </div>
-                        <div class="m-text-thin" style="text-align: left;margin-left: 75px">
-                            留言总数： <h2 class="ui orange header m-inline-block m-margin-top-null" style="font-size:medium;"> 14 </h2> 条
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="ui inverted section divider"></div>
-        <div style="color: #F08047;margin-top: -18px" class="ui inverted m-text-thin m-text-spaced">我的客栈已营业：<span id="htmer_time" class="item m-text-thin"></span> (*๓´╰╯`๓)</div>
-        <a rel="nofollow" href="http://www.beian.miit.gov.cn" target="_blank">赣ICP备20004408号-1</a>
-    </div>
-    </div>
+{{--            <div class="four wide column">--}}
+{{--                <div class="ui inverted link list">--}}
+{{--                    <div class="item">--}}
+{{--                        <!--微信二维码-->--}}
+{{--                        <div style="font-size: large;font-weight: bold" class="ui inverted m-text-thin m-text-spaced " >问题交流（QQ群）</div>--}}
+{{--                        <img src="{{ asset('home/images/QQ-question.jpg') }}" th:src="@{/home/images/QQ-question.jpg}"  class="ui m-margin-top rounded image" alt="" style="width: 110px">--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <!--博客运行时间统计-->--}}
+{{--            <div class="four wide column">--}}
+{{--                <div style="font-size: large;font-weight: bold" class="ui inverted  m-text-thin m-text-spaced m-margin-top">客栈信息</div>--}}
+{{--                <!--<p id="htmer_time" class="item m-text-thin"></p>-->--}}
+{{--                <div id="blog-message">--}}
+{{--                    <div class="ui inverted link list" style="align-content: center;margin-top: 10px">--}}
+{{--                        <div class="m-text-thin" style="text-align: left;margin-left: 75px;">--}}
+{{--                            文章总数： <h2 class="ui orange header m-inline-block m-margin-top-null" style="font-size:medium;"> 14 </h2> 篇--}}
+{{--                        </div>--}}
+{{--                        <div class="m-text-thin" style="text-align: left;margin-left: 75px">--}}
+{{--                            访问总数： <h2 class="ui orange header m-inline-block m-margin-top-null" style="font-size:medium;"> 14 </h2> 次--}}
+{{--                        </div>--}}
+{{--                        <div class="m-text-thin" style="text-align: left;margin-left: 75px">--}}
+{{--                            评论总数： <h2 class="ui orange header m-inline-block m-margin-top-null" style="font-size:medium;"> 14 </h2> 条--}}
+{{--                        </div>--}}
+{{--                        <div class="m-text-thin" style="text-align: left;margin-left: 75px">--}}
+{{--                            留言总数： <h2 class="ui orange header m-inline-block m-margin-top-null" style="font-size:medium;"> 14 </h2> 条--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--        <div class="ui inverted section divider"></div>--}}
+{{--        <div style="color: #F08047;margin-top: -18px" class="ui inverted m-text-thin m-text-spaced">我的客栈已营业：<span id="htmer_time" class="item m-text-thin"></span> (*๓´╰╯`๓)</div>--}}
+{{--        <a rel="nofollow" href="http://www.beian.miit.gov.cn" target="_blank">赣ICP备20004408号-1</a>--}}
+{{--    </div>--}}
+{{--    </div>--}}
 
-</footer>
+{{--</footer>--}}
 <!--底部栏结束-->
+
+<footer id="b-foot">
+    <div class="container">
+        <div class="row b-content">
+            <dl class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                <dt>权益</dt>
+                <dd>许可协议：<a rel="nofollow" href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.en" target="_blank">CC BY-NC 4.0</a></dd>
+                <dd>版权所有：© 2014-2021</dd>
+                <dd>联系邮箱：<a href="mailto:baijunyao@baijunyao.com">baijunyao@baijunyao.com</a></dd>
+                <dd>ICP 备案：<a rel="nofollow" href="http://www.beian.miit.gov.cn" target="_blank">豫ICP备14009546号-3</a></dd>
+            </dl>
+
+            <dl class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                <dt>架构</dt>
+                <dd>项目名称：<a rel="nofollow" href="https://github.com/baijunyao/laravel-bjyblog" target="_blank">laravel-bjyblog</a></dd>
+                <dd>博客版本：<a rel="nofollow" href="https://github.com/baijunyao/laravel-bjyblog" target="_blank">v15.0.11-develop</a></dd>
+                <dd>框架版本：<a rel="nofollow" href="https://github.com/laravel/framework" target="_blank">laravel-v8.40.0</a></dd>
+                <dd>项目作者：<a href="https://baijunyao.com">白俊遥</a></dd>
+                <dd>主题名称：<a rel="nofollow" href="https://github.com/baijunyao/blog-theme-blueberry">blog-theme-blueberry</a></dd>
+                <dd>主题作者：<a href="https://baijunyao.com">白俊遥</a></dd>
+            </dl>
+
+            <dl class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                <dt>统计</dt>
+                <dd>文章总数：198</dd>
+                <dd>评论总数：4582</dd>
+                <dd>登录用户：4376</dd>
+                <dd>随言碎语：41</dd>
+            </dl>
+
+            <dl class="col-xs-12 col-sm-12 col-md-3 col-lg-3 b-social">
+                <dt>Social</dt>
+                <dd class="b-small-logo">
+                    <a rel="nofollow" href="https://github.com/baijunyao" ><img src="https://baijunyao.com/images/home/social-github.png" alt="github"></a>
+                </dd>
+            </dl>
+        </div>
+    </div>
+</footer>
 
 
 
@@ -141,68 +164,14 @@
 <script src="{{ asset('home/static/semantic/semantic.min.js') }}"></script>
 <script src="{{ asset('home/static/waypoints/jquery.waypoints.min.js') }}" th:src="@{/home/static/waypoints/jquery.waypoints.min.js}"></script>
 
-<script>
-
-    // $('#newblog-container').load(/*[[@{/footer/newblog}]]*/"/footer/newblog");
-
-
-    // 运行时间统计
-    function secondToDate(second) {
-        if (!second) {
-            return 0;
-        }
-        var time = new Array(0, 0, 0, 0, 0);
-        if (second >= 365 * 24 * 3600) {
-            time[0] = parseInt(second / (365 * 24 * 3600));
-            second %= 365 * 24 * 3600;
-        }
-        if (second >= 24 * 3600) {
-            time[1] = parseInt(second / (24 * 3600));
-            second %= 24 * 3600;
-        }
-        if (second >= 3600) {
-            time[2] = parseInt(second / 3600);
-            second %= 3600;
-        }
-        if (second >= 60) {
-            time[3] = parseInt(second / 60);
-            second %= 60;
-        }
-        if (second > 0) {
-            time[4] = second;
-        }
-        return time;
-    }
-    function setTime() {
-        /*此处为网站的创建时间*/
-        var create_time = Math.round(new Date(Date.UTC(2020, 01, 25, 15, 15, 15)).getTime() / 1000);
-        var timestamp = Math.round((new Date().getTime() + 8 * 60 * 60 * 1000) / 1000);
-        currentTime = secondToDate((timestamp - create_time));
-        currentTimeHtml = currentTime[0] + '年' + currentTime[1] + '天'
-            + currentTime[2] + '时' + currentTime[3] + '分' + currentTime[4]
-            + '秒';
-        document.getElementById("htmer_time").innerHTML = currentTimeHtml;
-    }
-    setInterval(setTime, 1000);
-
+<script type="text/javascript">
 
     $('.menu.toggle').click(function () {
         $('.m-item').toggleClass('m-mobile-show');
     });
 
-    
-    // 导航栏显示
-    // var waypoint = new Waypoint({
-    //     element: document.getElementById('waypoint'),
-    //     // handler: function(direction) {
-    //     //     if (direction == 'down') {
-    //     //         $('#nav').show(500);
-    //     //     } else {
-    //     //         $('#nav').hide(500);
-    //     //     }
-    //     //     console.log('Scrolled to waypoint!  ' + direction);
-    //     // }
-    // })
+
 </script>
+@yield('js')
 </body>
 </html>
