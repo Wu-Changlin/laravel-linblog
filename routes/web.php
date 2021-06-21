@@ -7,14 +7,18 @@ Route::namespace('Home')->name('home.')->group(function () {
     //博客首页展示  http://192.168.164.134:1133/
     Route::get('/', 'IndexController@showIndex');
 
-    //显示文章内容+文章评论  http://192.168.164.134:1133/article/1
+    //显示文章内容  http://192.168.164.134:1133/article/1
     Route::get('article/{id}/', 'ArticleController@showArticle');
 
-    //显示指定类型下的所有文章  http://192.168.164.134:1133/category/1
-    Route::get('category/{id}/', 'categoryController@showCategory')->name('category.show');;
+    //显示指定类型下的标签、文章  http://192.168.164.134:1133/category/1
+    Route::get('category/{id}/', 'categoryController@showCategory')->name('category.show');
 
-    //评论文章+回复评论  http://192.168.164.134:1133/comment   测试阶段  get  应用post 表单提交 $article_id 文章id  $user_id用户id, comment_id 评论id ,$comment_content评论内容  $parent_id评论父项id  0：默认  1：不可见 2：父项
-    Route::get('comment', 'CommentController@showComment');
+    //显示友链 http://192.168.164.134:1133/friend
+    Route::get('friend', 'FriendshipLinkController@showFirend');;
+
+    //显示资源库  http://192.168.164.134:1133/resource
+    Route::get('resource', 'ResourceStocksController@showResource');;
+
 
 });
 
@@ -33,17 +37,6 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 
 });
 
-
-//// 后台登录页面
-//Route::namespace('Admin')->prefix('admin')->group(function () {
-//    Route::redirect('/', url('admin/login/index'));
-//    Route::prefix('login')->group(function () {
-//        // 登录页面
-//        Route::get('index', 'LoginController@index')->middleware('admin.login');
-//        // 退出
-//        Route::get('logout', 'LoginController@logout');
-//    });
-//});
 
 
 // 用户注册

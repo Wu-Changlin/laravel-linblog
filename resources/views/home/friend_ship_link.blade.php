@@ -1,0 +1,231 @@
+@extends('layouts.home')
+
+@section('title', '友好博客')
+
+@section('keywords', '友好博客')
+
+@section('description', '友好博客')
+
+
+
+@section('content')
+    <!--友链页开始-->
+
+        <!--顶部图片开始-->
+        <div  class="m-bg-type_outer" style="width: 100%;height: 50%">
+            <img src="{{ asset('home/images/bg.jpg') }}" alt="" class="ui m-bg image" style="width: 100%;height: 100%">
+            <div class="m-bg-class_cover">
+                <div class="ui container" style="position: relative ;bottom: -540px;">
+                    <h2 class="m-font-size-title-large" align="center">古之燧火，今之星火，明之你我；点燃思想火炬，照亮别人,温暖自己。</h2>
+                    <div class="ui container" align="center">
+                        <div class="ui horizontal link list" align="center">
+                            <div class="item">
+                                <a href="#" style="color: #ffffff;font-size: 18px">没有人相当英雄，但总要有人去完成使命。</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--顶部图片结束-->
+
+        <!--友链内容开始-->
+        <div id="waypoint" class="m-margin- animated fadeIn">
+        <div class="ui m-opacity container">
+            <div class="box-shadow-max">
+                <div class="ui segment m-padded-tb-large m-opacity">
+                    <div class="ui container">
+                        <h1 class="" align="center">友人入帐须知</h1>
+
+                        <ui class="list">
+                            <div class="m-margin-left-mini m-margin-tb-tiny" style="font-size: large;font-weight: bold">网站要求</div>
+                            <br>
+                            <li class="m-margin-left-big m-margin-tb-tiny" style="font-size: medium">无色情内容，无政治敏感内容，网站要能长期正常访问</li>
+                            <li class="m-margin-left-big m-margin-tb-tiny" style="font-size: medium">二十篇以上个人原创文章，两个月内有新文章更新</li>
+                            <li class="m-margin-left-big m-margin-tb-tiny" style="font-size: medium">原创博客、技术博客、游记博客优先</li>
+                            <li class="m-margin-left-big m-margin-tb-tiny" style="font-size: medium">需要交换友链，先把本站添加到你的网站中，然后根据下面的格式，给我发email或在页面底部留言~</li>
+                            <br>
+                            <div class="m-margin-left-mini m-margin-tb-tiny" style="font-size: large;font-weight: bold">申请格式</div>
+                            <br>
+                            <li class="m-margin-left-big m-margin-tb-tiny" style="font-size: medium;word-wrap:break-word">博客标题：ONESTAR</li>
+                            <li class="m-margin-left-big m-margin-tb-tiny" style="font-size: medium;word-wrap:break-word">博客地址：https://onestar.newstar.net.cn/</li>
+                            <li class="m-margin-left-big m-margin-tb-tiny" style="font-size: medium;word-wrap:break-word">图片地址：https://onestar.newstar.net.cn/images/me.jpg</li>
+                        </ui>
+                    </div>
+                </div>
+            </div>
+
+            <!--友人帐区域-->
+            <div class="box-shadow-max">
+                <div class="ui top attached teal m-opacity segment box-shadow-max">
+                    <div class="ui m-padded-tb-large m-container-tiny">
+                        <div class="ui stackable m-container-mini m-opacity grid">
+
+                            <!--友人帐显示区域-->
+                            <div class="m-margin-tb-tiny four wide column">
+                                <a href="#" class="class_outer" target="_blank">
+                                    <div align="center">
+                                        <div class="friends-link">
+                                            <img src="{{ asset('home/images/bg.jpg') }}"  alt="" class="friends-link-image">
+                                            <div class="m-margin-top">
+                                                <h4 class="m-font-size-text-friends m-margin-tb-tiny">ONESTAR</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+        <!--友链内容结束-->
+    <div class="m-container-small m-padded-tb-massive">
+        <div class="ui container">
+            <form action="http://192.168.164.134:1133/article/1" method="get" class="ui form">
+                <input type="hidden" name="id">
+                <div class=" field">
+                    <div class="ui left labeled input m-margin-top">
+                        <label class="ui teal basic label">博客名称</label>
+                        <input type="text" name="blogname" placeholder="博客名称">
+                    </div>
+                    <div class="ui left labeled input m-margin-top">
+                        <label class="ui teal basic label">博客地址</label>
+                        <input type="text" name="blogaddress" placeholder="博客地址">
+                    </div>
+                    <div class="ui left labeled input m-margin-top">
+                        <label class="ui teal basic label">图片地址</label>
+                        <input type="text" name="pictureaddress" placeholder="图片地址">
+                    </div>
+                </div>
+
+                <div class="ui error message"></div>
+                <div class="ui mini negative message">提示：不能添加重复的友链</div>
+                <div class="ui right aligned container">
+                    <button class="ui teal submit button">提交</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+        <!--弹框内容开始-->
+        <div class="ui modal" _msthidden="6">
+            <form action="#" method="post" class="ui segment form">
+
+                <div class="two fields">
+                    <div class="field">
+                        <label>资源名称</label>
+                        <input name="resourceName" type="text" placeholder="资源名称（如：CSDN）">
+                    </div>
+                    <div class="field">
+                        <label>资源地址</label>
+                        <input name="resourceAddress" type="text" placeholder="资源地址（如：https://www.csdn.net/）">
+                    </div>
+                </div>
+                <div class="two fields">
+                    <div class="field">
+                        <label>一级分类</label>
+                        <div class="ui fluid selection dropdown">
+                            <input type="hidden" name="firstType">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">一级分类（如：学习资源）</div>
+                            <div class="menu">
+                                <div class="item" data-value="学习资源">学习资源</div>
+                                <div class="item" data-value="图片资源">图片资源</div>
+                                <div class="item" data-value="办公资源">办公资源</div>
+                                <div class="item" data-value="娱乐资源">娱乐资源</div>
+                                <div class="item" data-value="设计资源">设计资源</div>
+                                <div class="item" data-value="搜索资源">搜索资源</div>
+                                <div class="item" data-value="工具资源">工具资源</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>二级分类</label>
+                        <input name="secondType" type="text" placeholder="二级分类（如：文章类）">
+                    </div>
+                </div>
+
+                <!--        <div class="ui aligned container" align="center">-->
+                <!--            <button class="ui teal submit button">提交</button>-->
+                <!--        </div>-->
+
+
+                <div class="actions" _msthidden="2" align="center">
+                    <div class="ui black deny button" _msthash="3553550" _msttexthash="44876" _msthidden="1">
+                        取消
+                    </div>
+                    <button style="width:70px" class="ui positive submit icon button" _msthidden="1">
+                        提交
+                    </button>
+                </div>
+
+                <div style="text-align: center;margin-top: 10px;color: red">注：添加成功后，经管理员审核通过，即可在该页面查看添加的资源（目前只收集页面所显示的七大类资源）</div>
+
+            </form>
+        </div>
+        <!--弹框内容结束-->
+
+        <!--置顶开始-->
+        <div id="toolbar" class="m-padded-tb-large m-fixed m-right-bottom">
+            <a href="#" class="ui icon button"><i class="chevron up icon"></i> </a>
+        </div>
+        <!--置顶结束-->
+
+    <!--友链页结束-->
+
+@endsection
+
+@section('js')
+    <script  type="text/javascript">
+        var waypoint = new Waypoint({
+            element: document.getElementById('waypoint'),
+            handler: function(direction) {
+                if (direction == 'down') {
+                    $('#toolbar').show(100);
+                    $('#nav').hide(100);
+                } else {
+                    $('#toolbar').hide(500);
+                    $('#nav').show(500);
+                }
+                console.log('Scrolled to waypoint!  ' + direction);
+            }
+        })
+
+
+        // 非空校验
+        $('.form.input').form({
+            fields : {
+                title : {
+                    identifier: 'blogname',
+                    rules: [{
+                        type : 'empty',
+                        prompt: '标题：博客名称'
+                    }]
+                },
+                content : {
+                    identifier: 'blogaddress',
+                    rules: [{
+                        type : 'empty',
+                        prompt: '标题：博客地址'
+                    }]
+                },
+                typeId : {
+                    identifier: 'pictureaddress',
+                    rules: [{
+                        type : 'empty',
+                        prompt: '标题：图片地址'
+                    }]
+                },
+            }
+        });
+
+    </script>
+
+
+
+@endsection
