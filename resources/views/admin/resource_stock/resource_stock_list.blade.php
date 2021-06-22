@@ -52,8 +52,8 @@
                                     <tr>
                                         <td align="center">{{  $v->resource_stock_id }}</td>
                                         <td align="center">{{  $v->name }}</td>
-                                        <td align="center">{{  $v->description }}</td>
-                                        <td align="center">{{  $v->url }}</td>
+                                        <td style="word-break:break-all; word-wrap:break-word; white-space:inherit" align="center">{{  $v->description }}</td>
+                                        <td style="word-break:break-all; word-wrap:break-word; white-space:inherit" align="center">{{  $v->url }}</td>
                                         <td align="center">
                                             <img src="{{url($v->cover)}}" height="30">
                                         </td>

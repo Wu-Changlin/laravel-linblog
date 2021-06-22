@@ -2,9 +2,9 @@
 
 @section('title', '霖博客,技术博客,个人博客模板,php博客系统')
 
-@section('keywords', '栏目列表')
+@section('keywords', '分类列表')
 
-@section('description', '显示所有栏目')
+@section('description', '显示所有分类')
 
 @section('content')
 <!-- Page Content -->
@@ -15,7 +15,7 @@
             <li>
                 <a href="{{route('admin.index')}}">系统</a>
             </li>
-            <li class="active">栏目管理</li>
+            <li class="active">分类管理</li>
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
@@ -23,7 +23,7 @@
     <!-- Page Body -->
     <div class="page-body">
 
-        <button type="button" tooltip="添加栏目" class="btn btn-sm btn-azure btn-addon" onclick="javascript:window.location.href = '/admin/category/showAddcategoryWeb'"> <i class="fa fa-plus"></i> Add
+        <button type="button" tooltip="添加分类" class="btn btn-sm btn-azure btn-addon" onclick="javascript:window.location.href = '/admin/category/showAddcategoryWeb'"> <i class="fa fa-plus"></i> Add
         </button>
         <div class="row">
             <div class="col-lg-12 col-sm-12 col-xs-12">
@@ -36,8 +36,8 @@
                                     <tr>
                                         <th class="text-center" width="10%">ID</th>
 {{--                                        <th class="text-center" width="10%">排序</th>--}}
-                                        <th class="text-center">栏目名称</th>
-                                        <th class="text-center">栏目类型</th>
+                                        <th class="text-center">分类名称</th>
+                                        <th class="text-center">分类类型</th>
                                         <th class="text-center" width="10%">下架</th>
                                         <th class="text-center" width="20%">操作</th>
                                     </tr>

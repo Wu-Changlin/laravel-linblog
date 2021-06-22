@@ -6,6 +6,11 @@
 
 @section('description', '显示编辑资源分类页面')
 
+@section('css')
+    <link href="{{asset('admin/article/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+@endsection
+
+
 @section('content')
 <!-- Page Content -->
 <div class="page-content" style="">
@@ -34,36 +39,87 @@
                     </div>
                     <div class="widget-body" style="">
                         <div id="horizontal-form" style="">
-                            <form class="form-horizontal" role="form" action="{{ route('resource.updateResource') }}" method="post" style="">
-                               {{ csrf_field() }}
-                                <input type="hidden" name="id" value="{{ $data->category_id }}">
+                            <form class="form-horizontal" role="form" action="{{ route('resource.updateResource') }}" method="post" enctype="multipart/form-data">
+                                {{ csrf_field() }}
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">上级资源分类</label>
+
                                     <div class="col-sm-6">
                                         <select name="pid">
-                                            <option value="0">顶级资源分类</option>
+                                            <option value="0">顶级资源</option>
+                                            @foreach($pid_res as $v)
+                                                <option  value="{{ $v->resource_stock_id }}"  @if ( $resource->pid==$v->resource_stock_id ) selected="selected" @endif >{{ $v->name }}</option>
+                                            @endforeach
                                         </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="group_id" class="col-sm-2 control-label no-padding-right">资源分类类型</label>
+                                    <div class="col-sm-6">
+
+                                        @foreach($data as $k=>$v)
+                                            @if ( $k==1 )
+                                                @if (  $resource->type==1 )
+                                                    <div class="radio" style="float:left;margin-right:10px;">
+                                                        <label>
+
+                                                            <span class="text" style="color: #0e9e1a">{{$v}}</span>
+                                                        </label>
+                                                    </div>
+                                                @endif
+                                            @else
+                                                <div class="radio" style="float:left;margin-right:10px;">
+                                                    <label>
+                                                            <input name="type" value="{{$k}}" @if ( $resource->type==$k ) checked="checked" @endif    type="radio" >
+                                                            <span class="text">{{$v}}</span>
+                                                    </label>
+                                                </div>
+                                            @endif
+                                        @endforeach
+
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">资源分类名称</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control" placeholder="" name="name" required="" type="text" value="{{ $data->name }}" >
+                                        <input  class="form-control" placeholder="" name="name" required="" type="text" value="{{ $resource->name }}">{{ old('name') }}
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="username" class="col-sm-2 control-label no-padding-right">资源分类关键词</label>
+                                    <label for="username" class="col-sm-2 control-label no-padding-right">资源地址</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control" placeholder="" name="keywords" type="text" value="{{ $data->keywords }}">
+                                        <input type="url" class="form-control" placeholder="" name="url" required="" type="text" value="{{ $resource->url }}">{{ old('url') }}
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">资源分类描述</label>
                                     <div class="col-sm-6">
-                                        <textarea name="description" class="form-control" >{{ $data->description }}</textarea>
+                                        <input class="form-control" placeholder="" name="description" required="" type="text" value="{{ $resource->description }}">{{ old('description') }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="username" class="col-sm-2 control-label no-padding-right">资源图片</label>
+                                    <div class="col-sm-6">
+                                        <div class="fileinput fileinput-new" data-provides="fileinput" id="uploadImageDiv">
+                                            <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 220px; height: 150px; line-height: 150px;">
+                                                <img src="{{ url($resource->cover) }}" alt="">
+                                                <input type="hidden" name="cover" value="{{ $resource->cover }}">
+                                            </div>
+                                            <div>
+                                                    <span class="btn default btn-file">
+                                                        <span class="fileinput-new">选择图片</span>
+                                                        <span class="fileinput-exists">更改</span>
+                                                        <input type="file" name="cover">
+                                                    </span>
+                                                <a href="#" class="btn default fileinput-exists" data-dismiss="fileinput">移除</a>
+                                            </div>
+                                        </div>
+                                        <div id="titleImageError" style="color: #a94442"></div>
                                     </div>
                                 </div>
 
@@ -72,13 +128,13 @@
                                     <div class="col-sm-6">
                                         <div class="radio" style="float:left;margin-right:10px;">
                                             <label>
-                                                <input name="is_pull" value="1" @if( $data->is_pull == 1) checked="checked"  @endif type="radio">
+                                                <input name="is_pull" value="1" @if ( $resource->is_pull==1 ) checked="checked" @endif type="radio">
                                                 <span class="text">是</span>
                                             </label>
                                         </div>
                                         <div class="radio" style="float:left;margin-right:10px;">
                                             <label>
-                                                <input name="is_pull" value="2"  @if( $data->is_pull == 2) checked="checked"  @endif  type="radio">
+                                                <input name="is_pull" value="2" class="inverted"  @if ( $resource->is_pull==2 ) checked="checked" @endif type="radio">
                                                 <span class="text">否</span>
                                             </label>
                                         </div>
@@ -86,24 +142,18 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="group_id" class="col-sm-2 control-label no-padding-right">资源分类类型</label>
+                                    <label for="username" class="col-sm-2 control-label no-padding-right">验证</label>
                                     <div class="col-sm-6">
                                         <div class="radio" style="float:left;margin-right:10px;">
                                             <label>
-                                                <input name="type" value="1" @if( $data->type=='1') checked="checked"  @endif type="radio">
-                                                <span class="text">文章列表</span>
+                                                <input name="is_verify" value="1" @if ( $resource->is_verify==1 ) checked="checked" @endif  type="radio">
+                                                <span class="text">未通过</span>
                                             </label>
                                         </div>
                                         <div class="radio" style="float:left;margin-right:10px;">
                                             <label>
-                                                <input name="type" value="2"  @if( $data->type=='2') checked="checked"  @endif type="radio">
-                                                <span class="text">单页资源分类</span>
-                                            </label>
-                                        </div>
-                                        <div class="radio" style="float:left;margin-right:10px;">
-                                            <label>
-                                                <input name="type" value="3"  @if( $data->type=='3') checked="checked"  @endif type="radio">
-                                                <span class="text">图片列表</span>
+                                                <input name="is_verify" value="2" class="inverted" @if ( $resource->is_verify==2 ) checked="checked" @endif type="radio">
+                                                <span class="text">通过</span>
                                             </label>
                                         </div>
                                     </div>
@@ -128,6 +178,9 @@
 <!-- /Page Content -->
 @endsection
 
+@section('js')
+    <script src="{{ asset('admin/article/bootstrap-fileinput.js')}}"></script>  {{--上传图片插件--}}
+@endsection
 
 
 

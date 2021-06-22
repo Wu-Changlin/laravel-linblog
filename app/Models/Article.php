@@ -6,7 +6,7 @@ use GrahamCampbell\Markdown\Facades\Markdown;
 
 use Illuminate\Support\Facades\DB;
 
-use \Illuminate\Support\Facades\File;
+
 
 class Article extends Base
 {
@@ -30,25 +30,33 @@ class Article extends Base
 
     /**
      * 获取分类 用于新增文章选择
-     * @return \Illuminate\Support\Collection 上架的所有分类
+     * @return \Illuminate\Support\Collection 所有分类
      */
     public  static  function  categorys(){
         $categarys =DB::table('categorys')
-            ->select('name as  category_name','category_id')
-            ->where('is_pull','=',2)
+            ->select('name as  category_name','category_id','is_pull')
             ->get();
+        foreach ($categarys as $k){
+            if($k->is_pull==1){
+                $k->category_name= $k->category_name.'(已下架)';
+            }
+        }
         return  $categarys;
     }
 
     /**
      * 获取标签 用于新增文章选择
-     * @return \Illuminate\Support\Collection 上架的所有标签
+     * @return \Illuminate\Support\Collection  所有标签
      */
     public  static  function  tags(){
         $tags =DB::table('tags')
-            ->select('name as  tag_name','tag_id')
-            ->where('is_pull','=',2)
+            ->select('name as  tag_name','tag_id','is_pull')
             ->get();
+        foreach ($tags as $k){
+            if($k->is_pull==1){
+                $k->tag_name= $k->tag_name.'(已下架)';
+            }
+        }
         return  $tags;
     }
 
@@ -106,6 +114,9 @@ class Article extends Base
         }
         if(!empty($edit_info['markdown'])){//如果$data['markdown']有数据，则转html
             $edit_info['html']= Markdown::convertToHtml($data['markdown']);//markdown转html
+        }
+        if(!empty($edit_info['is_pull']) && $edit_info['is_pull']==1){//如果 is_pull=1 下架文章取消置顶
+            $edit_info['is_top']= 1;//取消置顶
         }
         self::find($data['article_id'])->update($edit_info);//使用update方法修改文章
         //本次新增标签信息写入log

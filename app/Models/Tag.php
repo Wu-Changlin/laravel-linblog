@@ -1,10 +1,8 @@
 <?php
 
 namespace App\Models;
-
-
-
 use Illuminate\Support\Facades\DB;
+
 class Tag extends Base
 {
 
@@ -31,9 +29,13 @@ class Tag extends Base
      */
     public  static  function  categorys(){
         $categarys =DB::table('categorys')
-            ->select('name as  category_name','category_id')
-            ->where('is_pull','=',2)
+            ->select('name as  category_name','category_id','is_pull')
             ->get();
+        foreach ($categarys as $k){
+            if($k->is_pull==1){
+                $k->category_name= $k->category_name.'(已下架)';
+            }
+        }
         return  $categarys;
     }
 

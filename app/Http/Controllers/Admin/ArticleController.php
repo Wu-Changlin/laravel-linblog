@@ -34,7 +34,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * 显示发布文章页
+     *
      * @return
      *
      */
@@ -49,6 +49,7 @@ class ArticleController extends Controller
     }
 
     /**
+     *  新增文章
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse  0:数据为空, 1:文章已存在, 2:新增文章成功,其他：数据写入失败,新增文章失败
      */
@@ -111,7 +112,6 @@ class ArticleController extends Controller
         $tags=ArticleModel::tags();            //标签
         $articles=ArticleModel::find($article_id);            //文章
         $assign   = compact('categorys', 'tags', 'articles');
-
         return view('admin.article.article_update',$assign);
     }
 
@@ -243,8 +243,6 @@ class ArticleController extends Controller
      * @param $file    上传封面图
      * @return string  图片路径
      */
-
-
     public function uploadCover ($file)
     {
         //值例如 /uploads/images/article/20210613
