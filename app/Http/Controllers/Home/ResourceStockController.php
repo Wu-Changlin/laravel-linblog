@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
  * @package App\Http\Controllers\Home
  */
 
-class ResourceStocksController extends Controller
+class ResourceStockController extends Controller
 {
 
     /**
@@ -18,7 +18,7 @@ class ResourceStocksController extends Controller
     public function showResource()
     {
 
-        return view('home.resource_stocks');
+        return view('home.resource_stock');
 
     }
 

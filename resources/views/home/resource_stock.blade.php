@@ -1291,11 +1291,12 @@
                     </div>
 
                     <div class="field">
-                        <label>二级分类</label>
-                        <input name="secondType" type="text" placeholder="二级分类（如：文章类）">
+                        <label>资源类型</label>
+                        <input name="secondType" type="text" placeholder="资源类型（如：视频类）">
                     </div>
-                </div>
 
+                </div>
+                <input  style="margin:0px 0px 15px 0px;" name="description" type="text" placeholder="资源简介（如：众所周知，B站是一个学习网站）">
 {{--                      <div class="ui aligned container" align="center">--}}
 {{--                           <button class="ui teal submit button">提交</button>--}}
 {{--                     </div>--}}
@@ -1368,7 +1369,8 @@
                     }
                 })
                 .modal("show");
-            return false;
+
+             // return false;
 
         }
 
@@ -1390,9 +1392,8 @@
                 content : {
                     identifier: 'resourceAddress',
                     rules: [{
-                        type : 'empty',
-                        Content :'url',
-                        prompt: '标题：请输入资源地址'
+                        type:'url',
+                        prompt: '标题：请输入资源地址或者请输入正确格式的资源地址'
                     }]
                 },
                 typeId : {
@@ -1406,7 +1407,7 @@
                     identifier: 'secondType',
                     rules: [{
                         type : 'empty',
-                        prompt: '标题：请输入二级分类'
+                        prompt: '标题：请输入资源类型'
                     }]
                 },
             }

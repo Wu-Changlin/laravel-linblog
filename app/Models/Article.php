@@ -134,10 +134,12 @@ class Article extends Base
         $article_info = self::find($article_id,["markdown","cover"]); //查询包含图片路径的信息
         $preg = '/(?<=\()+\/uploads\/images\/article\/+[^\)]+/';// 匹配括号里面的内容的正则表达式 markdown里的图片路径：(/uploads/images/article/20210616/DkCGWaGQTm1623848364.png)
         preg_match_all($preg, $article_info->markdown, $allImg);//这里匹配指定文章/uploads/images/article/的img
-        //二维数组转一维
-        $allImg = array_reduce($allImg, function ($result, $value) {
-            return array_merge($result, array_values($value));
-        }, array());
+//        //二维数组转一维
+//        $allImg = array_reduce($allImg, function ($result, $value) {
+//            return array_merge($result, array_values($value));
+//        }, array());
+        //多维数组转一维
+        $allImg=array_dot($allImg);
         array_push($allImg,$article_info->cover);//把封面图入栈
         //循环删除图片
         foreach ($allImg as $key=>$v){

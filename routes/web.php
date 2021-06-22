@@ -17,7 +17,7 @@ Route::namespace('Home')->name('home.')->group(function () {
     Route::get('friend', 'FriendshipLinkController@showFirend');;
 
     //显示资源库  http://192.168.164.134:1133/resource
-    Route::get('resource', 'ResourceStocksController@showResource');;
+    Route::get('resource', 'ResourceStockController@showResource');;
 
 
 });
@@ -95,6 +95,7 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login')->group(fun
     });
 
 
+
     // 标签管理
     Route::prefix('tag')->group(function () {
         // 标签列表     http://192.168.164.134:1133/admin/tag/showTag
@@ -129,6 +130,23 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login')->group(fun
         Route::post('uploadArticleImage', 'ArticleController@uploadArticleImage');
         // 删除文章     http://192.168.164.134:1133/admin/article/deleteArticle/3
         Route::get('deleteArticle/{id}', 'ArticleController@deleteArticle');
+    });
+
+    // 资源管理
+    Route::prefix('resource')->group(function () {
+        // 资源分类列表     http://192.168.164.134:1133/admin/resource/index
+        Route::get('index', 'ResourceStockController@index')->name('resource.index');
+        //显示添加资源分类页面 http://192.168.164.134:1133/admin/resource/showAddresourceWeb
+        Route::get('showAddresourceWeb', 'ResourceStockController@showAddresourceWeb');
+        // 添加资源分类     http://192.168.164.134:1133/admin/resource/addResources
+        Route::post('addResources', 'ResourceStockController@addResources')->name('resource.addResources');
+
+        // 显示编辑资源分类     http://192.168.164.134:1133/admin/resource/showUpdateresourceWeb/1
+        Route::get('showUpdateresourceWeb/{id}', 'ResourceStockController@showUpdateresourceWeb');
+        // 编辑资源分类   http://192.168.164.134:1133/admin/resource/updateResource
+        Route::post('updateResource', 'ResourceStockController@updateResource')->name('resource.updateResource');
+        // 删除资源分类     http://192.168.164.134:1133/admin/resource/deleteResource/1
+        Route::get('deleteResource/{id}', 'ResourceStockController@deleteResource');
     });
 
 

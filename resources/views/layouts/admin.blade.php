@@ -163,6 +163,23 @@
                 <li>
                     <a href="#" class="menu-dropdown">
                         <i class="menu-icon fa fa-chain"></i>
+                        <span class="menu-text">资源分类</span>
+                        <i class="menu-expand"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li>
+                            <a href="{{ route('resource.index') }}">
+                                    <span class="menu-text">
+                                        资源分类列表                                    </span>
+                                <i class="menu-expand"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#" class="menu-dropdown">
+                        <i class="menu-icon fa fa-chain"></i>
                         <span class="menu-text">友情链接</span>
                         <i class="menu-expand"></i>
                     </a>
