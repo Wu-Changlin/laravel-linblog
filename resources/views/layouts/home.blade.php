@@ -23,7 +23,7 @@
     <div class="ui inverted secondary stackable menu">
       <h2 class="ui olive header item" style="font-family: STSong">Lin</h2>
       <!--<div class="right m-item item m-mobile-hide">-->
-        <a href="#" class="m-item item m-mobile-hide "><i class="home icon"></i>首页</a>
+        <a href="/" class="m-item item m-mobile-hide "><i class="home icon"></i>首页</a>
         <a href="#" class="m-item item m-mobile-hide"><i class="clone outline icon"></i>分类</a>
         <a href="#" class="m-item item m-mobile-hide"><i class="clock icon"></i>时间轴</a>
         <a href="#" class="m-item item m-mobile-hide"><i class="music icon"></i>音乐盒</a>

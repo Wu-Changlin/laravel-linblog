@@ -7,7 +7,7 @@
 @section('description', '显示编辑资源分类页面')
 
 @section('css')
-    <link href="{{asset('admin/article/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('admin/article/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />  {{--上传图片插件--}}
 @endsection
 
 
@@ -35,21 +35,25 @@
             <div class="col-lg-12 col-sm-12 col-xs-12" style="">
                 <div class="widget" style="">
                     <div class="widget-header bordered-bottom bordered-blue">
-                        <span class="widget-caption">新增资源分类</span>
+                        <span class="widget-caption">编辑资源分类</span>
                     </div>
                     <div class="widget-body" style="">
                         <div id="horizontal-form" style="">
                             <form class="form-horizontal" role="form" action="{{ route('resource.updateResource') }}" method="post" enctype="multipart/form-data">
                                 {{ csrf_field() }}
+                                <input type="text" name="resource_stock_id" value="{{ $resource->resource_stock_id }}" hidden>
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">上级资源分类</label>
 
                                     <div class="col-sm-6">
                                         <select name="pid">
+                                            @if ( $resource->pid==0 )
                                             <option value="0">顶级资源</option>
-                                            @foreach($pid_res as $v)
-                                                <option  value="{{ $v->resource_stock_id }}"  @if ( $resource->pid==$v->resource_stock_id ) selected="selected" @endif >{{ $v->name }}</option>
-                                            @endforeach
+                                            @else
+                                                    @foreach($pid_res as $v)
+                                                        <option  value="{{ $v->resource_stock_id }}"  @if ( $resource->pid==$v->resource_stock_id ) selected="selected" @endif >{{ $v->name }}</option>
+                                                    @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                 </div>
@@ -63,7 +67,6 @@
                                                 @if (  $resource->type==1 )
                                                     <div class="radio" style="float:left;margin-right:10px;">
                                                         <label>
-
                                                             <span class="text" style="color: #0e9e1a">{{$v}}</span>
                                                         </label>
                                                     </div>
@@ -71,8 +74,8 @@
                                             @else
                                                 <div class="radio" style="float:left;margin-right:10px;">
                                                     <label>
-                                                            <input name="type" value="{{$k}}" @if ( $resource->type==$k ) checked="checked" @endif    type="radio" >
-                                                            <span class="text">{{$v}}</span>
+                                                            <input name="type" value="{{$k}}" @if ( $resource->type==$k ) checked="checked" @endif    type="radio">
+                                                            <span class="text"  >{{$v}}</span>
                                                     </label>
                                                 </div>
                                             @endif
@@ -134,7 +137,7 @@
                                         </div>
                                         <div class="radio" style="float:left;margin-right:10px;">
                                             <label>
-                                                <input name="is_pull" value="2" class="inverted"  @if ( $resource->is_pull==2 ) checked="checked" @endif type="radio">
+                                                <input name="is_pull" value="2" class="inverted"  @if ( $resource->is_pull==2 ) checked="checked" @endif type="radio" >
                                                 <span class="text">否</span>
                                             </label>
                                         </div>
@@ -146,7 +149,7 @@
                                     <div class="col-sm-6">
                                         <div class="radio" style="float:left;margin-right:10px;">
                                             <label>
-                                                <input name="is_verify" value="1" @if ( $resource->is_verify==1 ) checked="checked" @endif  type="radio">
+                                                <input name="is_verify" value="1" @if ( $resource->is_verify==1 ) checked="checked" @endif  type="radio"  resource="">
                                                 <span class="text">未通过</span>
                                             </label>
                                         </div>

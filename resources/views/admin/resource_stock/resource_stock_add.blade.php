@@ -7,7 +7,7 @@
 @section('description', '添加资源分类.')
 
 @section('css')
-    <link href="{{asset('admin/article/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('admin/article/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />  {{--上传图片插件--}}
 @endsection
 
 @section('content')

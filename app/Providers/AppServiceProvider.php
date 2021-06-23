@@ -30,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
             ];
 //            dd($assign);
             $view->with($assign);
+            //dd($assign);
         });
 
     }
