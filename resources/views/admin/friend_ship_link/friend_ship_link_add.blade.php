@@ -16,7 +16,7 @@
                 <a href="{{route('admin.index')}}">系统</a>
             </li>
             <li>
-                <a href="{{url('admin/category/showCategory')}}">友链管理</a>
+                <a href="{{ route('friendshipLink.index') }}">友链管理</a>
             </li>
             <li class="active">添加友链</li>
         </ul>
@@ -34,17 +34,8 @@
                     </div>
                     <div class="widget-body" style="">
                         <div id="horizontal-form" style="">
-                            <form class="form-horizontal" role="form" action="{{ route('resource.addResources') }}" method="post" style="">
+                            <form class="form-horizontal" role="form" action="{{ route('friendshipLink.addFriend') }}" method="post" style="">
                                 {{ csrf_field() }}
-                                <div class="form-group">
-                                    <label for="username" class="col-sm-2 control-label no-padding-right">上级友链</label>
-                                    <div class="col-sm-6">
-                                        <select name="pid">
-                                            <option value="0">顶级友链</option>
-                                        </select>
-                                    </div>
-                                </div>
-
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">友链名称</label>
                                     <div class="col-sm-6">
@@ -53,16 +44,16 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="username" class="col-sm-2 control-label no-padding-right">友链关键词</label>
+                                    <label for="username" class="col-sm-2 control-label no-padding-right">友链地址</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control" placeholder="" name="keywords" type="text" value="{{ old('keywords') }}">
+                                        <input class="form-control" placeholder="" name="url" required="" type="url" value="{{ old('url') }}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="username" class="col-sm-2 control-label no-padding-right">友链描述</label>
+                                    <label for="username" class="col-sm-2 control-label no-padding-right">友链图片</label>
                                     <div class="col-sm-6">
-                                        <textarea name="description" class="form-control">{{ old('description') }}</textarea>
+                                        <input class="form-control" placeholder="" name="cover" required="" type="url" value="{{ old('cover') }}">
                                     </div>
                                 </div>
 
@@ -84,31 +75,23 @@
                                     </div>
                                 </div>
 
-
                                 <div class="form-group">
-                                    <label for="group_id" class="col-sm-2 control-label no-padding-right">友链类型</label>
+                                    <label for="username" class="col-sm-2 control-label no-padding-right">验证</label>
                                     <div class="col-sm-6">
                                         <div class="radio" style="float:left;margin-right:10px;">
                                             <label>
-                                                <input name="type" value="1" checked="checked" type="radio">
-                                                <span class="text">文章列表</span>
+                                                <input name="is_verify" value="1" type="radio">
+                                                <span class="text">未通过</span>
                                             </label>
                                         </div>
                                         <div class="radio" style="float:left;margin-right:10px;">
                                             <label>
-                                                <input name="type" value="2" class="inverted" type="radio">
-                                                <span class="text">单页友链</span>
-                                            </label>
-                                        </div>
-                                        <div class="radio" style="float:left;margin-right:10px;">
-                                            <label>
-                                                <input name="type" value="3" class="inverted" type="radio">
-                                                <span class="text">图片列表</span>
+                                                <input name="is_verify" value="2" class="inverted" checked="checked" type="radio">
+                                                <span class="text">已通过</span>
                                             </label>
                                         </div>
                                     </div>
                                 </div>
-
 
 
                                 <div class="form-group">

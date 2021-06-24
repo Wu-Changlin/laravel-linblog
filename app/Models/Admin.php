@@ -67,7 +67,7 @@ class Admin extends Base
         $admin_log['exec_object']=6;                    //执行操作对象 0:默认 1：分类， 2：标签 ，3：文章，4：评论，5：网站配置 ， 6：管理员',
         $admin_log['exec_type']=2;                      //执行操作类型 0:默认 1：删除， 2：添加， 3：修改， 4：登录， 5：退出',
         $admin_log['exec_object_id']=$res->admin_id;        //执行操作对象id
-        $admin_log['created_at']=$res->created_at;;//执行操作创建时间
+        $admin_log['created_at']=$res->created_at;//执行操作创建时间
         self::addAadminLog($admin_log);
         return 2;
     }

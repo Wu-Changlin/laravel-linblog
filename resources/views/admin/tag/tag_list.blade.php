@@ -68,8 +68,10 @@
                             </form>
                         </div>
 
-                        <div>
+                        <div style="padding-top:10px;">
+                            {{ $data->links() }}
                         </div>
+
                     </div>
                 </div>
             </div>

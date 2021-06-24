@@ -30,7 +30,7 @@ class Category extends Base
         $admin_log['exec_object']=1;                    //执行操作对象 0:默认 1：分类， 2：标签 ，3：文章，4：评论，5：网站配置 ， 6：管理员'
         $admin_log['exec_type']=2;                      //执行操作类型 0:默认 1：删除， 2：添加， 3：修改， 4：登录， 5：退出',
         $admin_log['exec_object_id']=$res->category_id;        //执行操作对象id
-        $admin_log['created_at']=$res->created_at;;//执行操作创建时间
+        $admin_log['created_at']=$res->created_at;//执行操作创建时间
         self::addAadminLog($admin_log);
         return 2;
     }
@@ -43,7 +43,7 @@ class Category extends Base
         if(empty($data)){ //如果$data为空直接返回
             return 0;
         }
-        $category_res = self::find($data['category_id'],["category_id","pid","name", "keywords" ,"description","is_pull","type"]); //根据分类id查询数据库分类信息
+        $category_res = self::find($data['category_id'],["category_id","pid","name", "keywords" ,"description","is_pull","type","val"]); //根据分类id查询数据库分类信息
         $category_info=$category_res->toArray(); //集合转数组
         //判断字段是否需要修改
         $edit_info = array_diff_assoc($data,$category_info); //1:返回[]空数组，说明2个数组相同 2:返回非空数组（数据相同字段已去除，剩下需要修改的字段数据），说明$data数据和数据库数据不一致，需要执行修改

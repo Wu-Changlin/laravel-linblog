@@ -15,46 +15,23 @@ class ResourceStockController extends Controller
      */
     public function index()
     {
-
-        $data= ResourceStock::all();
+        $data= ResourceStock::paginate(10);
         $pid_res=ResourceStock::pid_resources();// 获取顶级资源分类
         $pid_data=$this->mate_pid($pid_res); //顶级资源分类
         $type_data=$this->mate_type();       //资源类型数组
-        //文字替换数字值  前台减少判断
+        ////数字转文字 页面减少判断
         foreach($data as $key){
             $key->type=$type_data[$key->type];//资源类型数字替换成文字
+            $key->is_pull=ResourceStock::mate_is_pull($key->is_pull);//下架数字替换成文字
+            $key->is_verify=ResourceStock::mate_is_verify($key->is_verify);//验证数字替换成文字
             if( $key->pid == 0){ //判断是否顶级资源分类
                 $key->pid='顶级资源';
             }else{
                 $key->pid=$pid_data[$key->pid];//父级id替换成顶级资源分类名称
             }
-            if($key->is_verify == 0){//是否通过验证
-                $str='默认';
-                $key->is_verify=$str;
-            }elseif ($key->is_verify == 1){
-                $str='未通过';
-                $key->is_verify=$str;
-            }elseif ($key->is_verify ==2 ){
-                $str='已通过';
-                $key->is_verify=$str;
-            }
-
-            if($key->is_pull == 1){//是否下架
-                $str='是';
-                $key->is_pull=$str;
-            }elseif ($key->is_pull == 2){
-                $str='否';
-                $key->is_pull=$str;
-            }else{
-                $str='默认';
-                $key->is_pull=$str;
-            }
         }
         $assign=compact('data');
-
-//        dd('index.后台显示所有分类');
         return view('admin.resource_stock.resource_stock_list',$assign);
-
     }
 
 
@@ -63,7 +40,6 @@ class ResourceStockController extends Controller
      */
     public  function  mate_type(){
         $data=[0=>'默认(顶级资源)', 1=>'前台用户添加资源（未分配）',2=>'文章类',3=>'书籍类',4=>'刷题类',5=>'图片类',6=>'文件格式转换类',7=>'在线编辑类',8=>'模板类',9=>'在线作图类',10=>'文件传输类',11=>'影视类',12=>'音乐类',13=>'直播类',14=>'设计类',15=>'图标类',16=>'字体类',18=>'编辑器类',19=>'引擎类',20=>'网盘类',21=>'学术资源类',22=>'工具类',23=>'在线图片处理类',24=>'在线文件转换类',25=>'导航类',26=>'视频类',27=>'其他'];
-
         return $data;
     }
 
@@ -242,8 +218,6 @@ class ResourceStockController extends Controller
      * @param $file    上传封面图
      * @return string  图片路径
      */
-
-
     public function uploadCover ($file)
     {
         //值例如 /uploads/images/resource_stock/20210613

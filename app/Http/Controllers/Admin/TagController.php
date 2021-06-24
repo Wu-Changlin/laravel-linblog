@@ -15,18 +15,9 @@ class TagController extends Controller
     public function showTag()
     {
         $data= TagModel::lists();
-        //文字替换数字值  前台减少判断
+        ////数字转文字 页面减少判断
         foreach($data as $key){
-            if($key->is_pull == 1){
-                $str='是';
-                $key->is_pull=$str;
-            }elseif ($key->is_pull == 2){
-                $str='否';
-                $key->is_pull=$str;
-            }else{
-                $str='默认';
-                $key->is_pull=$str;
-            }
+            $key->is_pull=TagModel::mate_is_pull($key->is_pull);//下架数字替换成文字
         }
         $assing=compact('data');
         return view('admin.tag.tag_list',$assing);

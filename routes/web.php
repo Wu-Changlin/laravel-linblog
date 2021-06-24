@@ -153,22 +153,16 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login')->group(fun
 
     // 友情链接管理
     Route::prefix('friendshipLink')->group(function () {
-        // 友情链接列表  http://192.168.164.134:1133/admin/friendshipLink/showFriendshipLink
-        Route::get('showFriendshipLink', 'FriendshipLinkController@showFriendshipLink');
-        // 添加友情链接
-        Route::get('create', 'FriendshipLinkController@create');
-        Route::post('store', 'FriendshipLinkController@store');
+        // 友情链接列表  http://192.168.164.134:1133/admin/friendshipLink/index
+        Route::get('index', 'FriendshipLinkController@index')->name('friendshipLink.index');
+        // 添加友情链接   http://192.168.164.134:1133/admin/friendshipLink/showAddfriendWeb
+        Route::get('showAddfriendWeb', 'FriendshipLinkController@showAddfriendWeb');
+        Route::post('addFriend', 'FriendshipLinkController@addFriend')->name('friendshipLink.addFriend');
         // 编辑友情链接
-        Route::get('edit/{id}', 'FriendshipLinkController@edit');
-        Route::post('update/{id}', 'FriendshipLinkController@update');
-        // 排序
-        Route::post('sort', 'FriendshipLinkController@sort');
+        Route::get('showUpdatefriendWeb/{id}', 'FriendshipLinkController@showUpdatefriendWeb');
+        Route::post('updateFriend', 'FriendshipLinkController@updateFriend')->name('friendshipLink.updateFriend');
         // 删除友情链接
-        Route::get('destroy/{id}', 'FriendshipLinkController@destroy');
-        // 恢复删除的友情链接
-        Route::get('restore/{id}', 'FriendshipLinkController@restore');
-        // 彻底删除友情链接
-        Route::get('forceDelete/{id}', 'FriendshipLinkController@forceDelete');
+        Route::get('deleteFriend/{id}', 'FriendshipLinkController@deleteFriend');
     });
 
 

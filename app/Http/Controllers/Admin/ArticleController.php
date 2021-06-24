@@ -19,16 +19,7 @@ class ArticleController extends Controller
         $data= ArticleModel::lists();
         $assign=compact('data');
         foreach($data as $key){
-            if($key->is_pull == 1){
-                $str='是';
-                $key->is_pull=$str;
-            }elseif ($key->is_pull == 2){
-                $str='否';
-                $key->is_pull=$str;
-            }else{
-                $str='默认';
-                $key->is_pull=$str;
-            }
+            $key->is_pull = ArticleModel::mate_is_pull($key->is_pull);
         }
         return view('admin.article.article_list',$assign);
     }

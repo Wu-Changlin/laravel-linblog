@@ -2,9 +2,9 @@
 
 @section('title', '霖博客,技术博客,个人博客模板,php博客系统')
 
-@section('keywords', '编辑栏目')
+@section('keywords', '编辑友好博客')
 
-@section('description', '显示编辑栏目页面')
+@section('description', '显示编辑友好博客页面')
 
 @section('content')
 <!-- Page Content -->
@@ -16,9 +16,9 @@
                 <a href="{{route('admin.index')}}">系统</a>
             </li>
             <li>
-                <a href="{{url('admin/category/showCategory')}}">栏目管理</a>
+                <a href="{{ route('friendshipLink.index') }}">友好博客管理</a>
             </li>
-            <li class="active">编辑栏目</li>
+            <li class="active">编辑友好博客</li>
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
@@ -30,40 +30,31 @@
             <div class="col-lg-12 col-sm-12 col-xs-12" style="">
                 <div class="widget" style="">
                     <div class="widget-header bordered-bottom bordered-blue">
-                        <span class="widget-caption">新增栏目</span>
+                        <span class="widget-caption">新增友好博客</span>
                     </div>
                     <div class="widget-body" style="">
                         <div id="horizontal-form" style="">
-                            <form class="form-horizontal" role="form" action="{{ route('category.updateCategory') }}" method="post" style="">
+                            <form class="form-horizontal" role="form" action="{{ route('friendshipLink.updateFriend') }}" method="post" style="">
                                {{ csrf_field() }}
-                                <input type="hidden" name="id" value="{{ $data->category_id }}">
+                                <input type="hidden" name="id" value="{{ $data->link_id }}">
                                 <div class="form-group">
-                                    <label for="username" class="col-sm-2 control-label no-padding-right">上级栏目</label>
+                                    <label for="username" class="col-sm-2 control-label no-padding-right">友链名称</label>
                                     <div class="col-sm-6">
-                                        <select name="pid">
-                                            <option value="0">顶级栏目</option>
-                                        </select>
+                                        <input class="form-control" placeholder="" name="name" required="" type="text" value="{{ $data->name }}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="username" class="col-sm-2 control-label no-padding-right">栏目名称</label>
+                                    <label for="username" class="col-sm-2 control-label no-padding-right">友链地址</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control" placeholder="" name="name" required="" type="text" value="{{ $data->name }}" >
+                                        <input class="form-control" placeholder="" name="url" required="" type="url" value="{{ $data->url }}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="username" class="col-sm-2 control-label no-padding-right">栏目关键词</label>
+                                    <label for="username" class="col-sm-2 control-label no-padding-right">友链图片</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control" placeholder="" name="keywords" type="text" value="{{ $data->keywords }}">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="username" class="col-sm-2 control-label no-padding-right">栏目描述</label>
-                                    <div class="col-sm-6">
-                                        <textarea name="description" class="form-control" >{{ $data->description }}</textarea>
+                                        <img   src="{{ url($data->cover) }}" height="160">
                                     </div>
                                 </div>
 
@@ -72,13 +63,13 @@
                                     <div class="col-sm-6">
                                         <div class="radio" style="float:left;margin-right:10px;">
                                             <label>
-                                                <input name="is_pull" value="1" @if( $data->is_pull == 1) checked="checked"  @endif type="radio">
+                                                <input name="is_pull" value="1" @if ( $data->is_pull==1 ) checked="checked" @endif type="radio">
                                                 <span class="text">是</span>
                                             </label>
                                         </div>
                                         <div class="radio" style="float:left;margin-right:10px;">
                                             <label>
-                                                <input name="is_pull" value="2"  @if( $data->is_pull == 2) checked="checked"  @endif  type="radio">
+                                                <input name="is_pull" value="2" class="inverted"  @if ( $data->is_pull==2 ) checked="checked" @endif type="radio" >
                                                 <span class="text">否</span>
                                             </label>
                                         </div>
@@ -86,24 +77,18 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="group_id" class="col-sm-2 control-label no-padding-right">栏目类型</label>
+                                    <label for="username" class="col-sm-2 control-label no-padding-right">验证</label>
                                     <div class="col-sm-6">
                                         <div class="radio" style="float:left;margin-right:10px;">
                                             <label>
-                                                <input name="type" value="1" @if( $data->type=='1') checked="checked"  @endif type="radio">
-                                                <span class="text">文章列表</span>
+                                                <input name="is_verify" value="1" @if ( $data->is_verify==1 ) checked="checked" @endif  type="radio"  resource="">
+                                                <span class="text">未通过</span>
                                             </label>
                                         </div>
                                         <div class="radio" style="float:left;margin-right:10px;">
                                             <label>
-                                                <input name="type" value="2"  @if( $data->type=='2') checked="checked"  @endif type="radio">
-                                                <span class="text">单页栏目</span>
-                                            </label>
-                                        </div>
-                                        <div class="radio" style="float:left;margin-right:10px;">
-                                            <label>
-                                                <input name="type" value="3"  @if( $data->type=='3') checked="checked"  @endif type="radio">
-                                                <span class="text">图片列表</span>
+                                                <input name="is_verify" value="2" class="inverted" @if ( $data->is_verify==2 ) checked="checked" @endif type="radio">
+                                                <span class="text">通过</span>
                                             </label>
                                         </div>
                                     </div>

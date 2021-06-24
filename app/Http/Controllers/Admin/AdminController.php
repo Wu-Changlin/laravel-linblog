@@ -37,7 +37,7 @@ class AdminController extends Controller
     public function showAdminUser()
     {
 
-        $data=AdminModel::all();
+        $data=AdminModel::paginate(10);
         $assign=compact('data');  // compact() 的字符串可以就是变量的名字  （ data 视图里的变量名）
 //        dd($assign);
         //dd('showAdminUser.管理员列表');

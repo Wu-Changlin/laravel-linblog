@@ -87,21 +87,21 @@
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">资源分类名称</label>
                                     <div class="col-sm-6">
-                                        <input  class="form-control" placeholder="" name="name" required="" type="text" value="{{ $resource->name }}">{{ old('name') }}
+                                        <input  class="form-control" placeholder="" name="name" required="" type="text" value="{{ $resource->name }}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">资源地址</label>
                                     <div class="col-sm-6">
-                                        <input type="url" class="form-control" placeholder="" name="url" required="" type="text" value="{{ $resource->url }}">{{ old('url') }}
+                                        <input type="url" class="form-control" placeholder="" name="url" required="" type="text" value="{{ $resource->url }}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">资源分类描述</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control" placeholder="" name="description" required="" type="text" value="{{ $resource->description }}">{{ old('description') }}
+                                        <input class="form-control" placeholder="" name="description" required="" type="text" value="{{ $resource->description }}">
                                     </div>
                                 </div>
 

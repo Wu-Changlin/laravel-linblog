@@ -88,24 +88,14 @@
                                 <div class="form-group">
                                     <label for="group_id" class="col-sm-2 control-label no-padding-right">分类类型</label>
                                     <div class="col-sm-6">
-                                        <div class="radio" style="float:left;margin-right:10px;">
-                                            <label>
-                                                <input name="type" value="1" checked="checked" type="radio">
-                                                <span class="text">文章列表</span>
-                                            </label>
-                                        </div>
-                                        <div class="radio" style="float:left;margin-right:10px;">
-                                            <label>
-                                                <input name="type" value="2" class="inverted" type="radio">
-                                                <span class="text">单页分类</span>
-                                            </label>
-                                        </div>
-                                        <div class="radio" style="float:left;margin-right:10px;">
-                                            <label>
-                                                <input name="type" value="3" class="inverted" type="radio">
-                                                <span class="text">图片列表</span>
-                                            </label>
-                                        </div>
+                                        @foreach( $data as $k=>$v)
+                                            <div class="radio" style="float:left;margin-right:10px;">
+                                                <label>
+                                                    <input name="type" value="{{ $k }}" checked="checked" type="radio">
+                                                    <span class="text">{{ $v }}</span>
+                                                </label>
+                                            </div>
+                                        @endforeach
                                     </div>
                                 </div>
 

@@ -88,24 +88,14 @@
                                 <div class="form-group">
                                     <label for="group_id" class="col-sm-2 control-label no-padding-right">分类类型</label>
                                     <div class="col-sm-6">
-                                        <div class="radio" style="float:left;margin-right:10px;">
-                                            <label>
-                                                <input name="type" value="1" @if( $data->type=='1') checked="checked"  @endif type="radio">
-                                                <span class="text">文章列表</span>
-                                            </label>
-                                        </div>
-                                        <div class="radio" style="float:left;margin-right:10px;">
-                                            <label>
-                                                <input name="type" value="2"  @if( $data->type=='2') checked="checked"  @endif type="radio">
-                                                <span class="text">单页分类</span>
-                                            </label>
-                                        </div>
-                                        <div class="radio" style="float:left;margin-right:10px;">
-                                            <label>
-                                                <input name="type" value="3"  @if( $data->type=='3') checked="checked"  @endif type="radio">
-                                                <span class="text">图片列表</span>
-                                            </label>
-                                        </div>
+                                        @foreach( $type_name as $k=>$v)
+                                            <div class="radio" style="float:left;margin-right:10px;">
+                                                <label>
+                                                    <input name="type" value="{{ $k }}" @if( $data->type==$k) checked="checked"  @endif  type="radio">
+                                                    <span class="text">{{ $v }}</span>
+                                                </label>
+                                            </div>
+                                        @endforeach
                                     </div>
                                 </div>
 

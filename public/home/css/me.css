@@ -552,58 +552,76 @@ body{
 }
 
 /*设置页码样式开始*/
- /*设置div样式的整体布局*/
-.page-icon{
-    margin:20px 0 0 0;/*设置距离顶部20像素*/
-    font-size:0;/*修复行内元素之间空隙间隔*/
-    text-align:center;/*设置内容居中显示*/
-    width: 100%;
+#pull_right{
+    text-align:center;
 }
-
-/*设置共有的的样式布局，主要是进行代码优化，提高运行效率*/
-.page-icon a,.page-disabled,.page-next{
-    border:1px solid #ccc;
-    border-radius:3px;
-    padding:1px 10px 5px;
-    font-size:19PX;/*修复行内元素之间空隙间隔*/
-    margin-right:10px;
+.pull-right {
+    /*float: left!important;*/
 }
-
-/*对 a 标签进行样式布局 */
-.page-icon a{
-    text-decoration:none;/*取消链接的下划线*/
-    color:#005aa0;
+.pagination {
+    display: inline-block;
+    padding-left: 0;
+    margin: 20px 0;
+    border-radius: 4px;
 }
-
-.page-current{
-    color:#ff6600;
-    padding:10px 10px 5px;
-    font-size:14PX;/*修复行内元素之间空隙间隔*/
+.pagination > li {
+    display: inline;
 }
-
-.disabled{
-    color: #7d7c7b;
-    padding:10px 10px 5px;
-    font-size:14PX;/*修复行内元素之间空隙间隔*/
+.pagination > li > a,
+.pagination > li > span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #428bca;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
 }
-
-.page-disabled{
-    color:#ccc;
+.pagination > li:first-child > a,
+.pagination > li:first-child > span {
+    margin-left: 0;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
 }
-
-.page-next i,.page-disabled i{
-    cursor:pointer;/*设置鼠标经过时的显示状态，这里设置的是显示状态为小手状态*/
-    display:inline-block;/*设置显示的方式为行内块元素*/
-    width:5px;
-    height:9px;
+.pagination > li:last-child > a,
+.pagination > li:last-child > span {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
 }
-.page-disabled i{
-    background-position:-80px -608px;
-    margin-right:3px;
+.pagination > li > a:hover,
+.pagination > li > span:hover,
+.pagination > li > a:focus,
+.pagination > li > span:focus {
+    color: #2a6496;
+    background-color: #eee;
+    border-color: #ddd;
 }
-
-.page-next i{
-    background-position:-62px -608px;
-    margin-left:3px;
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+    z-index: 2;
+    color: #fff;
+    cursor: default;
+    background-color: #428bca;
+    border-color: #428bca;
+}
+.pagination > .disabled > span,
+.pagination > .disabled > span:hover,
+.pagination > .disabled > span:focus,
+.pagination > .disabled > a,
+.pagination > .disabled > a:hover,
+.pagination > .disabled > a:focus {
+    color: #777;
+    cursor: not-allowed;
+    background-color: #fff;
+    border-color: #ddd;
+}
+.clear{
+    clear: both;
 }
 /*设置页码样式结束*/

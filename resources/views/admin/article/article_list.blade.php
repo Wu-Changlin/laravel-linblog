@@ -70,12 +70,12 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            <div style="padding-top:10px;">
-                                <ul class="pagination"><li class="disabled"><span>«</span></li> <li class="active"><span>1</span></li><li><a href="/admin/article/lst.html?page=2">2</a></li> <li><a href="/admin/article/lst.html?page=2">»</a></li></ul>                         </div>
                         </div>
 
-                        <div>
+                        <div style="padding-top:10px;">
+                            {{ $data->links() }}
                         </div>
+
                     </div>
                 </div>
             </div>

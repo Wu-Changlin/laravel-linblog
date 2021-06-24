@@ -16,8 +16,10 @@ class IndexController extends Controller
      */
     public function showIndex()
     {
-//        dd('home.....IndexController ....index');
+
         //dd('博客前台首页');
+        //获取置顶的文章
+        //获取文章信息
         return view('home.index');
     }
 

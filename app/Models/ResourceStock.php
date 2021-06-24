@@ -47,7 +47,7 @@ class ResourceStock extends Base
         $admin_log['exec_object']=7;                    //执行操作对象  0:默认 1：分类， 2：标签 ，3：文章，4：评论，5：网站配置 ， 6：管理员， 7：资源库，8：友链
         $admin_log['exec_type']=2;                      //执行操作类型 0:默认 1：删除， 2：添加， 3：修改， 4：登录， 5：退出，6：前台添加
         $admin_log['exec_object_id']=$res->resource_stock_id;        //执行操作对象id
-        $admin_log['created_at']=$res->created_at;;//执行操作创建时间
+        $admin_log['created_at']=$res->created_at;//执行操作创建时间
         self::addAadminLog($admin_log);
         return 2;
     }
@@ -79,17 +79,18 @@ class ResourceStock extends Base
             }
         }
 
-
         //判断是否顶级资源
         if($resource_info['pid']==0){
-            if($edit_info['is_pull']==1){//下架顶级资源 子级资源pid=顶级资源id  子级资源也下架
-                self::where('pid','=', $resource_info['resource_stock_id'])
-                    ->update(['is_pull' => 1]);
-            }elseif($edit_info['is_pull']==2){//取消下架顶级资源 子级资源pid=顶级资源id  子级资源也取消下架
-                self::where('pid','=', $resource_info['resource_stock_id'])
-                    ->update(['is_pull' => 2]);
-            }else{
+            if(!empty($edit_info['is_pull'])){//如果下架资源分类
+                if($edit_info['is_pull']==1){//下架顶级资源 子级资源pid=顶级资源id  子级资源也下架
+                    self::where('pid','=', $resource_info['resource_stock_id'])
+                        ->update(['is_pull' => 1]);
+                }elseif($edit_info['is_pull']==2){//取消下架顶级资源 子级资源pid=顶级资源id  子级资源也取消下架
+                    self::where('pid','=', $resource_info['resource_stock_id'])
+                        ->update(['is_pull' => 2]);
+                }else{
 
+                }
             }
         }else{//不是顶级资源才有资源分类图片
             if(!empty($edit_info['cover'])){//如果有新资源分类图片

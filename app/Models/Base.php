@@ -30,10 +30,14 @@ class Base extends Model
         }
     }
 
+    /**
+     * 删除图片
+     * @param $path  图片地址
+     * @param $num   图片地址数据类型  1： 字符串，2：数组
+     */
     public static  function  deletedCover($path,$num)
     {
         if(!empty($path)){//判断是否有图片路径
-
             if($num==1){//图片路径是字符串
                 if(file_exists(public_path().$path)){//如果存在图片路径
                     //echo '1'.public_path().$path."</br>";
@@ -41,7 +45,6 @@ class Base extends Model
                 }
             }elseif($num==2){//图片路径是数组
                 $path=array_filter($path);//去除数组中空值的方法
-               
                 if(!empty($path)){//数组有值
                     foreach ($path as $k=>$v){
                         if(file_exists(public_path().$v)){
@@ -56,6 +59,16 @@ class Base extends Model
         }else{
             // echo '空';
         }
+    }
 
+    public static function mate_is_verify ($num){
+        $is_verify=[0=>'默认', 1=>'未通过',2=>'已通过',];
+        return $is_verify[$num];
+
+    }
+
+    public static function mate_is_pull ($num){
+        $is_pull=[0=>'默认', 1=>'是',2=>'否',];
+        return $is_pull[$num];
     }
 }

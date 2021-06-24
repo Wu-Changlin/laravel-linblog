@@ -24,13 +24,13 @@
       <h2 class="ui olive header item" style="font-family: STSong">Lin</h2>
       <!--<div class="right m-item item m-mobile-hide">-->
         <a href="/" class="m-item item m-mobile-hide "><i class="home icon"></i>首页</a>
-        <a href="#" class="m-item item m-mobile-hide"><i class="clone outline icon"></i>分类</a>
-        <a href="#" class="m-item item m-mobile-hide"><i class="clock icon"></i>时间轴</a>
-        <a href="#" class="m-item item m-mobile-hide"><i class="music icon"></i>音乐盒</a>
-        <a href="#" class="m-item item m-mobile-hide"><i class="book icon"></i>留言板</a>
-        <a href="#" class="m-item item m-mobile-hide"><i class="pencil alternate icon"></i>友人帐</a>
-        <a href="#" class="m-item item m-mobile-hide"><i class="image icon"></i>照片墙</a>
-        <a href="#" class="m-item item m-mobile-hide"><i class="info icon"></i>关于我</a>
+        @foreach($category as $v)
+            @if ($v->type>1)
+                <a href="{{ url("$v->val") }}" class="m-item item m-mobile-hide"><i class="clone outline icon"></i>{{ $v->name }}</a>
+            @else
+            <a href="{{ url('category',[$v->category_id]) }}" class="m-item item m-mobile-hide"><i class="clone outline icon"></i>{{ $v->name }}</a>
+            @endif
+        @endforeach
       <!--</div>-->
       <div class="right m-item item m-mobile-hide">
         <form name="search" action="#" method="post" target="_blank">

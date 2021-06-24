@@ -14,45 +14,44 @@ class CategoryController extends Controller
     public function index()
     {
 
-        $data= CategoryModel::all();
-        //文字替换数字值  前台减少判断
+        $data= CategoryModel::paginate(10);
+        //数字转文字 页面减少判断
         foreach($data as $key){
-            if($key->type == 1){
-                $str='文章列表';
-                $key->type=$str;
-            }elseif ($key->type == 2){
-                $str='单页栏目';
-                $key->type=$str;
-            }elseif ($key->type ==3 ){
-                $str='图片列表';
-                $key->type=$str;
-            }
-            if($key->is_pull == 1){
-                $str='是';
-                $key->is_pull=$str;
-            }elseif ($key->is_pull == 2){
-                $str='否';
-                $key->is_pull=$str;
-            }else{
-                $str='默认';
-                $key->is_pull=$str;
-            }
+            $key->type=$this->mate_type($key->type,1);
+            $key->is_pull=CategoryModel::mate_is_pull($key->is_pull);//下架数字替换成文字
         }
         $assign=compact('data');
-//        dd('index.后台显示所有分类');
         return view('admin.category.category_list',$assign);
 
     }
 
+    /**
+     * 分类类型数字转分类类型文字
+     * @param $num    分类类型数字
+     * @return string 分类类型文字
+     */
+    public function mate_type ($num,$return_type){
+       $type=[0=>'默认',1=>'文章列表',2=>'单页栏目',3=>'图片列表',4=>'友好博客',5=>'资源库'];
+       if($return_type==1){//返回分类类型文字
+           return $type[$num];
+       }elseif ($return_type==2){ //返回分类类型英文别名
+           $type_enname=[1=>'category',2 =>'about',3=>'picture',4=>'friend',5=>'resource'];
+           return $type_enname[$num];
+       }else{//返回分类类型文字数组
+           return $type;
+       }
+    }
 
     /**
      * 显示新增分类页
-     *
-     *
      */
     public function showAddcategoryWeb()
     {
-        return view('admin.category.category_add');
+
+        $data=$this->mate_type(3,3);
+        $data=array_except($data, array(0));//从数组移除给定的键=1的值对
+        $assign=compact('data');
+        return view('admin.category.category_add',$assign);
     }
 
 
@@ -71,7 +70,7 @@ class CategoryController extends Controller
             $data['description'] = isset($input['description']) ? $input['description'] : "";
             $data['is_pull'] = intval($input['is_pull']) ? intval($input['is_pull']) : 0;
             $data['type'] = intval($input['type']) ? intval($input['type']) : 0;
-
+            $data['val']=$this->mate_type($data['type'],2);//分类类型英文别名
         }else{
             return redirect()->back()->withInput()->with('msg', '非法访问');
         }
@@ -102,9 +101,12 @@ class CategoryController extends Controller
         if(empty($category_id)){
             return redirect()->back()->withInput()->with('msg', '非法访问');
         }
+
         $data = CategoryModel::find($category_id);
         $data->toArray();
-        $assign=compact('data');  // compact() 的字符串可以就是变量的名字  （ data 视图里的变量名）
+        $type_name=$this->mate_type(3,3);
+        $type_name=array_except($type_name, array(0));//从数组移除给定的键=1的值对
+        $assign=compact('data','type_name');  // compact() 的字符串可以就是变量的名字  （ data 视图里的变量名）
         return view('admin.category.category_update',$assign);
     }
 
@@ -126,6 +128,7 @@ class CategoryController extends Controller
             $data['description'] = isset($input['description']) ? $input['description'] : "";
             $data['is_pull'] = intval($input['is_pull']) ? intval($input['is_pull']) : 0;
             $data['type'] = intval($input['type']) ? intval($input['type']) : 0;
+            $data['val']=$this->mate_type($data['type'],2);//分类类型英文别名
         }else{
             return redirect()->back()->withInput()->with('msg', '非法请求');
         }

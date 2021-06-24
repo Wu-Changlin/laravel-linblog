@@ -185,7 +185,7 @@
                     </a>
                     <ul class="submenu">
                         <li>
-                            <a href="/admin/link/lst.html">
+                            <a href="{{ route('friendshipLink.index') }}">
                                     <span class="menu-text">
                                         链接列表                                    </span>
                                 <i class="menu-expand"></i>
