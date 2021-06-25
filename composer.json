@@ -10,7 +10,8 @@
         "graham-campbell/markdown": "^11.2",
         "intervention/image": "^2.5",
         "laravel/framework": "5.5.*",
-        "laravel/tinker": "~1.0"
+        "laravel/tinker": "~1.0",
+        "maatwebsite/excel": "~2.1.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.8",

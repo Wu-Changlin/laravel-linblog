@@ -164,9 +164,11 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        //        App\Providers\ComposerServiceProvider::class,   //加载页面共享数据 （如共享页面导航栏、底部）
+        //第三方包开始
         Intervention\Image\ImageServiceProvider::class, //加载Image
-        App\Providers\ComposerServiceProvider::class,   //加载页面共享数据 （如共享页面导航栏、底部）
-
+        Maatwebsite\Excel\ExcelServiceProvider::class,  //操作Excel
+        //第三方包结束
 
     
         /*
@@ -231,8 +233,10 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        //第三方包
         'Image' => Intervention\Image\Facades\Image::class, //加载Image
         'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,//Markdown解析器  把markdown转成html
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,//操作Excel
     ],
 
 ];
