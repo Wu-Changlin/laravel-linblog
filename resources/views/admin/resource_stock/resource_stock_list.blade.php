@@ -25,6 +25,7 @@
 
         <button type="button" tooltip="添加资源分类" class="btn btn-sm btn-azure btn-addon" onclick="javascript:window.location.href = '/admin/resource/showAddresourceWeb'"> <i class="fa fa-plus"></i> Add
         </button>
+
         <div class="row">
             <div class="col-lg-12 col-sm-12 col-xs-12">
                 <div class="widget">
@@ -80,19 +81,44 @@
                         <div style="padding-top:10px;">
                             {{ $data->links() }}
                         </div>
+                        <form class="form-horizontal" role="form" action="{{ route('resource.importResource') }}" method="post" enctype="multipart/form-data">
+                            {{ csrf_field() }}
 
+                                <div class="form-group">
+                                    <label for="username" class="col-sm-2 control-label no-padding-right">excel表格</label>
+                                    <div class="col-sm-6">
+                                        <input   placeholder="" name="excel"  type="file">
+                                    </div>
+                                </div>
+
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-default">上传</button>
+                                </div>
+                            </div>
+
+                        </form>
                     </div>
                 </div>
             </div>
+
         </div>
 
     </div>
     <!-- /Page Body -->
+
 </div>
+
 <!-- /Page Content -->
 
 @endsection
 
+@section('js')
+    <script>
 
+
+        </script>
+@endsection
 
 

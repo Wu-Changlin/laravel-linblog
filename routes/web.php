@@ -8,7 +8,7 @@ Route::namespace('Home')->name('home.')->group(function () {
     Route::get('/', 'IndexController@showIndex');
 
     //显示文章内容  http://192.168.164.134:1133/article/1
-    Route::get('article/{id}/', 'ArticleController@showArticle');
+    Route::get('arttag.showTagicle/{id}/', 'ArticleController@showArticle');
 
     //显示指定类型下的标签、文章  http://192.168.164.134:1133/category/1
     Route::get('category/{id}/', 'categoryController@showCategory')->name('category.show');
@@ -32,11 +32,9 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
         Route::get('index','LoginController@index')->name("login.index");
         // 登录     http://192.168.164.134:1133/admin/login/logIn
         Route::post('logIn', 'LoginController@logIn')->name("admin.login");
-
     });
 
 });
-
 
 
 // 用户注册
@@ -147,6 +145,8 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login')->group(fun
         Route::post('updateResource', 'ResourceStockController@updateResource')->name('resource.updateResource');
         // 删除资源分类     http://192.168.164.134:1133/admin/resource/deleteResource/1
         Route::get('deleteResource/{id}', 'ResourceStockController@deleteResource');
+        //导入资源分类        http://192.168.164.134:1133/admin/resource/importResource
+        Route::post('importResource', 'ResourceStockController@importResource')->name('resource.importResource');
     });
 
 
@@ -169,13 +169,16 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login')->group(fun
     // 网站配置管理
     Route::prefix('web')->group(function () {
         // 网站配置列表   http://192.168.164.134:1133/admin/web/showWebConfig
-        Route::get('showWebConfig', 'WebConfigController@showWebConfig');
-        //添加网站配置    http://192.168.164.134:1133/admin/web/addWebConfig
-        Route::get('addWebConfig', 'WebConfigController@addWebConfig');
-        // 更新网站配置   http://192.168.164.134:1133/admin/web/updateWebConfig/1
-        Route::get('updateWebConfig/{id}', 'WebConfigController@updateWebConfig');
-        // 删除网站配置   http://192.168.164.134:1133/admin/web/deleteWebConfig/1
-        Route::get('deleteWebConfig/{id}', 'WebConfigController@deleteWebConfig');
+        Route::get('showWebconfig', 'WebConfigController@showWebConfig')->name('webconfig.index');
+        Route::get('configView', 'WebConfigController@configView')->name('webconfig.configView');
+        //添加网站配置    http://192.168.164.134:1133/admin/web/showAddwebConfig
+        Route::get('showAddwebConfig', 'WebConfigController@showAddwebConfig');
+        Route::post('addWebconfig', 'WebConfigController@addWebconfig')->name('webconfig.addWebconfig');
+        // 更新网站配置   http://192.168.164.134:1133/admin/web/showUpdatewebConfig/1
+        Route::get('showUpdatewebConfig/{id}', 'WebConfigController@showUpdatewebConfig');
+        Route::post('updateWebconfig', 'WebConfigController@updateWebconfig')->name('webconfig.updateWebconfig');
+        // 删除网站配置   http://192.168.164.134:1133/admin/web/deleteWebconfig/1
+        Route::get('deleteWebconfig/{id}', 'WebConfigController@deleteWebConfig');
     });
 
 

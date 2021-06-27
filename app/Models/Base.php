@@ -16,18 +16,20 @@ class Base extends Model
 
     /**
      * 记录管理员操作
-     * @param $data  array 日志数据
+     * @param $exec_object 执行操作对象  0:默认 1：分类， 2：标签 ，3：文章，4：评论，5：网站配置 ， 6：管理员， 7：资源库，8：友链
+     *@param $exec_type    执行操作类型1：删除， 2：添加， 3：修改， 4：登录， 5：退出，6：前台添加',  如果 $exec_type=4 或 $exec_type=5 那么执行操作对象id exec_object_id=登录次数
+     * @param $exec_object_id   执行操作对象id    如果登录或退出 $exec_object_id=登录次数
+     * @param $created_at       创建记录时间
      */
-    public static function addAadminLog($data){
-        if(!empty($data['created_at'])){       //创建记录
-            DB::table('admins_logs')->insert($data);
-        }elseif (!empty($data['updated_at'])){ //修改记录
-            DB::table('admins_logs')->insert($data);
-        }elseif (!empty($data['deleted_at'])){ //删除记录
-            DB::table('admins_logs')->insert($data);
-        }else{
-
-        }
+    public static function addAadminLog($exec_object,$exec_type,$exec_object_id,$created_at){
+        $admin_user=session('admin_user');
+        $admin_log['last_login_ip']=$admin_user['last_login_ip'];    //管理员IP
+        $admin_log['admin_id']=$admin_user['admin_id'];  //管理员id
+        $admin_log['exec_object']=$exec_object;
+        $admin_log['exec_type']=$exec_type;
+        $admin_log['exec_object_id']=$exec_object_id;
+        $admin_log['created_at']=$created_at;//执行操作创建时间
+        DB::table('admins_logs')->insert($admin_log);
     }
 
     /**
@@ -53,11 +55,11 @@ class Base extends Model
                         }
                     }
                 }else{
-                    //echo '数组空';
+                    //echo '图片路径数组空';
                 }
             }
         }else{
-            // echo '空';
+            // echo '图片路径不存在';
         }
     }
 

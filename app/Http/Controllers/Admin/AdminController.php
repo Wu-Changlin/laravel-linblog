@@ -71,21 +71,21 @@ class AdminController extends Controller
             $data['email'] = isset($input['email']) ? $input['email'] : "";
             $data['password'] = isset($input['password']) ? $input['password'] : "";
         }else{
-            return redirect()->back()->withInput()->with('msg', '非法请求');
+            return redirect()->back()->withInput()->with('err', '非法请求');
         }
         $res=AdminModel::addAdmin($data); //执行新增
         switch ($res) { //判断新增返回值
             case 0:
-                return redirect()->back()->withInput()->with('msg', '数据为空');
+                return redirect()->back()->withInput()->with('err', '数据为空');
                 break;
             case 1:
-                return redirect()->back()->withInput()->with('msg', '邮箱已注册');
+                return redirect()->back()->withInput()->with('err', '邮箱已注册');
                 break;
             case 2:
                 return redirect()->route("admin.showAdminUser")->with('msg', "新增管理员成功");
                 break;
             default:
-                return redirect()->back()->withInput()->with('msg', '数据写入失败,新增管理员失败');
+                return redirect()->back()->withInput()->with('err', '数据写入失败,新增管理员失败');
         }
 
     }
@@ -98,7 +98,7 @@ class AdminController extends Controller
     public function showUpdateAdminWeb($admin_id)
     {
         if(empty($admin_id)){
-            return redirect()->back()->withInput()->with('msg', '非法访问');
+            return redirect()->back()->withInput()->with('err', '非法访问');
         }
         $data = AdminModel::find($admin_id);
         $data->toArray();
@@ -125,12 +125,12 @@ class AdminController extends Controller
             $data['password'] = isset($input['password']) ? $input['password'] : "";
             $data['admin_id'] = isset($input['id']) ? $input['id'] : 0;
         }else{
-            return redirect()->back()->withInput()->with('msg', '非法请求');
+            return redirect()->back()->withInput()->with('err', '非法请求');
         }
         $res=AdminModel::updateAdmin($data);   //执行修改
         switch ($res) { //判断修改返回值
             case 0:
-                return redirect()->back()->withInput()->with('msg', '数据为空');
+                return redirect()->back()->withInput()->with('err', '数据为空');
                 break;
             case 1:
                 return redirect()->back()->withInput()->with('msg', "保留");
@@ -139,13 +139,13 @@ class AdminController extends Controller
                 return redirect()->route("admin.showAdminUser")->with('msg', "更改管理员信息成功");
                 break;
             case 3:
-                return redirect()->back()->withInput()->with('msg', '邮箱已注册');
+                return redirect()->back()->withInput()->with('err', '邮箱已注册');
                 break;
             case 4:
-                return  redirect()->route("login.index")->with('msg','更改管理员密码成功,注销登录');
+                 $this->logOut();
                 break;
             default:
-                return redirect()->back()->withInput()->with('msg', '数据写入失败,更改管理员信息失败');
+                return redirect()->back()->withInput()->with('err', '数据写入失败,更改管理员信息失败');
         }
 
     }
@@ -159,25 +159,25 @@ class AdminController extends Controller
     public function deleteAdminUser($admin_id)
     {
         if(empty($admin_id)){
-            return redirect()->back()->withInput()->with('msg', '非法访问');
+            return redirect()->back()->withInput()->with('err', '非法访问');
         }
         $admin_user=session('admin_user');
         if($admin_user['admin_id'] == $admin_id){ //判断删除管理员id是不是当前登录的管理员id
-            return redirect()->back()->withInput()->with('msg', '请勿自残');
+            return redirect()->back()->withInput()->with('err', '请勿自残');
         }
         $res=AdminModel::deleteAdmin($admin_id);//执行删除
         switch ($res) { //判断删除返回值
             case 0:
-                return redirect()->back()->withInput()->with('msg', '数据为空');
+                return redirect()->back()->withInput()->with('err', '数据为空');
                 break;
             case 1:
-                return redirect()->back()->withInput()->with('msg', '已删除管理员');
+                return redirect()->back()->withInput()->with('err', '已删除管理员');
                 break;
             case 2:
                 return redirect()->route("admin.showAdminUser")->with('msg', "删除管理员成功");
                 break;
             default:
-                return redirect()->back()->withInput()->with('msg', '网络错误,删除管理员失败');
+                return redirect()->back()->withInput()->with('err', '网络错误,删除管理员失败');
         }
 
     }
@@ -187,7 +187,7 @@ class AdminController extends Controller
      * @return 返回登录页
      */
     public function logOut(){
-        session()->flush(); // 清空session
+        AdminModel::adminlogOut();//执行删除
         return redirect()->route("login.index")->with('msg','注销登录');
     }
 

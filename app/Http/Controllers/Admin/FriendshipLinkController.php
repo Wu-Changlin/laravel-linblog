@@ -48,21 +48,21 @@ class FriendshipLinkController extends Controller
             $data['is_pull'] = intval($input['is_pull']) ? intval($input['is_pull']) : 0;
             $data['is_verify'] = intval($input['is_verify']) ? intval($input['is_verify']) : 0;
         }else{
-            return redirect()->back()->withInput()->with('msg', '非法访问');
+            return redirect()->back()->withInput()->with('err', '非法访问');
         }
         $res=FriendshipLinkModel::addFriend($data);
         switch ($res) { //判断新增返回值
             case 0:
-                return redirect()->back()->withInput()->with('msg', '数据为空');
+                return redirect()->back()->withInput()->with('err', '数据为空');
                 break;
             case 1:
-                return redirect()->back()->withInput()->with('msg', '友好博客已存在');
+                return redirect()->back()->withInput()->with('err', '友好博客已存在');
                 break;
             case 2:
                 return redirect()->route("friendshipLink.index")->with('msg', "新增友好博客成功");
                 break;
             default:
-                return redirect()->back()->withInput()->with('msg', '数据写入失败,新增友好博客失败');
+                return redirect()->back()->withInput()->with('err', '数据写入失败,新增友好博客失败');
         }
 
     }
@@ -75,7 +75,7 @@ class FriendshipLinkController extends Controller
     {
 
         if(empty($link_id)){
-            return redirect()->back()->withInput()->with('msg', '非法访问');
+            return redirect()->back()->withInput()->with('err', '非法访问');
         }
         $data = FriendshipLinkModel::find($link_id);
         $assign=compact('data');  // compact() 的字符串可以就是变量的名字  （ data 视图里的变量名）
@@ -102,24 +102,24 @@ class FriendshipLinkController extends Controller
             $data['is_pull'] = intval($input['is_pull']) ? intval($input['is_pull']) : 0;
             $data['is_verify'] = intval($input['is_verify']) ? intval($input['is_verify']) : 0;
         }else{
-            return redirect()->back()->withInput()->with('msg', '非法请求');
+            return redirect()->back()->withInput()->with('err', '非法请求');
         }
         $res=FriendshipLinkModel::updateFriend($data);   //执行修改
         switch ($res) { //判断修改返回值
             case 0:
-                return redirect()->back()->withInput()->with('msg', '数据为空');
+                return redirect()->back()->withInput()->with('err', '数据为空');
                 break;
             case 1:
-                return redirect()->back()->withInput()->with('msg', "保留");
+                return redirect()->back()->withInput()->with('err', "保留");
                 break;
             case 2:
                 return redirect()->route("friendshipLink.index")->with('msg', "更改友好博客信息成功");
                 break;
             case 3:
-                return redirect()->back()->withInput()->with('msg', '友好博客已存在');
+                return redirect()->back()->withInput()->with('err', '友好博客已存在');
                 break;
             default:
-                return redirect()->back()->withInput()->with('msg', '数据写入失败,更改友好博客信息失败');
+                return redirect()->back()->withInput()->with('err', '数据写入失败,更改友好博客信息失败');
         }
     }
 
@@ -132,21 +132,21 @@ class FriendshipLinkController extends Controller
     public function deleteFriend($link_id)
     {
         if(empty($link_id)){
-            return redirect()->back()->withInput()->with('msg', '非法访问');
+            return redirect()->back()->withInput()->with('err', '非法访问');
         }
         $res=FriendshipLinkModel::deleteFriend($link_id);//执行删除
         switch ($res) { //判断删除返回值
             case 0:
-                return redirect()->back()->withInput()->with('msg', '数据为空');
+                return redirect()->back()->withInput()->with('err', '数据为空');
                 break;
             case 1:
-                return redirect()->back()->withInput()->with('msg', '友好博客不存在');
+                return redirect()->back()->withInput()->with('err', '友好博客不存在');
                 break;
             case 2:
                 return redirect()->route("friendshipLink.index")->with('msg', "删除友好博客成功");
                 break;
             default:
-                return redirect()->back()->withInput()->with('msg', '网络错误,删除友好博客失败');
+                return redirect()->back()->withInput()->with('err', '网络错误,删除友好博客失败');
         }
 
 

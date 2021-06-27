@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ResourceStock;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
+
+
 
 class ResourceStockController extends Controller
 {
@@ -19,15 +21,17 @@ class ResourceStockController extends Controller
         $pid_res=ResourceStock::pid_resources();// 获取顶级资源分类
         $pid_data=$this->mate_pid($pid_res); //顶级资源分类
         $type_data=$this->mate_type();       //资源类型数组
-        ////数字转文字 页面减少判断
-        foreach($data as $key){
-            $key->type=$type_data[$key->type];//资源类型数字替换成文字
-            $key->is_pull=ResourceStock::mate_is_pull($key->is_pull);//下架数字替换成文字
-            $key->is_verify=ResourceStock::mate_is_verify($key->is_verify);//验证数字替换成文字
-            if( $key->pid == 0){ //判断是否顶级资源分类
-                $key->pid='顶级资源';
-            }else{
-                $key->pid=$pid_data[$key->pid];//父级id替换成顶级资源分类名称
+
+        if(!empty($data)){
+            foreach($data as $key){
+                $key->type=$type_data[$key->type];//资源类型数字替换成文字
+                $key->is_pull=ResourceStock::mate_is_pull($key->is_pull);//下架数字替换成文字
+                $key->is_verify=ResourceStock::mate_is_verify($key->is_verify);//验证数字替换成文字
+                if( $key->pid == 0){ //判断是否顶级资源分类
+                    $key->pid='顶级资源';
+                }else{
+                    $key->pid=isset($pid_data[$key->pid])?$pid_data[$key->pid]:'';//父级id替换成顶级资源分类名称
+                }
             }
         }
         $assign=compact('data');
@@ -59,7 +63,6 @@ class ResourceStockController extends Controller
 
     /**
      * 显示新增资源分类页
-     *
      *
      */
     public function showAddresourceWeb()
@@ -101,21 +104,21 @@ class ResourceStockController extends Controller
                 $data['cover']=$this->uploadCover($data['cover']);
             }
         }else{
-            return redirect()->back()->withInput()->with('msg', '非法访问');
+            return redirect()->back()->withInput()->with('err', '非法访问');
         }
         $res=ResourceStock::addResource($data);
         switch ($res) { //判断新增返回值
             case 0:
-                return redirect()->back()->withInput()->with('msg', '数据为空');
+                return redirect()->back()->withInput()->with('err', '数据为空');
                 break;
             case 1:
-                return redirect()->back()->withInput()->with('msg', '资源分类已存在');
+                return redirect()->back()->withInput()->with('err', '资源分类已存在');
                 break;
             case 2:
                 return redirect()->route("resource.index")->with('msg', "新增资源分类成功");
                 break;
             default:
-                return redirect()->back()->withInput()->with('msg', '数据写入失败,新增资源分类失败');
+                return redirect()->back()->withInput()->with('err', '数据写入失败,新增资源分类失败');
         }
 
     }
@@ -127,7 +130,7 @@ class ResourceStockController extends Controller
     public function showUpdateresourceWeb($resource_stock_id)
     {
         if(empty($resource_stock_id)){
-            return redirect()->back()->withInput()->with('msg', '非法访问');
+            return redirect()->back()->withInput()->with('err', '非法访问');
         }
         $pid_res=ResourceStock::pid_resources();
         $data=$this->mate_type(0,1);
@@ -163,12 +166,12 @@ class ResourceStockController extends Controller
                 $data['cover']=$this->uploadCover($data['cover']);
             }
         }else{
-            return redirect()->back()->withInput()->with('msg', '非法请求');
+            return redirect()->back()->withInput()->with('err', '非法请求');
         }
         $res=ResourceStock::updateResource($data);   //执行修改
         switch ($res) { //判断修改返回值
             case 0:
-                return redirect()->back()->withInput()->with('msg', '数据为空');
+                return redirect()->back()->withInput()->with('err', '数据为空');
                 break;
             case 1:
                 return redirect()->back()->withInput()->with('msg', "保留");
@@ -177,10 +180,10 @@ class ResourceStockController extends Controller
                 return redirect()->route("resource.index")->with('msg', "更改资源分类信息成功");
                 break;
             case 3:
-                return redirect()->back()->withInput()->with('msg', '资源分类已存在');
+                return redirect()->back()->withInput()->with('err', '资源分类已存在');
                 break;
             default:
-                return redirect()->back()->withInput()->with('msg', '数据写入失败,更改资源分类信息失败');
+                return redirect()->back()->withInput()->with('err', '数据写入失败,更改资源分类信息失败');
         }
 //        dd('updateCategory.后台更改分类');
     }
@@ -194,24 +197,22 @@ class ResourceStockController extends Controller
     public function deleteResource($resource_stock_id)
     {
         if(empty($resource_stock_id)){
-            return redirect()->back()->withInput()->with('msg', '非法访问');
+            return redirect()->back()->withInput()->with('err', '非法访问');
         }
         $res=ResourceStock::deleteResource($resource_stock_id);//执行删除
         switch ($res) { //判断删除返回值
             case 0:
-                return redirect()->back()->withInput()->with('msg', '数据为空');
+                return redirect()->back()->withInput()->with('err', '数据为空');
                 break;
             case 1:
-                return redirect()->back()->withInput()->with('msg', '资源分类不存在');
+                return redirect()->back()->withInput()->with('err', '资源分类不存在');
                 break;
             case 2:
                 return redirect()->route("resource.index")->with('msg', "删除资源分类成功");
                 break;
             default:
-                return redirect()->back()->withInput()->with('msg', '网络错误,删除资源分类失败');
+                return redirect()->back()->withInput()->with('err', '网络错误,删除资源分类失败');
         }
-
-
     }
     /**
      *上传文章封面图
@@ -231,5 +232,133 @@ class ResourceStockController extends Controller
         $path= "/".$folder_name.$filename;  //   /uploads/images/article/20210613
         return $path;
     }
+
+
+    public static function importResource(Request $request){
+        if (!$request->hasFile('excel')) {
+            return redirect()->back()->withInput()->with('err', '文件上传失败');
+        }
+
+        $excel_file=$request->file('excel');//获取上传的excel
+        $upload_path=storage_path()."/".'import';//存放excel的路径
+        $excel_name=$excel_file->getClientOriginalName();//获取excel表格名
+        $excel_file->move($upload_path , $excel_name);//移动excel到/storage/import/
+//        $filePath = 'storage/import/'.$excel_name;//
+        $filePath = $upload_path."/".$excel_name;//
+
+        $objPHPExcel = Excel::load($filePath);
+
+        $a = $objPHPExcel->getsheet(0);//去除表头
+
+        //设置一个存放图片的路径
+        $imgPath = "/uploads/images/resource_stock/".date('Ymd/',time());
+        $imageFilePath = public_path() . $imgPath;//图片保存目录
+        if(!file_exists($imageFilePath)){//文件夹不存在
+            mkdir($imageFilePath);//创建文件夹
+        }
+
+        foreach($a->getDrawingCollection() as $img){
+            list ($startColumn, $startRow) = \PHPExcel_Cell::coordinateFromString($img->getCoordinates());//获取列与行号
+            $imageFileName=Str::random(10).time();
+            /*表格解析后图片会以资源形式保存在对象中，可以通过getImageResource函数直接获取图片资源然后写入本地文件中*/
+            switch ($img->getMimeType()){//处理图片格式
+                case 'image/jpg':
+                case 'image/jpeg':
+                    $imageFileName.='.jpg';
+                    imagejpeg($img->getImageResource(),$imageFilePath.$imageFileName);
+                    break;
+                case 'image/gif':
+                    $imageFileName.='.gif';
+                    imagegif($img->getImageResource(),$imageFilePath.$imageFileName);
+                    break;
+                case 'image/png':
+                    $imageFileName.='.png';
+                    imagepng($img->getImageResource(),$imageFilePath.$imageFileName);
+                    break;
+            }
+            $data[$startRow-2]['cover']=$imgPath.$imageFileName; //图片地址追加到数组中去；$startRow=图片所在列，  $startRow-2  数组的键从0开始
+        }
+        $excel_array=$a->toArray();
+        array_shift($excel_array);  //删除第一个数组(标题);
+        $i=0;
+        foreach($excel_array as $k=>$v) {
+            $data[$k]['name'] = $v[0];
+            $data[$k]['description'] = $v[2];
+            $data[$k]['url'] = $v[3];
+            $data[$k]['type'] = intval($v[4]);
+            $data[$k]['pid'] = intval($v[5]);
+            $data[$k]['is_pull'] = intval($v[6]);
+            $data[$k]['is_verify'] = intval($v[7]);
+            $res=ResourceStock::create($data[$k]);
+
+            if($res){
+                echo $res->resource_stock_id.'数据写入成功,新增资源分类';
+                ResourceStock::addAadminLog(7,2,$res->resource_stock_id,$res->created_at);
+            }else{
+                echo '数据写入失败,新增资源分类失败';
+            }
+
+            //入库(资源库)
+        }
+        //dd($data);
+    }
+
+    /**
+     * 导出资源库
+     */
+    public function exportResource (){
+        $cellData=ResourceStock::where('pid','>',0)->get();
+        $data[0] = ["资源名称","资源图片","资源描述","资源地址","资源类型","父级资源","下架","验证"];
+        foreach ($cellData as $k=>$v){
+            $k ++;
+            $data[$k][0] = $v['name'];
+            $data[$k][1] = $v['cover'];
+            $data[$k][2] = $v['description'];
+            $data[$k][3] = $v['url'];
+            $data[$k][4] = $v['type'];
+            $data[$k][5] = $v['pid'];
+            $data[$k][6] = $v['is_pull'];
+            $data[$k][7] = $v['is_verify'];
+
+        }
+        //$cellData=$cellData->toArray();
+//        dd($data);
+        Excel::create("resourceStock",function ($excel) use ($data){
+            $excel->sheet('score',function ($sheet) use ($data) {
+                //init列
+                $title_array = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
+                    'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH'];
+                //遍历数据
+                for($i=0;$i<sizeof($data);$i++){
+                    foreach($data[$i] as $k=>$v){
+                        //设置图片列高度
+                        $i>0 && $sheet->setHeight($i+1, 78);
+                        //设置图片列宽度
+                        $sheet->setWidth(array($title_array[$k]=>15));
+                        //判断图片列，如果是则放图片
+                        if($k == 1 && $i>0){
+                            $objDrawing = new \PHPExcel_Worksheet_Drawing;
+                            $objDrawing->setPath(public_path().$v);//图片路径
+                            $objDrawing->setCoordinates($title_array[$k] . ($i+1));//图片在excel的位置
+                            $objDrawing->setHeight(100);//图片高度
+                            $objDrawing->setWidth(100);//图片宽度
+                            $objDrawing->setOffsetX(1);
+                            $objDrawing->setRotation(1);
+                            $objDrawing->setWorksheet($sheet);
+                            continue;
+                        }
+                        //否则放置文字数据
+                        $sheet->cell($title_array[$k] . ($i+1), function ($cell) use ($v) {
+                            $cell->setValue($v);
+                        });
+                    }
+                }
+            });
+        })->store('xls');//   保存在/storage/exports/
+        //->export('xls');  //保存在本地
+        //->store('xls')->export('xls'); //直接下载
+
+    }
+
 
 }

@@ -72,21 +72,21 @@ class CategoryController extends Controller
             $data['type'] = intval($input['type']) ? intval($input['type']) : 0;
             $data['val']=$this->mate_type($data['type'],2);//分类类型英文别名
         }else{
-            return redirect()->back()->withInput()->with('msg', '非法访问');
+            return redirect()->back()->withInput()->with('err', '非法访问');
         }
         $res=CategoryModel::addCategory($data);
         switch ($res) { //判断新增返回值
             case 0:
-                return redirect()->back()->withInput()->with('msg', '数据为空');
+                return redirect()->back()->withInput()->with('err', '数据为空');
                 break;
             case 1:
-                return redirect()->back()->withInput()->with('msg', '分类已存在');
+                return redirect()->back()->withInput()->with('err', '分类已存在');
                 break;
             case 2:
                 return redirect()->route("category.index")->with('msg', "新增分类成功");
                 break;
             default:
-                return redirect()->back()->withInput()->with('msg', '数据写入失败,新增分类失败');
+                return redirect()->back()->withInput()->with('err', '数据写入失败,新增分类失败');
         }
 
     }
@@ -99,7 +99,7 @@ class CategoryController extends Controller
     {
 
         if(empty($category_id)){
-            return redirect()->back()->withInput()->with('msg', '非法访问');
+            return redirect()->back()->withInput()->with('err', '非法访问');
         }
 
         $data = CategoryModel::find($category_id);
@@ -130,12 +130,12 @@ class CategoryController extends Controller
             $data['type'] = intval($input['type']) ? intval($input['type']) : 0;
             $data['val']=$this->mate_type($data['type'],2);//分类类型英文别名
         }else{
-            return redirect()->back()->withInput()->with('msg', '非法请求');
+            return redirect()->back()->withInput()->with('err', '非法请求');
         }
         $res=CategoryModel::updateCategory($data);   //执行修改
         switch ($res) { //判断修改返回值
             case 0:
-                return redirect()->back()->withInput()->with('msg', '数据为空');
+                return redirect()->back()->withInput()->with('err', '数据为空');
                 break;
             case 1:
                 return redirect()->back()->withInput()->with('msg', "保留");
@@ -144,10 +144,10 @@ class CategoryController extends Controller
                 return redirect()->route("category.index")->with('msg', "更改分类信息成功");
                 break;
             case 3:
-                return redirect()->back()->withInput()->with('msg', '分类已存在');
+                return redirect()->back()->withInput()->with('err', '分类已存在');
                 break;
             default:
-                return redirect()->back()->withInput()->with('msg', '数据写入失败,更改分类信息失败');
+                return redirect()->back()->withInput()->with('err', '数据写入失败,更改分类信息失败');
         }
 //        dd('updateCategory.后台更改分类');
     }
@@ -161,21 +161,21 @@ class CategoryController extends Controller
     public function deleteCategory($category_id)
     {
         if(empty($category_id)){
-            return redirect()->back()->withInput()->with('msg', '非法访问');
+            return redirect()->back()->withInput()->with('err', '非法访问');
         }
         $res=CategoryModel::deleteCategory($category_id);//执行删除
         switch ($res) { //判断删除返回值
             case 0:
-                return redirect()->back()->withInput()->with('msg', '数据为空');
+                return redirect()->back()->withInput()->with('err', '数据为空');
                 break;
             case 1:
-                return redirect()->back()->withInput()->with('msg', '分类不存在');
+                return redirect()->back()->withInput()->with('err', '分类不存在');
                 break;
             case 2:
                 return redirect()->route("admin.showAdminUser")->with('msg', "删除分类成功");
                 break;
             default:
-                return redirect()->back()->withInput()->with('msg', '网络错误,删除分类失败');
+                return redirect()->back()->withInput()->with('err', '网络错误,删除分类失败');
         }
 
 

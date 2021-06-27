@@ -60,8 +60,9 @@ class Article extends Base
         return  $tags;
     }
 
-    /**新增文章
-     * @param $data
+    /**
+     * 新增文章
+     * @param $data 新增文章数据
      * @return int 0：$data为空，1：文章标题已存在，2：成功新增文章
      */
 
@@ -79,21 +80,15 @@ class Article extends Base
             $data['html']="";
         }
         $res=self::create($data);//使用create新增文章
-        //本次新增标签信息写入log
-        $admin_user=session('admin_user');
-        $admin_log['last_login_ip']=$admin_user['last_login_ip'];    //管理员IP
-        $admin_log['admin_id']=$admin_user['admin_id'];  //管理员id
-        $admin_log['exec_object']=3;                    //执行操作对象 0:默认 1：分类， 2：标签 ，3：文章，4：评论，5：网站配置 ， 6：管理员'
-        $admin_log['exec_type']=2;                      //执行操作类型 0:默认 1：删除， 2：添加， 3：修改， 4：登录， 5：退出',
-        $admin_log['exec_object_id']=$res->article_id;        //执行操作对象id
-        $admin_log['created_at']=$res->created_at;//执行操作创建时间
-        self::addAadminLog($admin_log);
+        //本次新增文章信息写入log
+        self::addAadminLog(3,2,$res->article_id,$res->created_at);
         return 2;
     }
 
     /**
-     *  修改文章
-     * @return \Illuminate\Support\Collection
+     * 修改文章
+     * @param $data 文章新数据
+     * @return int  0：数据为空，1：无需修改，保留原样，2：修改成功，3：文章标题已存在
      */
     public  static  function  updateArticle($data){
         if(empty($data)){//如果$data为空
@@ -119,25 +114,24 @@ class Article extends Base
             $edit_info['is_top']= 1;//取消置顶
         }
         self::find($data['article_id'])->update($edit_info);//使用update方法修改文章
-        //本次新增标签信息写入log
-        $admin_user=session('admin_user');
-        $admin_log['last_login_ip']=$admin_user['last_login_ip'];    //管理员IP
-        $admin_log['admin_id']=$admin_user['admin_id'];  //管理员id
-        $admin_log['exec_object']=3;                    //执行操作对象 0:默认 1：分类， 2：标签 ，3：文章，4：评论，5：网站配置 ， 6：管理员'
-        $admin_log['exec_type']=3;                      //执行操作类型 0:默认 1：删除， 2：添加， 3：修改， 4：登录， 5：退出',
-        $admin_log['exec_object_id']=$data['article_id'];        //执行操作对象id
-        $admin_log['created_at']=date('Y-m-d H:i:s', time());//执行操作创建时间
-        self::addAadminLog($admin_log);
+        //本次修改文章信息写入log
+        self::addAadminLog(3,3,$data['article_id'],date('Y-m-d H:i:s', time()));
         return 2;
 
     }
 
+    /**
+     *删除文章
+     * @param $article_id  文章id
+     * @return int        0：数据为空，1：文章已删除，2：成功删除
+     * @throws \Exception
+     */
     public static function deleteArticle($article_id)
     {
         if(empty($article_id)){
             return 0;
         }
-        //查询数据库中是否存在该分类  0：没有  1：存在
+        //查询数据库中是否存在该文章  0：没有  1：存在
         $article_id_count = self::where('article_id','=',$article_id)->count();
         if(!$article_id_count){ //不存在说明已删除
             return 1;
@@ -145,22 +139,12 @@ class Article extends Base
         $article_info = self::find($article_id,["markdown","cover"]); //查询包含图片路径的信息
         $preg = '/(?<=\()+\/uploads\/images\/article\/+[^\)]+/';// 匹配括号里面的内容的正则表达式 markdown里的图片路径：(/uploads/images/article/20210616/DkCGWaGQTm1623848364.png)
         preg_match_all($preg, $article_info->markdown, $allImg);//这里匹配指定文章/uploads/images/article/的img
-        //多维数组转一维
-        $allImg=array_flatten($allImg);
-
+        $allImg=array_flatten($allImg); //多维数组转一维
         array_push($allImg,$article_info->cover);//把封面图入栈
-        //删除图片
-        self::deletedCover($allImg,2);
+        self::deletedCover($allImg,2); //删除图片
         self::where('article_id','=',$article_id)->delete();
         //本次删除文章信息写入log
-        $admin_user=session('admin_user');
-        $admin_log['last_login_ip']=$admin_user['last_login_ip'];    //管理员IP
-        $admin_log['admin_id']=$admin_user['admin_id'];  //管理员id
-        $admin_log['exec_object']=3;                    //执行操作对象 0:默认 1：分类， 2：标签 ，3：文章，4：评论，5：网站配置 ， 6：管理员',
-        $admin_log['exec_type']=1;                      //执行操作类型 0:默认 1：删除， 2：添加， 3：修改， 4：登录， 5：退出',
-        $admin_log['exec_object_id']=$article_id;       //执行操作对象id
-        $admin_log['created_at']=date('Y-m-d H:i:s', time());//执行操作创建时间
-        self::addAadminLog($admin_log);
+        self::addAadminLog(3,1,$article_id,date('Y-m-d H:i:s', time()));
         return 2;
     }
 

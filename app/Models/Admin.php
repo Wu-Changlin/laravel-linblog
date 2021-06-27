@@ -10,29 +10,23 @@ class Admin extends Base
 
 
     /**管理员登录
-     * @param $data 管理员登录信息
+     * @param $data 管理员登录数据
      * @return int 0:用户不存在，0:用户密码错误，2：登录成功
      */
     public static function adminLogin ($data) {
         if(empty($data)){ //如果$data为空直接返回
             return 0;
         }
+
         $admin_users = self::where('email',$data['email'])->first(); //根据用户输入邮箱查询数据库管理员信息
         if(!$admin_users){
             return 0;
         }else{
+
             if(!Hash::check($data['password'],$admin_users->password)){ //用户输入密码对比数据库管理员密码  $data['password']：字符串 ，$admin_users->password：数据库Hash密码字符串 60
                 return 1;
             }
         }
-        //本次登录信息写入log
-        $admin_log['last_login_ip']=request()->ip();    //管理员IP
-        $admin_log['admin_id']=$admin_users->admin_id;  //管理员id
-        $admin_log['exec_object']=6;                    //执行操作对象 0:默认 1：分类， 2：标签 ，3：文章，4：评论，5：网站配置 ， 6：管理员',
-        $admin_log['exec_type']=4;                      //执行操作类型 0:默认 1：删除， 2：添加， 3：修改， 4：登录， 5：退出',
-        $admin_log['exec_object_id']=$admin_users->admin_id;        //执行操作对象id
-        $admin_log['created_at']=date('Y-m-d H:i:s', time());//执行操作创建时间
-        self::addAadminLog($admin_log);
         //写入session
         $admin_session['admin_id']=$admin_users->admin_id;
         $admin_session['email']=$admin_users->email;
@@ -42,13 +36,17 @@ class Admin extends Base
         //更新管理员登录次数+1
         $admin_users->login_number +=1;
         $admin_users->save();
+        //本次登录信息写入log
+        self::addAadminLog(6,4,$admin_users->login_number,date('Y-m-d H:i:s', time()));
         //登录成功状态
         return 2;
     }
 
+
     /**
      * 新增管理员
-     * @param $data array 新增管理员信息
+     * @param $data 新增管理员数据
+     * @return int 0：$data为空，1：管理员邮箱已存在，2：成功新增分类
      */
     public static function addAdmin ($data) {
         if(empty($data)){ //如果$data为空直接返回
@@ -61,20 +59,14 @@ class Admin extends Base
         $data['password']=Hash::make($data['password']); //对字符串密码hash加密
         $res=self::create($data);//使用create方法新增管理员
         //本次新增管理员信息写入log
-        $admin_user=session('admin_user');
-        $admin_log['last_login_ip']=$admin_user['last_login_ip'];    //管理员IP
-        $admin_log['admin_id']=$admin_user['admin_id'];  //管理员id
-        $admin_log['exec_object']=6;                    //执行操作对象 0:默认 1：分类， 2：标签 ，3：文章，4：评论，5：网站配置 ， 6：管理员',
-        $admin_log['exec_type']=2;                      //执行操作类型 0:默认 1：删除， 2：添加， 3：修改， 4：登录， 5：退出',
-        $admin_log['exec_object_id']=$res->admin_id;        //执行操作对象id
-        $admin_log['created_at']=$res->created_at;//执行操作创建时间
-        self::addAadminLog($admin_log);
+        self::addAadminLog(6,2,$res->admin_id,$res->created_at);
         return 2;
     }
 
     /**
-     *更改管理员
-     * @param $data array 更改管理员信息
+     * 修改管理员信息
+     * @param $data 管理员新数据
+     * @return int  0：$data为空，1：无需修改，保留原样，2：成功修改分类，3：管理员邮箱已存在
      */
     public static function updateAdmin ($data) {
         if(empty($data)){ //如果$data为空直接返回
@@ -101,19 +93,11 @@ class Admin extends Base
                 }
         }
         self::where('admin_id',$data['admin_id'])->update($edit_info);
-        //本次修改管理员信息写入log
-        $admin_user=session('admin_user');
-        $admin_log['last_login_ip']=$admin_user['last_login_ip'];    //管理员IP
-        $admin_log['admin_id']=$admin_user['admin_id'];  //管理员id
-        $admin_log['exec_object']=6;                    //执行操作对象 0:默认 1：分类， 2：标签 ，3：文章，4：评论，5：网站配置 ， 6：管理员',
-        $admin_log['exec_type']=3;                      //执行操作类型 0:默认 1：删除， 2：添加， 3：修改，4：登录， 5：退出',
-        $admin_log['exec_object_id']=$data['admin_id'];    //执行操作对象id
-        $admin_log['created_at']=date('Y-m-d H:i:s', time());//执行操作创建时间
+
         //如果当前登录管理员修改本管理员的基本信息则更新session
         if(intval($data['admin_id']) === $admin_user['admin_id']){
             if(isset($data['password'])){
-                session()->flush(); // 清空session
-                return 4;
+               return 4;
             }
             $admin_new_info = self::find($data['admin_id'],['admin_id',"name","email"]); //根据用户输入邮箱查询数据库用户信息
             //重新写入session
@@ -123,15 +107,16 @@ class Admin extends Base
             $admin_session['last_login_ip']=request()->ip();
             session(['admin_user'=>$admin_session]);
         }
-
-
-        self::addAadminLog($admin_log);
+        self::addAadminLog(6,3,$data['admin_id'],date('Y-m-d H:i:s', time()));
         return 2;
     }
 
+
     /**
-     *删除管理员
-     * @param $admin_id 删除管理员id
+     * 删除管理员
+     * @param $admin_id 管理员id
+     * @return int 0：$admin_id为空，1：已删除管理员，2：成功删除
+     * @throws \Exception
      */
     public static function deleteAdmin ($admin_id) {
         if(empty($admin_id)){
@@ -144,15 +129,17 @@ class Admin extends Base
         }
         self::where('admin_id','=',$admin_id)->delete();
         //本次删除管理员信息写入log
-        $admin_user=session('admin_user');
-        $admin_log['last_login_ip']=$admin_user['last_login_ip'];    //管理员IP
-        $admin_log['admin_id']=$admin_user['admin_id'];  //管理员id
-        $admin_log['exec_object']=6;                    //执行操作对象 0:默认 1：分类， 2：标签 ，3：文章，4：评论，5：网站配置 ， 6：管理员',
-        $admin_log['exec_type']=1;                      //执行操作类型 0:默认 1：删除， 2：添加， 3：修改， 4：登录， 5：退出',
-        $admin_log['exec_object_id']=$admin_id;        //执行操作对象id
-        $admin_log['created_at']=date('Y-m-d H:i:s', time());//执行操作创建时间
-        self::addAadminLog($admin_log);
+        self::addAadminLog(6,1,$admin_id,date('Y-m-d H:i:s', time()));
         return 2;
+    }
+
+    //退出后台管理并返回后台登录页，清除用户缓存
+    public static function adminlogOut(){
+        $admin_user=session('admin_user');
+        $admin_user['admin_id'];  //管理员id
+        $admin_user = self::find( $admin_user['admin_id'],["login_number"]);
+        self::addAadminLog(6,5,$admin_user->login_number,date('Y-m-d H:i:s', time()));
+        session()->flush(); // 清空session
     }
     
 }

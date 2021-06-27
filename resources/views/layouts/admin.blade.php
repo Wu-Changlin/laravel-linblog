@@ -134,7 +134,7 @@
                     </a>
                     <ul class="submenu">
                         <li>
-                            <a href="{{route('tag.showTag')  }}">
+                            <a href="{{ route('tag.showTag')  }}">
                                     <span class="menu-text">
                                         标签列表                                    </span>
                                 <i class="menu-expand"></i>
@@ -202,14 +202,14 @@
                     </a>
                     <ul class="submenu">
                         <li>
-                            <a href="/admin/conf/conf.html">
+                            <a href="{{ route('webconfig.configView') }}">
                                     <span class="menu-text">
                                         配置项                                  </span>
                                 <i class="menu-expand"></i>
                             </a>
                         </li>
                         <li>
-                            <a href="/admin/conf/lst.html">
+                            <a href="{{ route('webconfig.index') }}">
                                     <span class="menu-text">
                                         配置列表                                  </span>
                                 <i class="menu-expand"></i>
@@ -234,7 +234,7 @@
 <script src="{{asset('admin/style/jquery.js')}}"></script>
 <!--Beyond Scripts-->
 <script src="{{asset('admin/style/beyond.js')}}"></script>
-<script src="{{asset('js/toastr.min.js')}}"></script>  {{--弹窗提示框样式--}}
+<script src="{{asset('js/toastr.min.js')}}"></script> {{-- 弹窗提示框样式--}}
 <script>
     // 弹窗提示框样式
     toastr.options = {
@@ -256,7 +256,10 @@
 <script>
     //自定义错误提示
     @if(session('msg'))
-        toastr.error("{{ session('msg') }}");
+        toastr.success("{{ session('msg') }}");
+    @endif
+    @if(session('err'))
+    toastr.error("{{ session('err') }}");
     @endif
     //验证器错误提示
     @if (count($errors) > 0)
@@ -265,6 +268,6 @@
         @endforeach
     @endif
 </script>
-        @yield('js')
+@yield('js')
     </body>
 </html>

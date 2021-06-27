@@ -69,19 +69,19 @@ class ArticleController extends Controller
             $res=ArticleModel::addArticle($data);
             switch ($res) { //判断新增返回值
                 case 0:
-                    return redirect()->back()->withInput()->with('msg', '数据为空');
+                    return redirect()->back()->withInput()->with('err', '数据为空');
                     break;
                 case 1:
-                    return redirect()->back()->withInput()->with('msg', '文章已存在');
+                    return redirect()->back()->withInput()->with('err', '文章已存在');
                     break;
                 case 2:
                     return redirect()->route("article.showArticle")->with('msg', "新增文章成功");
                     break;
                 default:
-                    return redirect()->back()->withInput()->with('msg', '数据写入失败,新增文章失败');
+                    return redirect()->back()->withInput()->with('err', '数据写入失败,新增文章失败');
             }
         }else{
-            return  redirect()->back()->withInput()->with('msg','非法访问');
+            return  redirect()->back()->withInput()->with('err','非法访问');
         }
 
 
@@ -97,7 +97,7 @@ class ArticleController extends Controller
     {
 
         if(empty($article_id)){
-            return  redirect()->back()->withInput()->with('msg','非法访问');
+            return  redirect()->back()->withInput()->with('err','非法访问');
         }
         $categorys=ArticleModel::categorys();  //分类
         $tags=ArticleModel::tags();            //标签
@@ -141,7 +141,7 @@ class ArticleController extends Controller
 
             switch ($res) { //判断新增返回值
                 case 0:
-                    return redirect()->back()->withInput()->with('msg', '数据为空');
+                    return redirect()->back()->withInput()->with('err', '数据为空');
                     break;
                 case 1:
                     return redirect()->back()->withInput()->with('msg', "保留，没有修改内容");
@@ -150,13 +150,13 @@ class ArticleController extends Controller
                     return redirect()->back()->withInput()->with('msg', "修改文章成功");
                     break;
                 case 3:
-                    return redirect()->back()->withInput()->with('msg', "标题已存在");
+                    return redirect()->back()->withInput()->with('err', "标题已存在");
                     break;
                 default:
-                    return redirect()->back()->withInput()->with('msg', '数据写入失败,新增文章失败');
+                    return redirect()->back()->withInput()->with('err', '数据写入失败,新增文章失败');
             }
         }else{
-            return  redirect()->back()->withInput()->with('msg','非法访问');
+            return  redirect()->back()->withInput()->with('err','非法访问');
         }
 
     }
@@ -170,21 +170,21 @@ class ArticleController extends Controller
     {
 
         if(empty($article_id)){
-            return redirect()->back()->withInput()->with('msg', '非法访问');
+            return redirect()->back()->withInput()->with('err', '非法访问');
         }
         $res=ArticleModel::deleteArticle($article_id);//执行删除
         switch ($res) { //判断删除返回值
             case 0:
-                return redirect()->back()->withInput()->with('msg', '数据为空');
+                return redirect()->back()->withInput()->with('err', '数据为空');
                 break;
             case 1:
-                return redirect()->back()->withInput()->with('msg', '文章不存在');
+                return redirect()->back()->withInput()->with('err', '文章不存在');
                 break;
             case 2:
                 return redirect()->route("article.showArticle")->with('msg', "删除文章成功");
                 break;
             default:
-                return redirect()->back()->withInput()->with('msg', '网络错误,删除文章失败');
+                return redirect()->back()->withInput()->with('err', '网络错误,删除文章失败');
         }
     }
 

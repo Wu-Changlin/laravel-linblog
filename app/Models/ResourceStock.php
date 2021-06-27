@@ -28,8 +28,9 @@ class ResourceStock extends Base
     }
 
     /**
-     * @param $data  新增资源分类
-     * @return int   状态码
+     * 新增资源分类
+     * @param $data  新增资源分类数据
+     * @return int   0：$data为空，1：资源分类已存在，2：成功资源分类
      */
     public static function addResource($data){
         if(empty($data)){//如果$data为空
@@ -40,23 +41,15 @@ class ResourceStock extends Base
             return 1;
         }
         $res=self::create($data);//使用create新增资源分类
-        //本次新增标签信息写入log
-        $admin_user=session('admin_user');
-        $admin_log['last_login_ip']=$admin_user['last_login_ip'];    //管理员IP
-        $admin_log['admin_id']=$admin_user['admin_id'];  //管理员id
-        $admin_log['exec_object']=7;                    //执行操作对象  0:默认 1：分类， 2：标签 ，3：文章，4：评论，5：网站配置 ， 6：管理员， 7：资源库，8：友链
-        $admin_log['exec_type']=2;                      //执行操作类型 0:默认 1：删除， 2：添加， 3：修改， 4：登录， 5：退出，6：前台添加
-        $admin_log['exec_object_id']=$res->resource_stock_id;        //执行操作对象id
-        $admin_log['created_at']=$res->created_at;//执行操作创建时间
-        self::addAadminLog($admin_log);
+        //本次新增资源分类信息写入log
+        self::addAadminLog(7,2,$res->resource_stock_id,$res->created_at);
         return 2;
     }
 
-
-
     /**
-     *  修改资源分类
-     * @return \Illuminate\Support\Collection
+     * 修改资源分类
+     * @param $data 资源分类新数据
+     * @return int 0：数据为空，1：无需修改，保留原样，2：修改成功，3：资源分类名称已存在
      */
     public  static  function  updateResource($data){
         if(empty($data)){//如果$data为空
@@ -97,23 +90,17 @@ class ResourceStock extends Base
                 self::deletedCover($resource_info['cover'],1);//删除资源分类图片
             }
         }
-        self::find($data['resource_stock_id'])->update($edit_info);//使用update方法修改文章
-        //本次新增标签信息写入log
-        $admin_user=session('admin_user');
-        $admin_log['last_login_ip']=$admin_user['last_login_ip'];    //管理员IP
-        $admin_log['admin_id']=$admin_user['admin_id'];  //管理员id
-        $admin_log['exec_object']=7;                    //执行操作对象  0:默认 1：分类， 2：标签 ，3：文章，4：评论，5：网站配置 ， 6：管理员， 7：资源库，8：友链
-        $admin_log['exec_type']=3;                      //执行操作类型 0:默认 1：删除， 2：添加， 3：修改， 4：登录， 5：退出，6：
-        $admin_log['exec_object_id']=$data['resource_stock_id'];        //执行操作对象id
-        $admin_log['created_at']=date('Y-m-d H:i:s', time());//执行操作创建时间
-        self::addAadminLog($admin_log);
+        self::find($data['resource_stock_id'])->update($edit_info);//使用update方法修改资源分类
+        //本次修改资源分类信息写入log
+        self::addAadminLog(7,3,$data['resource_stock_id'],date('Y-m-d H:i:s', time()));
         return 2;
 
     }
 
     /**
-     * @param $resource_stock_id
-     * @return int
+     * 删除资源
+     * @param $resource_stock_id 资源分类id
+     * @return int  0：数据为空，1：分类已删除，2：成功删除
      */
     public static function deleteResource($resource_stock_id)
     {
@@ -139,15 +126,8 @@ class ResourceStock extends Base
         }
 
         self::where('resource_stock_id','=',$resource_stock_id)->delete();
-        //本次删除文章信息写入log
-        $admin_user=session('admin_user');
-        $admin_log['last_login_ip']=$admin_user['last_login_ip'];    //管理员IP
-        $admin_log['admin_id']=$admin_user['admin_id'];  //管理员id
-        $admin_log['exec_object']=7;                    //执行操作对象 0:默认 1：分类， 2：标签 ，3：文章，4：评论，5：网站配置 ， 6：管理员',
-        $admin_log['exec_type']=1;                      //执行操作类型 0:默认 1：删除， 2：添加， 3：修改， 4：登录， 5：退出',
-        $admin_log['exec_object_id']=$resource_stock_id;       //执行操作对象id
-        $admin_log['created_at']=date('Y-m-d H:i:s', time());//执行操作创建时间
-        self::addAadminLog($admin_log);
+        //本次删除资源分类信息写入log
+        self::addAadminLog(7,1,$resource_stock_id,date('Y-m-d H:i:s', time()));
         return 2;
     }
 

@@ -24,20 +24,14 @@ class Category extends Base
         }
         $res=self::create($data);//使用create方法新增分类
         //本次新增分类信息写入log
-        $admin_user=session('admin_user');
-        $admin_log['last_login_ip']=$admin_user['last_login_ip'];    //管理员IP
-        $admin_log['admin_id']=$admin_user['admin_id'];  //管理员id
-        $admin_log['exec_object']=1;                    //执行操作对象 0:默认 1：分类， 2：标签 ，3：文章，4：评论，5：网站配置 ， 6：管理员'
-        $admin_log['exec_type']=2;                      //执行操作类型 0:默认 1：删除， 2：添加， 3：修改， 4：登录， 5：退出',
-        $admin_log['exec_object_id']=$res->category_id;        //执行操作对象id
-        $admin_log['created_at']=$res->created_at;//执行操作创建时间
-        self::addAadminLog($admin_log);
+        self::addAadminLog(1,2,$res->category_id,$res->created_at);
         return 2;
     }
 
     /**
-     * @param $data   修改分类数据
-     * @return int   0：$data为空，1：分类名已存在，2：没有有需要修改的信息，保留原有数据，3：成功修改分类
+     * 修改分类
+     * @param $data   分类新数据
+     * @return int   0：$data为空，1：没有有需要修改的，保留原有数据，2：成功修改分类，3：分类名已存在
      */
     public static function updateCategory($data){
         if(empty($data)){ //如果$data为空直接返回
@@ -58,23 +52,16 @@ class Category extends Base
         }
         self::where('category_id',$data['category_id'])->update($edit_info); //执行修改分类操作
         //本次修改分类信息写入log
-        $admin_user=session('admin_user');
-        $admin_log['last_login_ip']=$admin_user['last_login_ip'];    //管理员IP
-        $admin_log['admin_id']=$admin_user['admin_id'];  //管理员id
-        $admin_log['exec_object']=1;                    //执行操作对象 0:默认 1：分类， 2：标签 ，3：文章，4：评论，5：网站配置 ， 6：管理员',
-        $admin_log['exec_type']=3;                      //执行操作类型 0:默认 1：删除， 2：添加， 3：修改，4：登录， 5：退出',
-        $admin_log['exec_object_id']=$data['category_id'];    //执行操作对象id
-        $admin_log['created_at']=date('Y-m-d H:i:s', time());//执行操作创建时间
-        self::addAadminLog($admin_log);
+        self::addAadminLog(1,3,$data['category_id'],date('Y-m-d H:i:s', time()));
         return 2;
     }
 
 
     /**
+     * 删除分类
      * @param $category_id    分类id
      * @return int   0：$data为空，1：分类不存在，2：成功删除分类
      */
-
     public static function deleteCategory ($category_id) {
         if(empty($category_id)){
             return 0;
@@ -86,14 +73,7 @@ class Category extends Base
         }
         self::where('category_id','=',$category_id)->delete();
         //本次删除分类信息写入log
-        $admin_user=session('admin_user');
-        $admin_log['last_login_ip']=$admin_user['last_login_ip'];    //管理员IP
-        $admin_log['admin_id']=$admin_user['admin_id'];  //管理员id
-        $admin_log['exec_object']=1;                    //执行操作对象 0:默认 1：分类， 2：标签 ，3：文章，4：评论，5：网站配置 ， 6：管理员',
-        $admin_log['exec_type']=1;                      //执行操作类型 0:默认 1：删除， 2：添加， 3：修改， 4：登录， 5：退出',
-        $admin_log['exec_object_id']=$category_id;       //执行操作对象id
-        $admin_log['created_at']=date('Y-m-d H:i:s', time());//执行操作创建时间
-        self::addAadminLog($admin_log);
+        self::addAadminLog(1,1,$category_id,date('Y-m-d H:i:s', time()));
         return 2;
     }
 

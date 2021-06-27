@@ -16,7 +16,7 @@
                 <a href="{{route('admin.index')}}">系统</a>
             </li>
             <li>
-                <a href="{{url('admin/category/showCategory')}}">标签管理</a>
+                <a href="{{ route('tag.showTag') }}">标签管理</a>
             </li>
             <li class="active">添加标签</li>
         </ul>

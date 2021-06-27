@@ -16,37 +16,52 @@ class WebConfigController extends Controller
      *showWebConfig        显示网站配置
      * @return  array      showWebConfig_show_code     1：显示网站配置失败   2：显示网站配置成功
      */
-    public function showWebConfig()
+    public function showWebconfig()
     {
-        $data=WebConfig::all();
+        $data=WebConfig::paginate(10);
         $assion=compact('data');
-        dd($assion);
+
+        return view('admin.web_config.web_config_list',$assion);
         //dd('showWebConfig.显示网站配置');
     }
 
-    /**
-     *
-     *addWebConfig          新增网站配置项
-     * @return   addWebConfig_add_code   0：默认   1：新增网站配置项   2：新增网站配置项  3：保存
-     */
-    public function addWebConfig(){
-        dd('addWebConfig.新增网站配置');
+    //网站配置视图
+    public function configView(){
+        return view('admin.web_config.web_config_view');
     }
 
 
     /**
-     *updateWebConfig         更改网站配置项
-     * @param $web_onfig_id   网站配置项id
-     * @rerurn   updateWebConfig_update_code   0：默认   1：更改网站配置项失败   2：更改网站配置项成功 3：保存
+     *显示新增网站配置项页
      */
-    public function updateWebConfig($webConfig_id){
-        dd('updateWebConfig.更改网站配置项');
+    public function showAddwebConfig(){
+        return view('admin.web_config.web_config_add');
+    }
+
+
+    public function addWebconfig(Request $request){
+
+    }
+
+    /**
+     * 显示更改网站配置项页
+     * @param $web_onfig_id   网站配置项id
+     *
+     */
+    public function showUpdatewebConfig($webConfig_id){
+
+        return view('admin.web_config.web_config_update');
+    }
+
+
+    public function updateWebconfig(Request $request){
+
     }
 
     /**
      * deleteWebConfig        删除网站配置项
      * @param $webConfig_id   删除网站配置项id
-     * @return deleteWebConfig_delete_code  0：默认   1：删除网站配置项失败   2：删除网站配置项成功
+     * @return
      */
     public  function deleteWebConfig($webConfig_id){
         dd('deleteWebConfig.删除网站配置项');

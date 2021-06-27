@@ -9,6 +9,11 @@ class FriendshipLink extends Base
     //
     protected $primaryKey='link_id';
 
+    /**
+     * 新增友好博客
+     * @param $data 友好博客数据
+     * @return int  0：数据为空，1：已存在，2：新增成功
+     */
     public static function addFriend($data){
         if(empty($data)){ //如果$data为空直接返回
             return 0;
@@ -19,21 +24,15 @@ class FriendshipLink extends Base
         }
         $res=self::create($data);//使用create方法新增友好博客
         //本次新增友好博客信息写入log
-        $admin_user=session('admin_user');
-        $admin_log['last_login_ip']=$admin_user['last_login_ip'];    //管理员IP
-        $admin_log['admin_id']=$admin_user['admin_id'];  //管理员id
-        $admin_log['exec_object']=8;                    //执行操作对象 0:默认 1：分类， 2：标签 ，3：文章，4：评论，5：网站配置 ， 6：管理员， 7：资源库，8：友链'
-        $admin_log['exec_type']=2;                      //执行操作类型 0:默认 1：删除， 2：添加， 3：修改， 4：登录， 5：退出',
-        $admin_log['exec_object_id']=$res->link_id;      //执行操作对象id
-        $admin_log['created_at']=$res->created_at;      //执行操作创建时间
-        self::addAadminLog($admin_log);
+        self::addAadminLog(8,2,$res->link_id,$res->created_at);
         return 2;
     }
 
 
     /**
-     * @param $data
-     * @return int   0:$data为空 ,1
+     * 修改友好博客
+     * @param $data 友好博客新数据
+     * @return int 0：数据为空，1：无需修改，保留原样，2：修改成功，3：友好博客名已存在
      */
     public static function updateFriend($data){
         if(empty($data)){ //如果$data为空直接返回
@@ -55,24 +54,16 @@ class FriendshipLink extends Base
         }
         self::where('link_id',$data['link_id'])->update($edit_info);
         //本次修改友好博客信息写入log
-        $admin_user=session('admin_user');
-        $admin_log['last_login_ip']=$admin_user['last_login_ip'];    //管理员IP
-        $admin_log['admin_id']=$admin_user['admin_id'];  //管理员id
-        $admin_log['exec_object']=8;                    //执行操作对象 0:默认 1：分类， 2：标签 ，3：文章，4：评论，5：网站配置 ， 6：管理员， 7：资源库，8：友链'
-        $admin_log['exec_type']=3;                      //执行操作类型 0:默认 1：删除， 2：添加， 3：修改，4：登录， 5：退出',
-        $admin_log['exec_object_id']=$data['link_id'];    //执行操作对象id
-        $admin_log['created_at']=date('Y-m-d H:i:s', time());//执行操作创建时间
-        self::addAadminLog($admin_log);
+        self::addAadminLog(8,1,$data['link_id'],date('Y-m-d H:i:s', time()));
         return 2;
     }
 
-
-
-
-
+    
     /**
-     *
-     * @param $link_id 删除友链id
+     * 删除友好博客
+     * @param $link_id  友好博客id
+     * @return int      0：数据为空，1：友好博客已删除，2：成功删除
+     * @throws \Exception
      */
     public static function deleteFriend ($link_id) {
         if(empty($link_id)){
@@ -84,15 +75,8 @@ class FriendshipLink extends Base
             return 1;
         }
         self::where('link_id','=',$link_id)->delete();
-        //本次删除标签信息写入log
-        $admin_user=session('admin_user');
-        $admin_log['last_login_ip']=$admin_user['last_login_ip'];    //管理员IP
-        $admin_log['admin_id']=$admin_user['admin_id'];  //管理员id
-        $admin_log['exec_object']=8;                    //执行操作对象 0:默认 1：分类， 2：标签 ，3：文章，4：评论，5：网站配置 ， 6：管理员， 7：资源库，8：友链'
-        $admin_log['exec_type']=1;                      //执行操作类型 0:默认 1：删除， 2：添加， 3：修改， 4：登录， 5：退出',
-        $admin_log['exec_object_id']=$link_id;       //执行操作对象id
-        $admin_log['created_at']=date('Y-m-d H:i:s', time());//执行操作创建时间
-        self::addAadminLog($admin_log);
+        //本次删除友好博客信息写入log
+        self::addAadminLog(8,1,$link_id,date('Y-m-d H:i:s', time()));
         return 2;
     }
 }
