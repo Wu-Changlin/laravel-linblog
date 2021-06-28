@@ -120,6 +120,9 @@ class TagController extends Controller
             case 3:
                 return redirect()->back()->withInput()->with('err', '标签已存在');
                 break;
+            case 4:
+                return redirect()->back()->withInput()->with('err', "标签所属分类已下架；如需修改请先上架标签所属分类");
+                break;
             default:
                 return redirect()->back()->withInput()->with('err', '数据写入失败,更改标签信息失败');
         }

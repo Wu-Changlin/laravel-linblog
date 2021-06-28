@@ -3,8 +3,6 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Tag;
-use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -57,6 +55,7 @@ class CategoryController extends Controller
             'articles'     => $article_res,
             'head'         => $head,
             'category_id'  =>$category_id,
+            'category_val'  =>'',
             'tag_id'=>0
         ];
 

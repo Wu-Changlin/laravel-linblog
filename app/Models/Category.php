@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Models;
-
-//use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Category extends Base
 {
@@ -44,10 +43,25 @@ class Category extends Base
         if (!$edit_info) {//空数组说明没有修改字段值，返回1
             return 1;
         }
-        if(!empty($edit_info['name'])){
+        if(!empty($edit_info['name'])){//如果新分类名数据
             $category_name_count = self::where('name',$data['name'])->count(); //根据用户输入分类名查询数据库分类表分类信息
             if($category_name_count){//如果有数据说明分类已存在
                 return 3;
+            }
+        }
+        if(!empty($edit_info['is_pull'])){//下架分类有数据
+            if($edit_info['is_pull']==1){//下架分类  标签category_id=分类category_id  文章category_id=分类category_id    下架标签  下架文章和取消文章置顶
+                DB::table('tags')->where('category_id','=', $data['category_id'])
+                    ->update(['is_pull' => 1]); //下架标签
+                DB::table('articles')->where('category_id','=', $data['category_id'])
+                    ->update(['is_pull' => 1,'is_top'=>1]); //下架文章和取消文章置顶
+            }elseif($edit_info['is_pull']==2){//取消下架分类  标签category_id=分类category_id  文章category_id=分类category_id    取消下架标签 取消下架文章
+                DB::table('tags')->where('category_id','=', $data['category_id'])
+                    ->update(['is_pull' => 2]); //取消下架标签
+                DB::table('articles')->where('category_id','=', $data['category_id'])
+                    ->update(['is_pull' => 2]); //取消下架文章
+            }else{
+
             }
         }
         self::where('category_id',$data['category_id'])->update($edit_info); //执行修改分类操作

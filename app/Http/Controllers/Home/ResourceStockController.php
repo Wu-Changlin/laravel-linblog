@@ -17,8 +17,17 @@ class ResourceStockController extends Controller
      */
     public function showResource()
     {
+        $category_val='resource';
+        $assign = [
+//            'tags'         => $tag_article_res,
+//            'articles'     => $article_res,
+//            'head'         => $head,
+            'category_val'  =>$category_val,
+            'category_id'  =>0,
+            'tag_id'=>0
+        ];
 
-        return view('home.resource_stock');
+        return view('home.resource_stock',$assign);
 
     }
 

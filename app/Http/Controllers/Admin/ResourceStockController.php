@@ -134,7 +134,7 @@ class ResourceStockController extends Controller
         }
         $pid_res=ResourceStock::pid_resources();
         $data=$this->mate_type(0,1);
-        uasort($data, function ($a, $b) { //排序按值的长度降序
+        uasort($data, function ($a, $b) { //排序按值的长度降序 用于页面显示标签
             return strLen($a) < strLen($b);
         });
         $resource = ResourceStock::find($resource_stock_id);

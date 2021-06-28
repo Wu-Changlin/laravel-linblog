@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Models;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use DB;
+use Illuminate\Database\Eloquent\Model;
+
 
 
 class Base extends Model
 {
+
     /**
      * 禁止被批量赋值的字段
      * @var array

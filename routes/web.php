@@ -8,7 +8,7 @@ Route::namespace('Home')->name('home.')->group(function () {
     Route::get('/', 'IndexController@showIndex');
 
     //显示文章内容  http://192.168.164.134:1133/article/1
-    Route::get('showTagicle/{id}/', 'ArticleController@showArticle');
+    Route::get('article/{id}/', 'ArticleController@showArticle');
 
     //显示标签下的文章 http://192.168.164.134:1133/showTag/1/1
     Route::get('showTag/{category_id}/{id}', 'TagController@showTag');

@@ -91,12 +91,17 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="username" class="col-sm-2 control-label no-padding-right">资源地址</label>
-                                    <div class="col-sm-6">
-                                        <input type="url" class="form-control" placeholder="" name="url" required="" type="text" value="{{ $resource->url }}">
+                                @if ($resource->pid >0)
+
+                                    <div class="form-group">
+                                        <label for="username" class="col-sm-2 control-label no-padding-right">资源地址</label>
+                                        <div class="col-sm-6">
+                                            <input type="url" class="form-control" placeholder="" name="url" required="" type="text" value="{{ $resource->url }}">
+                                        </div>
                                     </div>
-                                </div>
+
+                                @endif
+
 
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">资源分类描述</label>

@@ -23,12 +23,15 @@
     <div class="ui inverted secondary stackable menu">
       <h2 class="ui olive header item" style="font-family: STSong">Lin</h2>
       <!--<div class="right m-item item m-mobile-hide">-->
-        <a href="/" class="m-item item m-mobile-hide "><i class="home icon"></i>首页</a>
+
         @foreach($category as $v)
-            @if ($v->type>1)
-                <a href="{{ url("$v->val") }}" class="m-item item m-mobile-hide"><i class="clone outline icon"></i>{{ $v->name }}</a>
+            @if ($v->category_id == 1 &&  $v->type==1)
+                <a href="/"  @if($category_id==$v->category_id) class="active m-item item m-mobile-hide" @else  class="m-item item m-mobile-hide" @endif><i class="home icon"></i>首页</a>
+            @elseif($v->category_id>1 && $v->type==1 )
+                <a href="{{ url('category',[$v->category_id]) }}" @if($category_id==$v->category_id) class="active m-item item m-mobile-hide" @else  class="m-item item m-mobile-hide" @endif><i class="clone outline icon"></i>{{ $v->name }}</a>
             @else
-            <a href="{{ url('category',[$v->category_id]) }}" class="m-item item m-mobile-hide"><i class="clone outline icon"></i>{{ $v->name }}</a>
+
+                <a href="{{ url("$v->val") }}" @if($category_val==$v->val) class="active m-item item m-mobile-hide" @else  class="m-item item m-mobile-hide" @endif><i class="clone outline icon"></i>{{ $v->name }}</a>
             @endif
         @endforeach
       <!--</div>-->
@@ -69,23 +72,29 @@
                 </div>
             </div>
 
-
-            <div class="four wide column">
-                <div style="font-size: large;font-weight: bold" class="ui inverted m-text-thin m-text-spaced m-margin-top-max" >网站信息</div>
+            <div class="four wide column" >
+                <div style="font-size: large;" class="ui inverted m-text-thin m-text-spaced m-margin-top-max" >架构</div>
                 <div class="ui inverted link list">
-                    <div href="#" class="m-text-thin">文章总数：<h2 class="ui orange header m-inline-block m-margin-top-null" style="font-size:medium;"> 14 </h2> 篇</div>
-                    <div href="#" class="m-text-thin">访问总数：<h2 class="ui orange header m-inline-block m-margin-top-null" style="font-size:medium;"> 14 </h2> 次</div>
-                    <div href="#" class="m-text-thin">文章总数：<h2 class="ui orange header m-inline-block m-margin-top-null" style="font-size:medium;"> 14 </h2> 篇</div>
+                    <div class="item">
+                        <div class="middle aligned right">
+                            <i class="calendar alternate outline icon"></i>
+                            <span>2019-03-17 14:11:56</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
+            <div class="four wide column">
+                <div style="font-size: large;font-weight: bold" class="ui inverted m-text-thin m-text-spaced m-margin-top-max" >统计</div>
+                <div class="ui inverted link list">
+                    <div href="#" class="m-text-thin">文章总数：<h2 class="ui orange header m-inline-block m-margin-top-null" style="font-size:medium;"> {{ $article_count }} </h2> 篇</div>
+                    <div href="#" class="m-text-thin">访问总数：<h2 class="ui orange header m-inline-block m-margin-top-null" style="font-size:medium;"> {{ $article_visits }} </h2> 次</div>
+                </div>
+            </div>
         </div>
         <div class="ui inverted section divider"></div>
-        <div style="color: #F08047;margin-top: -18px" class="ui inverted m-text-thin m-text-spaced">我的客栈已营业：<span id="htmer_time" class="item m-text-thin"></span> (*๓´╰╯`๓)</div>
-        <a rel="nofollow" href="http://www.beian.miit.gov.cn" target="_blank">赣ICP备20004408号-1</a>
+        <div style="color: #F08047;margin-top: -18px" class="ui inverted m-text-thin m-text-spaced"><span id="htmer_time" class="item m-text-thin"></span>已经到谷底了，每一步都是向上</div>
     </div>
-    </div>
-
 </footer>
 <!--底部栏结束-->
 

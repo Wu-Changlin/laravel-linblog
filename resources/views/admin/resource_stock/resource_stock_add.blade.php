@@ -79,7 +79,7 @@
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">资源地址</label>
                                     <div class="col-sm-6">
-                                        <input type="url" class="form-control" placeholder="" name="url" required="" type="text" value="{{ old('url') }}">
+                                        <input  class="form-control" placeholder="" name="url" type="text" value="{{ old('url') }}">
                                     </div>
                                 </div>
 

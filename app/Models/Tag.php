@@ -82,6 +82,25 @@ class Tag extends Base
                 return 3;
             }
         }
+        if(!empty($edit_info['is_pull'])){//如果下架标签有数据
+            $category_is_pull_res=DB::table('categorys')->where('category_id', '=',$data['category_id'])->get(['is_pull']); //标签所属分类
+            $category_is_pull_data = json_decode($category_is_pull_res,true);//使用true，转数组
+            $category_is_pull['is_pull'] = $category_is_pull_data[0]['is_pull'];
+            if( intval($category_is_pull['is_pull'])===1){ //如果标签所属分类已下架
+                return 4;
+            }else {//如果标签所属分类未下架
+                if($edit_info['is_pull']==1){//下架标签 文章tag_id=标签tag_id  下架文章和取消文章置顶
+                    DB::table('articles')->where('tag_id','=', $data['tag_id'])
+                        ->update(['is_pull' => 1,'is_top'=>1]);
+                }elseif($edit_info['is_pull']==2){//取消下架顶级资源 文章tag_id=标签tag_id  取消下架文章
+                    DB::table('articles')->where('tag_id','=', $data['tag_id'])
+                        ->update(['is_pull' => 2]);
+                }else{
+
+                }
+            }
+
+        }
         self::where('tag_id',$data['tag_id'])->update($edit_info);
         //本次修改标签信息写入log
         self::addAadminLog(2,3,$data['tag_id'],date('Y-m-d H:i:s', time()));

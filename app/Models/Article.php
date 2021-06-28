@@ -110,8 +110,18 @@ class Article extends Base
         if(!empty($edit_info['markdown'])){//如果$data['markdown']有数据，则转html
             $edit_info['html']= Markdown::convertToHtml($data['markdown']);//markdown转html
         }
-        if(!empty($edit_info['is_pull']) && $edit_info['is_pull']==1){//如果 is_pull=1 下架文章取消置顶
-            $edit_info['is_top']= 1;//取消置顶
+        if(!empty($edit_info['is_pull'])){//如果下架文章有数据
+            $tag_is_pull_res=DB::table('tags')->where('tag_id', '=',$data['tag_id'])->get(['is_pull']); //文章所属标签
+            $tag_is_pull_data = json_decode($tag_is_pull_res,true);//使用true，转数组
+            $tag_is_pull['is_pull'] = $tag_is_pull_data[0]['is_pull'];
+            if(intval($tag_is_pull['is_pull'])===1){ //如果文章所属标签已下架
+                return 4;
+            }else{//如果文章所属标签未下架
+                if($edit_info['is_pull']==1){//下架文章同时取消置顶
+                    $edit_info['is_top']= 1;//取消置顶
+                }
+            }
+
         }
         self::find($data['article_id'])->update($edit_info);//使用update方法修改文章
         //本次修改文章信息写入log

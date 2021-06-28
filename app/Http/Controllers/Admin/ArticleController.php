@@ -152,6 +152,9 @@ class ArticleController extends Controller
                 case 3:
                     return redirect()->back()->withInput()->with('err', "标题已存在");
                     break;
+                case 4:
+                    return redirect()->back()->withInput()->with('err', "文章所属标签已下架；如需修改请先上架文章所属标签");
+                    break;
                 default:
                     return redirect()->back()->withInput()->with('err', '数据写入失败,新增文章失败');
             }

@@ -19,8 +19,19 @@ class FriendshipLinkController extends Controller
     {
 
 
-        //dd('前台显示文章内容+文章评论');
-        return view('home.friend_ship_link');
+        //dd('前台友好博客
+        //     * return  array');
+        $category_val='friend';
+        $assign = [
+//            'tags'         => $tag_article_res,
+//            'articles'     => $article_res,
+//            'head'         => $head,
+            'category_val'  =>$category_val,
+            'category_id'  =>0,
+            'tag_id'=>0
+        ];
+
+        return view('home.friend_ship_link',$assign);
         //return view('home.article');
     }
 

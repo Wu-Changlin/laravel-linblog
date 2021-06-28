@@ -55,13 +55,10 @@
                     <div class="ui large aligned mobile reversed stackable grid">
                         <!--博文信息-->
                         <div class="eleven wide column ">
-                            <h3 class="ui header"><a href="#" target="_blank" class="m-black">{{ $v->title }}</a></h3>
-{{--                            <p class="m-text m-margin-top-max">{{ $v->description }}</p>--}}
-                            <p class="m-text m-margin-top-max">戴上金箍，没法爱你；放下金箍，没法保护你。我知道上天不会给我第二次机会，曾经我们说好的永远，原来也仅仅只有，十二画，而已。“大圣，此去欲何?”“踏南天，碎凌霄。”“若一去不回……”“便一去不回” 其实很多时候，我们都是有机会的，最后真正放弃的，是我们自己。......</p>
+                            <h3 class="ui header"><a href="{{ url('article',[$v->article_id]) }}" target="_blank" >{{ $v->title }}</a></h3>
+                            <p class="m-text m-margin-top-max">{{ $v->description }}</p>
                             <div class="ui m-margin-top-max grid">
-
                                 <div class="eleven wide column">
-
                                     <div class="ui  horizontal  list">
                                         <div class="item">
                                             <div class="middle aligned top">
@@ -90,13 +87,13 @@
                                     </div>
                                 </div>
                                 <div class="right aligned five wide column">
-                                    <a href="#" target="_blank" class="ui teal basic label m-padded-tiny m-text-thin">好文</a>
+                                    <a href="{{ url('article',[$v->article_id]) }}" target="_blank" class="ui teal basic label m-padded-tiny m-text-thin">阅读全文</a>
                                 </div>
                             </div>
                         </div>
                         <!--博文图片-->
                         <div class="five wide column">
-                            <a href="#" target="_blank">
+                            <a href="{{ url('article',[$v->article_id]) }}" target="_blank">
                                 <img  src="{{ $v->cover?:asset('home/images/default.jpg') }} " alt="" class="ui rounded image">
                             </a>
                         </div>
@@ -158,9 +155,7 @@
                 </div>
             </div>
 
-            <div style="width: 100%;text-align:center; font-size: 16px;">
-                {{ $articles->links() }}
-            </div>
+
         </div>
     </div>
         <!--居中内容结束-->
@@ -172,5 +167,10 @@
         <!--置顶图标结束-->
 
 
+        <!--分页开始-->
+        <div style="width: 100%;text-align:center; font-size: 16px;">
+            {{ $articles->links() }}
+        </div>
+        <!--分页结束-->
 @endsection
 

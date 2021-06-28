@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Article;
 use App\Models\Category;
 use App\Models\WebConfig;
 use Illuminate\Support\ServiceProvider;
@@ -21,11 +22,15 @@ class AppServiceProvider extends ServiceProvider
             $category = Category::select('category_id', 'name','type','val')->where('is_pull','2')->get();
             // 获取网站配置（如网站标题，网站关键词，格言，底部栏）
             $web_config = WebConfig::select('config_id', 'name')->get();
-
+            //统计文章数和文章访问数
+            $article_count=Article::count('article_id');
+            $article_visits=Article::sum('visits');
 
             $assign = [
                 'category' => $category,
-                'web_config'=>$web_config
+                'web_config'=>$web_config,
+                'article_count'=>$article_count,
+                'article_visits'=>$article_visits,
 
             ];
 //            dd($assign);
