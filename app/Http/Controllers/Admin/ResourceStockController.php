@@ -21,6 +21,7 @@ class ResourceStockController extends Controller
         $pid_res=ResourceStock::pid_resources();// 获取顶级资源分类
         $pid_data=$this->mate_pid($pid_res); //顶级资源分类
         $type_data=$this->mate_type();       //资源类型数组
+        $data=ResourceStock::classtree($data);
 
         if(!empty($data)){
             foreach($data as $key){
@@ -34,7 +35,9 @@ class ResourceStockController extends Controller
                 }
             }
         }
+
         $assign=compact('data');
+
         return view('admin.resource_stock.resource_stock_list',$assign);
     }
 

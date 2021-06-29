@@ -17,12 +17,12 @@ Route::namespace('Home')->name('home.')->group(function () {
     Route::get('category/{id}/', 'categoryController@showCategory')->name('category.show');
 
     //显示友链 http://192.168.164.134:1133/friend
-    Route::get('friend', 'FriendshipLinkController@showFirend');;
+    Route::get('friend', 'FriendshipLinkController@showFirend');
 
     //显示资源库  http://192.168.164.134:1133/resource
-    Route::get('resource', 'ResourceStockController@showResource');;
-
-
+    Route::get('resource', 'ResourceStockController@showResource');
+    //添加资源  http://192.168.164.134:1133/addResource
+    Route::post('addResource', 'ResourceStockController@addResource');
 });
 
 

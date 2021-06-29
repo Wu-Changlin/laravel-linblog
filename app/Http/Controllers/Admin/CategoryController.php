@@ -19,7 +19,6 @@ class CategoryController extends Controller
         foreach($data as $key){
             $key->type=$this->mate_type($key->type,1);
             $key->is_pull=CategoryModel::mate_is_pull($key->is_pull);//下架数字替换成文字
-
         }
         $assign=compact('data');
         return view('admin.category.category_list',$assign);
