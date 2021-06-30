@@ -20,9 +20,7 @@ class ResourceStockController extends Controller
         $data= ResourceStock::paginate(10);
         $pid_res=ResourceStock::pid_resources();// 获取顶级资源分类
         $pid_data=$this->mate_pid($pid_res); //顶级资源分类
-        $type_data=$this->mate_type();       //资源类型数组
-        $data=ResourceStock::classtree($data);
-
+        $type_data=ResourceStock::mate_type();       //资源类型数组
         if(!empty($data)){
             foreach($data as $key){
                 $key->type=$type_data[$key->type];//资源类型数字替换成文字
@@ -35,20 +33,13 @@ class ResourceStockController extends Controller
                 }
             }
         }
-
         $assign=compact('data');
 
         return view('admin.resource_stock.resource_stock_list',$assign);
     }
 
 
-    /**
-     * @return string[]  资源类型数组
-     */
-    public  function  mate_type(){
-        $data=[0=>'默认(顶级资源)', 1=>'前台用户添加资源（未分配）',2=>'文章类',3=>'书籍类',4=>'刷题类',5=>'图片类',6=>'文件格式转换类',7=>'在线编辑类',8=>'模板类',9=>'在线作图类',10=>'文件传输类',11=>'影视类',12=>'音乐类',13=>'直播类',14=>'设计类',15=>'图标类',16=>'字体类',18=>'编辑器类',19=>'引擎类',20=>'网盘类',21=>'学术资源类',22=>'工具类',23=>'在线图片处理类',24=>'在线文件转换类',25=>'导航类',26=>'视频类',27=>'其他'];
-        return $data;
-    }
+
 
     /**
      * 父级id替换成顶级资源分类名称
@@ -71,7 +62,7 @@ class ResourceStockController extends Controller
     public function showAddresourceWeb()
     {
         $pid_res=ResourceStock::pid_resources();
-        $data=$this->mate_type();
+        $data=ResourceStock::mate_type();
         $data=array_except($data, array(1));//从数组移除给定的键=1的值对
         uasort($data, function ($a, $b) { //排序按值的长度降序
             return strLen($a) < strLen($b);
@@ -136,7 +127,7 @@ class ResourceStockController extends Controller
             return redirect()->back()->withInput()->with('err', '非法访问');
         }
         $pid_res=ResourceStock::pid_resources();
-        $data=$this->mate_type(0,1);
+        $data=ResourceStock::mate_type();
         uasort($data, function ($a, $b) { //排序按值的长度降序 用于页面显示标签
             return strLen($a) < strLen($b);
         });
@@ -236,7 +227,12 @@ class ResourceStockController extends Controller
         return $path;
     }
 
-
+    /**
+     * 导入
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \PHPExcel_Exception
+     */
     public static function importResource(Request $request){
         if (!$request->hasFile('excel')) {
             return redirect()->back()->withInput()->with('err', '文件上传失败');

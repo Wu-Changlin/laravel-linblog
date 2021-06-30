@@ -6,7 +6,9 @@
 
 @section('description', '友好博客')
 
-
+@section('css')
+    <link href="{{asset('css/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+@endsection
 
 @section('content')
     <!--友链页开始-->
@@ -73,7 +75,23 @@
                                         </div>
                                     </div>
                                 </a>
+
                             </div>
+
+                            @foreach( $friends as $v)
+                                <div class="m-margin-tb-tiny four wide column">
+                                    <a href="{{ $v->url }}" class="class_outer" target="_blank">
+                                        <div align="center">
+                                            <div class="friends-link">
+                                                <img src="{{ $v->cover?:asset('home/images/default.jpg')}}"  alt="" class="friends-link-image">
+                                                <div class="m-margin-top">
+                                                    <h4 class="m-font-size-text-friends m-margin-tb-tiny">{{ $v->name}}</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endforeach
 
                         </div>
                     </div>
@@ -87,20 +105,20 @@
         <!--添加友链开始-->
         <div class="m-container-small m-padded-tb-massive">
             <div class="ui container">
-                <form action="http://192.168.164.134:1133/article/1" method="get" class="ui form">
-                    <input type="hidden" name="id">
+                <form action="{{ url('addFriend') }}" method="post" class="ui form">
+                    {{ csrf_field() }}
                     <div class=" field">
                         <div class="ui left labeled input m-margin-top">
                             <label class="ui teal basic label">博客名称</label>
-                            <input type="text" name="blogname" placeholder="博客名称">
+                            <input type="text" required="" name="blogname" placeholder="博客名称">
                         </div>
                         <div class="ui left labeled input m-margin-top">
                             <label class="ui teal basic label">博客地址</label>
-                            <input type="text" name="blogaddress" placeholder="博客地址">
+                            <input type="url"  required="" name="blogaddress" placeholder="博客地址">
                         </div>
                         <div class="ui left labeled input m-margin-top">
                             <label class="ui teal basic label">图片地址</label>
-                            <input type="text" name="pictureaddress" placeholder="图片地址">
+                            <input type="url"  required="" name="pictureaddress" placeholder="图片地址">
                         </div>
                     </div>
 
@@ -144,6 +162,39 @@
 
     </script>
 
-
+    <script src="{{asset('js/toastr.min.js')}}"></script> {{-- 弹窗提示框样式--}}
+    <script>
+        // 弹窗提示框样式
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "positionClass": "toast-top-center",
+            "onclick": null,
+            "showDuration": "1000",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut",
+            "progressBar": true
+        }
+    </script>
+    <script>
+        //自定义错误提示
+        @if(session('msg'))
+        toastr.success("{{ session('msg') }}");
+        @endif
+        @if(session('err'))
+        toastr.error("{{ session('err') }}");
+        @endif
+        //验证器错误提示
+        @if (count($errors) > 0)
+        @foreach ($errors->all() as $error)
+        toastr.error("{{ $error }}");
+        @endforeach
+        @endif
+    </script>
 
 @endsection

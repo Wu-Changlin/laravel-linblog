@@ -18,6 +18,8 @@ Route::namespace('Home')->name('home.')->group(function () {
 
     //显示友链 http://192.168.164.134:1133/friend
     Route::get('friend', 'FriendshipLinkController@showFirend');
+    //添加友链
+    Route::post('addFriend', 'FriendshipLinkController@addFriend');
 
     //显示资源库  http://192.168.164.134:1133/resource
     Route::get('resource', 'ResourceStockController@showResource');

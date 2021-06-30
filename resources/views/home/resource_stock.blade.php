@@ -6,6 +6,10 @@
 
 @section('description', '资源库')
 
+@section('css')
+    <link href="{{asset('css/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+@endsection
+
 @section('content')
     <!--资源页开始-->
 
@@ -65,7 +69,7 @@
                                     <div class="ui stackable four cards m-margin-top grid" style="width: 6000px" >
                                        @foreach($resource_stock_all as $k=>$v)
                                            @if( $s->resource_id==$v['pid'] )
-                                            <a target="_blank" href="http://lcoc.top/bizhi/" class="orange card ">
+                                            <a target="_blank" href="{{ $v['url'] }}" class="orange card ">
                                                 <div class="content" >
                                                     <img class="left circular floated mini ui image" src="{{ $v['cover'] }}" style="width: 45px;height: 45px;">
                                                     <div class="left" style="font-size: medium;font-weight: bold;color: #2C7EEA">{{ $v['name'] }}</div>
@@ -258,5 +262,39 @@
     </script>
 
 
-
+    <script src="{{asset('js/toastr.min.js')}}"></script> {{-- 弹窗提示框样式--}}
+    <script>
+        // 弹窗提示框样式
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "positionClass": "toast-top-center",
+            "onclick": null,
+            "showDuration": "1000",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut",
+            "progressBar": true
+        }
+    </script>
+    <script>
+        //自定义错误提示
+        @if(session('msg'))
+        toastr.success("{{ session('msg') }}");
+        @endif
+        @if(session('err'))
+        toastr.error("{{ session('err') }}");
+        @endif
+        //验证器错误提示
+        @if (count($errors) > 0)
+        @foreach ($errors->all() as $error)
+        toastr.error("{{ $error }}");
+        @endforeach
+        @endif
+    </script>
 @endsection
+

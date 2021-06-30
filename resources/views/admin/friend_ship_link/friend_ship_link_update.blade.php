@@ -54,7 +54,9 @@
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">友链图片</label>
                                     <div class="col-sm-6">
-                                        <img   src="{{ url($data->cover) }}" height="160">
+                                        <input class="form-control" placeholder="" name="cover" required="" type="url" value="{{ $data->cover }}" id="in">
+
+                                        <img  id="show_url" style="margin:10px;" src="{{ url($data->cover) }}" height="160">
                                     </div>
                                 </div>
 
@@ -113,6 +115,17 @@
 <!-- /Page Content -->
 @endsection
 
-
+@section('js')
+    <script>
+        $("#in").blur(function(){
+            var img_url=this.value;
+            if (img_url == '' || img_url == undefined || img_url == null) {
+                console.log('空图片地址');
+            } else {
+                $("#show_url").removeAttr("src").attr("src", img_url);
+            }
+        })
+    </script>
+@endsection
 
 

@@ -131,40 +131,49 @@ class ResourceStock extends Base
         return 2;
     }
 
+
     /**
-     *  无极分类(递归)实现代码   继承类的树形
-     * @param $data       无极分类数据
-     * @param int $pid    父类的id （顶级pid=0）
-     * @param int $level  子类的层次
-     * @return array      树形数组 （例如：
-     * 中国（id=1,pid=0）
-     * --北京(id=2,pid=1)、
-     * --天津(id=3,pid=1)、
-     * --河北(id=4,pid=1)等省、自治区
-     * -----石家庄(id=6,pid=4)等地级市
-     * ----------正定县(id=7,pid=6)
-     * ----------无极县(id=8,pid=6)等县）
+     * @return string[]  资源类型数组
      */
-    public  static  function  classtree($data,$pid=0,$level=0){
-        static $arr=array();
-
-        foreach ($data as $k => $v) {
-
-            if($v['pid']==$pid){
-                $v['level']=$level;
-                if($v['pid']>0){
-                    $v['name']='ss'.$v['name'];
-
-                }
-                $arr[]=$v;
-
-                self::classtree($data,$v['resource_stock_id'],$level+1);
-            }
-        }
-
-        return $arr;
-
+    public  static function  mate_type(){
+        $data=[0=>'默认(顶级资源)', 1=>'前台用户添加资源（未分配）',2=>'文章类',3=>'书籍类',4=>'刷题类',5=>'图片类',6=>'文件格式转换类',7=>'在线编辑类',8=>'模板类',9=>'在线作图类',10=>'文件传输类',11=>'影视类',12=>'音乐类',13=>'直播类',14=>'设计类',15=>'图标类',16=>'字体类',18=>'编辑器类',19=>'引擎类',20=>'网盘类',21=>'学术资源类',22=>'工具类',23=>'在线图片处理类',24=>'在线文件转换类',25=>'导航类',26=>'视频类',27=>'其他'];
+        return $data;
     }
+
+//    /**
+//     *  无极分类(递归)实现代码   继承类的树形
+//     * @param $data       无极分类数据
+//     * @param int $pid    父类的id （顶级pid=0）
+//     * @param int $level  子类的层次
+//     * @return array      树形数组 （例如：
+//     * 中国（id=1,pid=0）
+//     * --北京(id=2,pid=1)、
+//     * --天津(id=3,pid=1)、
+//     * --河北(id=4,pid=1)等省、自治区
+//     * -----石家庄(id=6,pid=4)等地级市
+//     * ----------正定县(id=7,pid=6)
+//     * ----------无极县(id=8,pid=6)等县）
+//     */
+//    public  static  function  classtree($data,$pid=0,$level=0){
+//        static $arr=array();
+//        $arr=collect($arr);
+//        foreach ($data as $k => $v) {
+////dd($data);
+//            if($v['pid']==$pid){
+//                $v['level']=$level;
+//                if($v['pid']>0){
+//                    $v['name']='-------'.$v['name'];
+//
+//                }
+//                $arr=$v;
+//
+//                self::classtree($data,$v['resource_stock_id'],$level+1);
+//            }
+//        }
+//
+//        return $arr;
+//
+//    }
 
 
 

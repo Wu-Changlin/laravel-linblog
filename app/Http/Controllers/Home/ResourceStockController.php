@@ -2,7 +2,6 @@
 namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use App\Models\ResourceStock;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -38,13 +37,12 @@ class ResourceStockController extends Controller
         foreach ($resource_stock_pid_top_res as $k =>$v ){
             $v->name=$s[$v->resource_id]['name'];
         }
-
-        $resource_classtree_res=ResourceStock::where([['pid','>', 0],['is_pull','=',2]])->get();
-//dd($resource_classtree_res);
+        //中间内容
+        $resource_res=ResourceStock::where([['pid','>', 0],['is_pull','=',2]])->get();
         $assign = [
 
             'resource_stock_top'     => $resource_stock_pid_top_res,
-            'resource_stock_all'     => $resource_classtree_res,
+            'resource_stock_all'     => $resource_res,
 //            'head'         => $head,
             'category_val'  =>'resource',
             'category_id'  =>0,
@@ -57,7 +55,20 @@ class ResourceStockController extends Controller
     //前台添加资源
     public function addResource(Request $request){
         if($request->isMethod('post')){
-            dd($request);
+            $input=$request->except('s');
+            $data['pid'] = intval($input['firstType']) ?  intval($input['firstType']) : 0;
+            $data['type'] =  1;
+            $data['name'] = isset($input['resourceName']) ? $input['resourceName'] : "";
+            $data['url'] = isset($input['resourceAddress']) ? $input['resourceAddress'] : "";
+            $data['description'] = isset($input['description']) ? $input['description'] : "";
+            $data['is_pull'] =  1;
+            $data['is_verify'] = 1;
+            $res=ResourceStock::addResource($data);
+            if($res==2){
+                return redirect()->back()->withInput()->with('msg', '成功');
+            }else{
+                return redirect()->back()->withInput()->with('err', '添加失败');
+            }
         }else{
             return redirect()->back()->withInput()->with('err', '非法访问');
         }
