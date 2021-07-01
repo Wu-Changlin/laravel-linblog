@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
+use App\Models\AdminsLogs;
 use App\Models\ResourceStock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +21,6 @@ class ResourceStockController extends Controller
      */
     public function showResource()
     {
-
         //获取顶级资源分类
         $resource_stock_res=ResourceStock::select('resource_stock_id')->where([['pid','=', 0],['is_pull','=',2]])->get();
         $resource_stock_res_ids =array_flatten($resource_stock_res->toArray());
@@ -63,7 +63,12 @@ class ResourceStockController extends Controller
             $data['description'] = isset($input['description']) ? $input['description'] : "";
             $data['is_pull'] =  1;
             $data['is_verify'] = 1;
-            $res=ResourceStock::addResource($data);
+            //检查是否限量值（每日10条）
+            $add_count_num=AdminsLogs::isIndexaddMax(7);
+            if($add_count_num==2){
+                return redirect()->back()->withInput()->with('err', '添加失败,已达到限量');
+            }
+            $res=ResourceStock::addResource($data,6);
             if($res==2){
                 return redirect()->back()->withInput()->with('msg', '成功');
             }else{

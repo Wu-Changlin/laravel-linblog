@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 
+use App\Models\AdminsLogs;
 use App\Models\FriendshipLink;
 use Illuminate\Http\Request;
 
@@ -47,7 +48,12 @@ class FriendshipLinkController extends Controller
             $data['cover'] = isset($input['pictureaddress']) ? $input['pictureaddress'] : "";
             $data['is_pull'] =  1;
             $data['is_verify'] =  1;
-            $res=FriendshipLink::addFriend($data);
+            //检查是否限量值（每日10条）
+            $add_count_num=AdminsLogs::isIndexaddMax(8);
+            if($add_count_num==2){
+                return redirect()->back()->withInput()->with('err', '添加失败,已达到限量');
+            }
+            $res=FriendshipLink::addFriend($data,6);
             if($res==2){
                 return redirect()->back()->with('msg','添加成功');
             }else{

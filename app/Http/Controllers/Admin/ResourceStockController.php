@@ -100,7 +100,7 @@ class ResourceStockController extends Controller
         }else{
             return redirect()->back()->withInput()->with('err', '非法访问');
         }
-        $res=ResourceStock::addResource($data);
+        $res=ResourceStock::addResource($data,2);
         switch ($res) { //判断新增返回值
             case 0:
                 return redirect()->back()->withInput()->with('err', '数据为空');

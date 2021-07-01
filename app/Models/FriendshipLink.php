@@ -14,7 +14,7 @@ class FriendshipLink extends Base
      * @param $data 友好博客数据
      * @return int  0：数据为空，1：已存在，2：新增成功
      */
-    public static function addFriend($data){
+    public static function addFriend($data,$type){
         if(empty($data)){ //如果$data为空直接返回
             return 0;
         }
@@ -24,7 +24,7 @@ class FriendshipLink extends Base
         }
         $res=self::create($data);//使用create方法新增友好博客
         //本次新增友好博客信息写入log
-        self::addAadminLog(8,2,$res->link_id,$res->created_at);
+        self::addAadminLog(8,$type,$res->link_id,$res->created_at);
         return 2;
     }
 

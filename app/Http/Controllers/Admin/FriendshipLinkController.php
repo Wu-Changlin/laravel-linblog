@@ -50,7 +50,7 @@ class FriendshipLinkController extends Controller
         }else{
             return redirect()->back()->withInput()->with('err', '非法访问');
         }
-        $res=FriendshipLinkModel::addFriend($data);
+        $res=FriendshipLinkModel::addFriend($data,2);
         switch ($res) { //判断新增返回值
             case 0:
                 return redirect()->back()->withInput()->with('err', '数据为空');

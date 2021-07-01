@@ -32,7 +32,7 @@ class ResourceStock extends Base
      * @param $data  新增资源分类数据
      * @return int   0：$data为空，1：资源分类已存在，2：成功资源分类
      */
-    public static function addResource($data){
+    public static function addResource($data,$type){
         if(empty($data)){//如果$data为空
             return 0;
         }
@@ -42,7 +42,7 @@ class ResourceStock extends Base
         }
         $res=self::create($data);//使用create新增资源分类
         //本次新增资源分类信息写入log
-        self::addAadminLog(7,2,$res->resource_stock_id,$res->created_at);
+        self::addAadminLog(7,$type,$res->resource_stock_id,$res->created_at);
         return 2;
     }
 
