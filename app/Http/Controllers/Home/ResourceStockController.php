@@ -68,6 +68,7 @@ class ResourceStockController extends Controller
             if($add_count_num==2){
                 return redirect()->back()->withInput()->with('err', '添加失败,已达到限量');
             }
+            //添加
             $res=ResourceStock::addResource($data,6);
             if($res==2){
                 return redirect()->back()->withInput()->with('msg', '成功');
