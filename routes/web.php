@@ -14,7 +14,7 @@ Route::namespace('Home')->name('home.')->group(function () {
     Route::get('showTag/{category_id}/{id}', 'TagController@showTag');
 
     //显示指定类型下的标签、文章  http://192.168.164.134:1133/category/1
-    Route::get('category/{id}/', 'categoryController@showCategory')->name('category.show');
+    Route::get('category/{id}/', 'CategoryController@showCategory')->name('category.show');
 
     //显示友链 http://192.168.164.134:1133/friend
     Route::get('friend', 'FriendshipLinkController@showFirend');
