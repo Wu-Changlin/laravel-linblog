@@ -43,7 +43,10 @@
 <script>
     //自定义错误提示
     @if(session('msg'))
-    toastr.error("{{ session('msg') }}");
+    toastr.success("{{ session('msg') }}");
+    @endif
+    @if(session('err'))
+    toastr.error("{{ session('err') }}");
     @endif
     //验证器错误提示
     @if (count($errors) > 0)

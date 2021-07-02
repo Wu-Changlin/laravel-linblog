@@ -46,7 +46,9 @@ class LoginController extends Controller
         }else{
             return redirect()->back()->withInput()->with('err', '非法请求');
         };
+
         $res=AdminModels::adminLogin($login); //执行登录
+
         switch ($res) { //判断登录返回值
             case 0:
                 return redirect()->back()->withInput()->with('err', '用户不存在');

@@ -128,6 +128,7 @@ class AdminController extends Controller
             return redirect()->back()->withInput()->with('err', '非法请求');
         }
         $res=AdminModel::updateAdmin($data);   //执行修改
+
         switch ($res) { //判断修改返回值
             case 0:
                 return redirect()->back()->withInput()->with('err', '数据为空');
@@ -142,7 +143,8 @@ class AdminController extends Controller
                 return redirect()->back()->withInput()->with('err', '邮箱已注册');
                 break;
             case 4:
-                 $this->logOut();
+                AdminModel::adminlogOut();//执行退出
+                return redirect()->route("login.index")->with('msg','重置密码，注销登录');
                 break;
             default:
                 return redirect()->back()->withInput()->with('err', '数据写入失败,更改管理员信息失败');
@@ -187,7 +189,7 @@ class AdminController extends Controller
      * @return 返回登录页
      */
     public function logOut(){
-        AdminModel::adminlogOut();//执行删除
+        AdminModel::adminlogOut();////执行退出
         return redirect()->route("login.index")->with('msg','注销登录');
     }
 

@@ -74,6 +74,7 @@ class Admin extends Base
         }
         $admin_user = self::find($data['admin_id'],["admin_id","name","email","password"]); //查询该管理员信息
         $admin_info=$admin_user->toArray(); //集合转数组
+
         //判断字段是否需要修改
         $edit_info = array_diff_assoc($data,$admin_info); //1:返回[]空数组，说明2个数组相同 2:返回非空数组（数据相同字段已去除，剩下需要修改的字段数据），说明$data数据和数据库数据不一致，需要执行修改
         if (!$edit_info) {//空数组说明没有修改字段值，返回1
@@ -85,18 +86,26 @@ class Admin extends Base
                 return 3;
             }
         }
+
+
         if(!empty($edit_info['password'])){//如果有新密码
-            if (Hash::check($data['password'],$admin_info['password']) ){
+            if (Hash::check($data['password'],$admin_info['password'])){
                 array_pull($edit_info, 'password');
+                array_pull($data, 'password');
             }else{
                 $edit_info['password']=Hash::make($data['password']); //对字符串密码hash加密
-                }
+            }
+        }
+        //如果没有值，说明保留
+        if(count($edit_info)<1){
+            return 1;
         }
         self::where('admin_id',$data['admin_id'])->update($edit_info);
-
+        self::addAadminLog(6,3,$data['admin_id'],date('Y-m-d H:i:s', time()));
         //如果当前登录管理员修改本管理员的基本信息则更新session
-        if(intval($data['admin_id']) === $admin_user['admin_id']){
-            if(isset($data['password'])){
+        $admin_user=session('admin_user');
+        if(intval($data['admin_id']) === intval($admin_user['admin_id'])){
+            if(isset($edit_info['password'])){
                return 4;
             }
             $admin_new_info = self::find($data['admin_id'],['admin_id',"name","email"]); //根据用户输入邮箱查询数据库用户信息
@@ -107,7 +116,6 @@ class Admin extends Base
             $admin_session['last_login_ip']=request()->ip();
             session(['admin_user'=>$admin_session]);
         }
-        self::addAadminLog(6,3,$data['admin_id'],date('Y-m-d H:i:s', time()));
         return 2;
     }
 
@@ -136,8 +144,8 @@ class Admin extends Base
     //退出后台管理并返回后台登录页，清除用户缓存
     public static function adminlogOut(){
         $admin_user=session('admin_user');
-        $admin_user['admin_id'];  //管理员id
-        $admin_user = self::find( $admin_user['admin_id'],["login_number"]);
+
+        $admin_user = self::find($admin_user['admin_id'],["login_number"]);
         self::addAadminLog(6,5,$admin_user->login_number,date('Y-m-d H:i:s', time()));
         session()->flush(); // 清空session
     }
