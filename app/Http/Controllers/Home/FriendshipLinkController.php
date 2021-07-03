@@ -22,10 +22,15 @@ class FriendshipLinkController extends Controller
     {
 
         $friends=FriendshipLink::where([['is_pull','=',2],['is_verify','=',2]])->get();
+        $category_res=Category::where('val','=','friend')->get(["name","description","keywords"]);
+        $head = [
+            'title'       => $category_res->name,
+            'keywords'    => $category_res->keywords,
+            'description' => $category_res->description,
+        ];
         $assign = [
             'friends'         => $friends,
-
-//            'head'         => $head,
+            'head'         => $head,
             'category_val'  =>'friend',
             'category_id'  =>0,
             'tag_id'=>0

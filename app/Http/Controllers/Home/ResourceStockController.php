@@ -39,11 +39,17 @@ class ResourceStockController extends Controller
         }
         //中间内容
         $resource_res=ResourceStock::where([['pid','>', 0],['is_pull','=',2]])->get();
+        $category_res=Category::where('val','=','resource')->get(["name","description","keywords"]);
+        $head = [
+            'title'       => $category_res->name,
+            'keywords'    => $category_res->keywords,
+            'description' => $category_res->description,
+        ];
         $assign = [
 
             'resource_stock_top'     => $resource_stock_pid_top_res,
             'resource_stock_all'     => $resource_res,
-//            'head'         => $head,
+            'head'         => $head,
             'category_val'  =>'resource',
             'category_id'  =>0,
             'tag_id'=>0

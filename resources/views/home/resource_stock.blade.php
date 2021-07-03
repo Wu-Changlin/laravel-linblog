@@ -1,10 +1,10 @@
 @extends('layouts.home')
 
-@section('title', '资源库')
+@section('title', $head['title'])
 
-@section('keywords', '资源库')
+@section('keywords', $head['keywords'])
 
-@section('description', '资源库')
+@section('description',  $head['description'])
 
 @section('css')
     <link href="{{asset('css/toastr.min.css')}}" rel="stylesheet" type="text/css" />
