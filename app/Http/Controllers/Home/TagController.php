@@ -59,6 +59,7 @@ class TagController extends Controller
             'articles'     => $article_res,
             'head'         => $head,
             'category_id'  =>$category_id,
+            'category_val'  =>'',
             'tag_id'  =>$tag_id
         ];
         return view('home.category',$assign);
