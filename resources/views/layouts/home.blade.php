@@ -67,8 +67,8 @@
             <div class="four wide column" >
                 <div style="font-size: large;" class="ui inverted m-text-thin m-text-spaced m-margin-top-max" >联系我</div>
                 <div class="ui inverted link list">
-                    <div href="#" class="m-text-thin">Email：onestarlr@hotmail.com</div>
-                    <div href="#" class="m-text-thin">QQ：316392836</div>
+                    <div href="#" class="m-text-thin">Email：840832887@qq.com</div>
+                    <div href="#" class="m-text-thin">QQ：840832887</div>
                 </div>
             </div>
 
@@ -82,6 +82,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
 
             <div class="four wide column">

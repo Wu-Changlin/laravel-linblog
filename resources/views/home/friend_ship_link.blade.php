@@ -49,9 +49,9 @@
                             <br>
                             <div class="m-margin-left-mini m-margin-tb-tiny" style="font-size: large;font-weight: bold">申请格式</div>
                             <br>
-                            <li class="m-margin-left-big m-margin-tb-tiny" style="font-size: medium;word-wrap:break-word">博客标题：ONESTAR</li>
-                            <li class="m-margin-left-big m-margin-tb-tiny" style="font-size: medium;word-wrap:break-word">博客地址：https://onestar.newstar.net.cn/</li>
-                            <li class="m-margin-left-big m-margin-tb-tiny" style="font-size: medium;word-wrap:break-word">图片地址：https://onestar.newstar.net.cn/images/me.jpg</li>
+                            <li class="m-margin-left-big m-margin-tb-tiny" style="font-size: medium;word-wrap:break-word">博客标题：Lin</li>
+                            <li class="m-margin-left-big m-margin-tb-tiny" style="font-size: medium;word-wrap:break-word">博客地址：https://www.linyuxianyu.cn/</li>
+                            <li class="m-margin-left-big m-margin-tb-tiny" style="font-size: medium;word-wrap:break-word">图片地址：https://www.linyuxianyu.cn/me.jpg</li>
                         </ui>
                     </div>
                 </div>
@@ -64,19 +64,6 @@
                         <div class="ui stackable m-container-mini m-opacity grid">
 
                             <!--友人帐显示区域-->
-                            <div class="m-margin-tb-tiny four wide column">
-                                <a href="#" class="class_outer" target="_blank">
-                                    <div align="center">
-                                        <div class="friends-link">
-                                            <img src="{{ asset('home/images/bg.jpg') }}"  alt="" class="friends-link-image">
-                                            <div class="m-margin-top">
-                                                <h4 class="m-font-size-text-friends m-margin-tb-tiny">ONESTAR</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-
-                            </div>
 
                             @foreach( $friends as $v)
                                 <div class="m-margin-tb-tiny four wide column">
