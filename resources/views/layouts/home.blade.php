@@ -67,23 +67,20 @@
             <div class="four wide column" >
                 <div style="font-size: large;" class="ui inverted m-text-thin m-text-spaced m-margin-top-max" >联系我</div>
                 <div class="ui inverted link list">
-                    <div href="#" class="m-text-thin">Email：840832887@qq.com</div>
-                    <div href="#" class="m-text-thin">QQ：840832887</div>
+                    <div href="#" class="m-text-thin;">Email：840832887@qq.com</div>
+                    <div href="#" class="m-text-thin;">QQ：840832887</div>
                 </div>
             </div>
 
-            <div class="four wide column" >
-                <div style="font-size: large;" class="ui inverted m-text-thin m-text-spaced m-margin-top-max" >架构</div>
-                <div class="ui inverted link list">
-                    <div class="item">
-                        <div class="middle aligned right">
-                            <i class="calendar alternate outline icon"></i>
-                            <span>2019-03-17 14:11:56</span>
-                        </div>
-                    </div>
+            <div class="four wide column">
+                <div style="font-size: large;font-weight: bold;" class="ui inverted m-text-thin m-text-spaced m-margin-top-max" >统计</div>
+                <div class="ui inverted link list" >
+                	<div href="#" class="m-text-thin">项目名称：<a href="https://github.com/Wu-Changlin/laravel-linblog" class="ui  m-inline-block m-margin-top-null" style="font-size:medium;"> laravel-linblog</a> </div>
+                	<div href="#" class="m-text-thin">框架版本：<h2  class="ui  m-inline-block m-margin-top-null" style="font-size:medium;">laravel-v5.50.</h2> </div>
+                    <div href="#" class="m-text-thin">主题名称：<a href="https://github.com/oneStarLR/myblog-page" class="ui  m-inline-block m-margin-top-null" style="font-size:medium;">  myblog-page </a> </div>
                 </div>
-
             </div>
+
 
             <div class="four wide column">
                 <div style="font-size: large;font-weight: bold" class="ui inverted m-text-thin m-text-spaced m-margin-top-max" >统计</div>
