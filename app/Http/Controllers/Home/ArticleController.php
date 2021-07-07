@@ -21,6 +21,8 @@ class ArticleController extends Controller
     {
         //获取文章信息
         $article_res =Article::join("tags", "articles.tag_id", '=', "tags.tag_id")                                   ->find($article_id,['articles.tag_id','articles.category_id','article_id','title','articles.description','cover','html','author','visits','articles.created_at','tags.name as tags_name']);
+        //访问量+1
+        Article::where('article_id','=',$article_id)->update(['visits'=>$article_res->visits+1]);
         //填充网站头部
         $head = [
             'title'       => $article_res->title,
