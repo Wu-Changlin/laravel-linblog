@@ -30,7 +30,6 @@ class WebConfigController extends Controller
         return view('admin.web_config.web_config_view');
     }
 
-
     /**
      *显示新增网站配置项页
      */
@@ -53,6 +52,10 @@ class WebConfigController extends Controller
         return view('admin.web_config.web_config_update');
     }
 
+    /**
+     * 更改网站配置
+     *
+     */
 
     public function updateWebconfig(Request $request){
 
