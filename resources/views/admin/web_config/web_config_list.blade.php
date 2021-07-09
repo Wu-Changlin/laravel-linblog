@@ -23,7 +23,7 @@
     <!-- Page Body -->
     <div class="page-body">
 
-        <button type="button" tooltip="添加网站配置" class="btn btn-sm btn-azure btn-addon" onclick="javascript:window.location.href = '/admin/category/showAddcategoryWeb'"> <i class="fa fa-plus"></i> Add
+        <button type="button" tooltip="添加网站配置" class="btn btn-sm btn-azure btn-addon" onclick="javascript:window.location.href = '/admin/web/showAddwebConfig'"> <i class="fa fa-plus"></i> Add
         </button>
         <div class="row">
             <div class="col-lg-12 col-sm-12 col-xs-12">

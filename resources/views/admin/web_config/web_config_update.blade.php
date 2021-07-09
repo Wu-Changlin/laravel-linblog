@@ -34,18 +34,20 @@
                     </div>
                     <div class="widget-body">
                         <div id="horizontal-form">
-                            <form class="form-horizontal" role="form" action="" method="post">
+                            <form class="form-horizontal" role="form" action="{{ route('webconfig.updateWebconfig') }}" method="post">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="id" value="{{ $data->config_id }}">
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">中文名称</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control"  placeholder="" name="cnname"  type="text">
+                                        <input class="form-control"  placeholder="" name="cnname"  type="text" value="{{ $data->name }}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">英文名称</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control"  placeholder="" name="enname"  type="text">
+                                        <input class="form-control"  placeholder="" name="enname"  type="text" value="{{ $data->enname }}">
                                     </div>
                                 </div>
 
@@ -54,12 +56,12 @@
                                     <label for="username" class="col-sm-2 control-label no-padding-right">配置类型</label>
                                     <div class="col-sm-6" >
                                         <select name="type">
-                                            <option value="0">请选择</option>
-                                            <option value="1">单行文本</option>
-                                            <option value="2">文本域</option>
-                                            <option value="3">单选按钮</option>
-                                            <option value="4">复选按钮</option>
-                                            <option value="5">下拉菜单</option>
+                                            <option value="0"  @if ($data->type==0)   selected="selected"     @endif>请选择</option>
+                                            <option value="1"  @if ($data->type==1)   selected="selected"     @endif>单行文本</option>
+                                            <option value="2"  @if ($data->type==2)   selected="selected"     @endif>文本域</option>
+                                            <option value="3"  @if ($data->type==3)   selected="selected"     @endif>单选按钮</option>
+                                            <option value="4"  @if ($data->type==4)   selected="selected"     @endif>复选按钮</option>
+                                            <option value="5"  @if ($data->type==5)   selected="selected"     @endif>下拉菜单</option>
                                         </select>
 
                                     </div>
@@ -68,7 +70,7 @@
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">配置可选值</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control"  placeholder="" name="values"  type="text">
+                                        <input class="form-control"  placeholder="" name="values"  type="text" value="{{ $data->values }}">
                                     </div>
                                 </div>
 

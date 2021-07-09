@@ -30,6 +30,7 @@ class Tag extends Base
     public  static  function  categorys(){
         $categarys =DB::table('categorys')
             ->select('name as  category_name','category_id','is_pull')
+            ->where('val','!=','index')
             ->get();
         foreach ($categarys as $k){
             if($k->is_pull==1){

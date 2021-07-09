@@ -7,8 +7,9 @@
 @section('description', '添加网站配置')
 
 @section('content')
+
 <!-- Page Content -->
-<div class="page-content" style="">
+<div class="page-content">
     <!-- Page Breadcrumb -->
     <div class="page-breadcrumbs">
         <ul class="breadcrumb">
@@ -16,9 +17,9 @@
                 <a href="{{route('admin.index')}}">系统</a>
             </li>
             <li>
-                <a href="{{route('webconfig.index')}}">网站配置管理</a>
+                <a href="{{ route('webconfig.index') }}">管理配置</a>
             </li>
-            <li class="active">添加网站配置</li>
+            <li class="active">添加配置</li>
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
@@ -34,11 +35,12 @@
                     </div>
                     <div class="widget-body">
                         <div id="horizontal-form">
-                            <form class="form-horizontal" role="form" action="" method="post">
+                            <form class="form-horizontal" role="form" action="{{ route('webconfig.addWebconfig') }}" method="post">
+                                {{ csrf_field() }}
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">中文名称</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control"  placeholder="" name="cnname"  type="text">
+                                        <input class="form-control"  placeholder="" required="" name="cnname"  type="text">
                                     </div>
                                 </div>
 
