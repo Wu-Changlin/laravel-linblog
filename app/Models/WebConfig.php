@@ -80,5 +80,41 @@ class WebConfig extends Base
         return 2;
     }
 
+    /**
+     * 修改配置视图
+     * @param $data
+     * @return int
+     */
+    public static function updateConfigview($data){
+        if(empty($data)){
+            return 0;
+        }
+        //获取$data里配置id
+        $formarr=array();
+        foreach ($data as $k => $v) {
+            $formarr[]=$k;
+        }
+        $_confarr=self::select('config_id')->get();
+        $confarr=array();
+        foreach ($_confarr as $k => $v) {
+            $confarr[]=$v['config_id'];
+        }
+        $checkboxarr=array();
+        foreach ($confarr as $k => $v) {
+            if(!in_array($v,$formarr)){
+                $checkboxarr[]=$v;
+
+            }
+
+        }
+        dd($checkboxarr);
+        foreach ($data as $k=>$v ){
+            self::where('enname',$k)->update(['value'=>$v]);
+            //本次删除配置信息写入log
+            //self::addAadminLog(5,3,$k,date('Y-m-d H:i:s', time()));
+        }
+
+        return 2;
+    }
 
 }

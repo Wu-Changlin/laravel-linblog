@@ -15,17 +15,46 @@ class WebConfigController extends Controller
 
     //网站配置视图
     public function configView(){
-        return view('admin.web_config.web_config_view');
+        $data=WebConfig::all();
+        $assign=compact('data');
+        return view('admin.web_config.web_config_view',$assign);
     }
 
+    public function updateConfigview(Request $request){
+        //判断是否post请求
+        if ($request->isMethod('post')) {
+            $data = $request->except('s','_token');  //去除 s：路由地址 ，_token： 表单中包含一个隐藏的 CSRF 令牌字段
+        }else{
+            return redirect()->back()->withInput()->with('err', '非法请求');
+        }
+//dd($data);
+        $res=WebConfig::updateConfigview($data); //执行新增
+        switch ($res) { //判断新增返回值
+            case 0:
+                return redirect()->back()->withInput()->with('err', '数据为空');
+                break;
+            case 1:
+                return redirect()->back()->withInput()->with('err', '配置不存在');
+                break;
+            case 2:
+                return redirect()->route("webconfig.configView")->with('msg', "修改配置值成功");
+                break;
+            default:
+                return redirect()->back()->withInput()->with('err', '数据写入失败,修改配置值失败');
+        }
+
+    }
     /**
      *showWebConfig        显示网站配置列表
      */
     public function showWebconfig()
     {
         $data=WebConfig::paginate(10);
-        $assion=compact('data');
-        return view('admin.web_config.web_config_list',$assion);
+        foreach ($data as $key){
+                $key->type=self::mate_config_type( $key->type);//配置类型数字替换成文字
+        }
+        $assign=compact('data');
+        return view('admin.web_config.web_config_list',$assign);
         //dd('showWebConfig.显示网站配置');
     }
 
@@ -154,5 +183,11 @@ class WebConfigController extends Controller
         }
     }
 
+
+    public static function mate_config_type ($num){
+        $config_type=[0=>'默认', 1=>'单行文本框',2=>'文本域',3=>'单选按钮',4=>'复选按钮5',5=>'下拉菜单'];
+        return $config_type[$num];
+
+    }
 
 }

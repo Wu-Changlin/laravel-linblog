@@ -19,13 +19,7 @@ class AdminController extends Controller
      */
     public function showIndex()
     {
-        //
-//
-//       //dd('AdminController.showIndex.博客后台首页');
-//        dd(session()->flush('admin_user'));
-
         return view('admin.admin.admin_index');
-
     }
 
 
@@ -39,8 +33,6 @@ class AdminController extends Controller
 
         $data=AdminModel::paginate(10);
         $assign=compact('data');  // compact() 的字符串可以就是变量的名字  （ data 视图里的变量名）
-//        dd($assign);
-        //dd('showAdminUser.管理员列表');
         return view('admin.admin.admin_list',$assign);
     }
 

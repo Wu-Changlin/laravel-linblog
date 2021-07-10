@@ -175,7 +175,9 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login')->group(fun
     Route::prefix('web')->group(function () {
         // 网站配置列表   http://192.168.164.134:1133/admin/web/showWebConfig
         Route::get('showWebconfig', 'WebConfigController@showWebConfig')->name('webconfig.index');
+        //网站配置视图
         Route::get('configView', 'WebConfigController@configView')->name('webconfig.configView');
+        Route::post('updateConfigView', 'WebConfigController@updateConfigview')->name('webconfig.updateConfigview');
         //添加网站配置    http://192.168.164.134:1133/admin/web/showAddwebConfig
         Route::get('showAddwebConfig', 'WebConfigController@showAddwebConfig');
         Route::post('addWebconfig', 'WebConfigController@addWebconfig')->name('webconfig.addWebconfig');

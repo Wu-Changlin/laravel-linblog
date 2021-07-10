@@ -15,7 +15,7 @@ class TagController extends Controller
     public function showTag()
     {
         $data= TagModel::lists();
-        ////数字转文字 页面减少判断
+        //数字转文字 页面减少判断
         foreach($data as $key){
             $key->is_pull=TagModel::mate_is_pull($key->is_pull);//下架数字替换成文字
         }
