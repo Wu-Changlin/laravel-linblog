@@ -94,26 +94,35 @@ class WebConfig extends Base
         foreach ($data as $k => $v) {
             $formarr[]=$k;
         }
+        //获取配置表里所有配置id
         $_confarr=self::select('config_id')->get();
         $confarr=array();
         foreach ($_confarr as $k => $v) {
             $confarr[]=$v['config_id'];
         }
+        //配置表里所有配置id比对$data里配置id，获得$data里没有的配置id
         $checkboxarr=array();
         foreach ($confarr as $k => $v) {
             if(!in_array($v,$formarr)){
                 $checkboxarr[]=$v;
-
             }
-
         }
-        dd($checkboxarr);
-        foreach ($data as $k=>$v ){
-            self::where('enname',$k)->update(['value'=>$v]);
-            //本次删除配置信息写入log
-            //self::addAadminLog(5,3,$k,date('Y-m-d H:i:s', time()));
+        //修改$data里没有的配置id的值
+        if($checkboxarr){
+            foreach ($checkboxarr as $key => $v) {
+                self::where('config_id',$v)->update(['value'=>'']);
+                self::addAadminLog(5,3,$key,date('Y-m-d H:i:s', time()));
+            }
         }
-
+        //修改$data里所有的配置id的值
+        if($data){
+            foreach ($data as $k=>$v ){
+                self::where('config_id',$k)->update(['value'=>$v]);
+                //本次删除配置信息写入log
+                self::addAadminLog(5,3,$k,date('Y-m-d H:i:s', time()));
+            }
+        }
+        
         return 2;
     }
 
