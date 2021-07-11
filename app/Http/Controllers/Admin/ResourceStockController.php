@@ -208,6 +208,11 @@ class ResourceStockController extends Controller
                 return redirect()->back()->withInput()->with('err', '网络错误,删除资源分类失败');
         }
     }
+
+    public function isResource(){
+        ResourceStock::isCheckurl();
+    }
+
     /**
      *上传文章封面图
      * @param $file    上传封面图
@@ -226,6 +231,8 @@ class ResourceStockController extends Controller
         $path= "/".$folder_name.$filename;  //   /uploads/images/article/20210613
         return $path;
     }
+
+
 
     /**
      * 导入

@@ -140,41 +140,40 @@ class ResourceStock extends Base
         return $data;
     }
 
-//    /**
-//     *  无极分类(递归)实现代码   继承类的树形
-//     * @param $data       无极分类数据
-//     * @param int $pid    父类的id （顶级pid=0）
-//     * @param int $level  子类的层次
-//     * @return array      树形数组 （例如：
-//     * 中国（id=1,pid=0）
-//     * --北京(id=2,pid=1)、
-//     * --天津(id=3,pid=1)、
-//     * --河北(id=4,pid=1)等省、自治区
-//     * -----石家庄(id=6,pid=4)等地级市
-//     * ----------正定县(id=7,pid=6)
-//     * ----------无极县(id=8,pid=6)等县）
-//     */
-//    public  static  function  classtree($data,$pid=0,$level=0){
-//        static $arr=array();
-//        $arr=collect($arr);
-//        foreach ($data as $k => $v) {
-////dd($data);
-//            if($v['pid']==$pid){
-//                $v['level']=$level;
-//                if($v['pid']>0){
-//                    $v['name']='-------'.$v['name'];
-//
-//                }
-//                $arr=$v;
-//
-//                self::classtree($data,$v['resource_stock_id'],$level+1);
-//            }
-//        }
-//
-//        return $arr;
-//
-//    }
 
+    public static function isCheckurl()
+    {
+        $check_url_res=self::where([['is_pull','=',2],['pid','!=',0]])->get(['resource_stock_id','url']);
+        for($i=0;$i<$check_url_res->count();$i++){
+            $check_code=self::httpcode($check_url_res[$i]->url);
 
+            if($check_code!=200){//如果网站失效
+//                echo $check_url_res[$i]->resource_stock_id;
+                self::find($check_url_res[$i]->resource_stock_id)->update(['is_pull'=>3]);//使用update方法修改资源分类
+                //本次修改资源分类信息写入log
+                self::addAadminLog(7,3,$check_url_res[$i]->resource_stock_i,date('Y-m-d H:i:s', time()));
+            }
+        }
+    }
+
+    /**
+     * 模拟url请求
+     * @param $url
+     * @return mixed
+     */
+    public static function httpcode($url)
+    {
+        ini_set('max_execution_time',120);
+        $ch = curl_init();
+        $timeout = 3;
+        curl_setopt($ch,CURLOPT_FOLLOWLOCATION,1);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch, CURLOPT_HEADER, 1);
+        curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_exec($ch);
+        return $httpcode = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+        curl_close($ch);
+    }
 
 }

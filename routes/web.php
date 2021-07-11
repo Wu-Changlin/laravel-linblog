@@ -150,6 +150,8 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login')->group(fun
         Route::post('updateResource', 'ResourceStockController@updateResource')->name('resource.updateResource');
         // 删除资源分类     http://192.168.164.134:1133/admin/resource/deleteResource/1
         Route::get('deleteResource/{id}', 'ResourceStockController@deleteResource');
+        // 检测资源分类地址        http://192.168.164.134:1133/admin/resource/isResource
+        Route::get('isResource', 'ResourceStockController@isResource');
         //导入资源分类        http://192.168.164.134:1133/admin/resource/importResource
         Route::post('importResource', 'ResourceStockController@importResource')->name('resource.importResource');
     });

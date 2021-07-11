@@ -71,7 +71,7 @@ class Base extends Model
     }
 
     public static function mate_is_pull ($num){
-        $is_pull=[0=>'默认', 1=>'是',2=>'否',];
+        $is_pull=[0=>'默认', 1=>'是',2=>'否',3=>'已失效'];
         return $is_pull[$num];
     }
 }

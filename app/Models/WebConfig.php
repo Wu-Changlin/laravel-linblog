@@ -122,7 +122,7 @@ class WebConfig extends Base
                 self::addAadminLog(5,3,$k,date('Y-m-d H:i:s', time()));
             }
         }
-        
+
         return 2;
     }
 
