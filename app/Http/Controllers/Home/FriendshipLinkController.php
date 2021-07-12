@@ -1,8 +1,8 @@
 <?php
 namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
-
 use App\Models\AdminsLogs;
+use App\Models\Category;
 use App\Models\FriendshipLink;
 use Illuminate\Http\Request;
 
@@ -21,18 +21,21 @@ class FriendshipLinkController extends Controller
     public function showFirend()
     {
 
+        //友好博客数据
         $friends=FriendshipLink::where([['is_pull','=',2],['is_verify','=',2]])->get();
+        //网页头部
         $category_res=Category::where('val','=','friend')->get(["name","description","keywords"]);
         $head = [
-            'title'       => $category_res->name,
-            'keywords'    => $category_res->keywords,
-            'description' => $category_res->description,
+            'title'       => $category_res[0]->name,
+            'keywords'    => $category_res[0]->keywords,
+            'description' => $category_res[0]->description,
         ];
+
         $assign = [
-            'friends'         => $friends,
-            'head'         => $head,
+            'friends'       => $friends,
+            'head'          => $head,
             'category_val'  =>'friend',
-            'category_id'  =>0,
+            'category_id'   =>0,
             'tag_id'=>0
         ];
 

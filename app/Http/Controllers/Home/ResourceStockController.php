@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use App\Models\AdminsLogs;
+use App\Models\Category;
 use App\Models\ResourceStock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,6 +22,7 @@ class ResourceStockController extends Controller
      */
     public function showResource()
     {
+
         //获取顶级资源分类
         $resource_stock_res=ResourceStock::select('resource_stock_id')->where([['pid','=', 0],['is_pull','=',2]])->get();
         $resource_stock_res_ids =array_flatten($resource_stock_res->toArray());
@@ -37,16 +39,17 @@ class ResourceStockController extends Controller
         foreach ($resource_stock_pid_top_res as $k =>$v ){
             $v->name=$s[$v->resource_id]['name'];
         }
+
         //中间内容
         $resource_res=ResourceStock::where([['pid','>', 0],['is_pull','=',2]])->get();
+        //网页头部
         $category_res=Category::where('val','=','resource')->get(["name","description","keywords"]);
         $head = [
-            'title'       => $category_res->name,
-            'keywords'    => $category_res->keywords,
-            'description' => $category_res->description,
+            'title'       => $category_res[0]->name,
+            'keywords'    => $category_res[0]->keywords,
+            'description' => $category_res[0]->description,
         ];
         $assign = [
-
             'resource_stock_top'     => $resource_stock_pid_top_res,
             'resource_stock_all'     => $resource_res,
             'head'         => $head,
