@@ -71,8 +71,8 @@
                     <div class="ui middle aligned ">
                         <div class="nine wide column">
                             <ui class="list">
-                                <li>作者：<span>ONESTAR</span><a href="#" target="_blank">（联系作者）</a></li>
-                                <li>发表时间：<span>2020-01-02 09:08</span></li>
+                                <li>作者：<span>{{ $article->author}}</span><a href="#" target="_blank">（联系作者）</a></li>
+                                <li>发表时间：<span>{{ $article->created_at}}</span></li>
                                 <li>版权声明：自由转载-非商用-非衍生-保持署名（创意共享3.0许可证）</li>
                                 <li>转载声明：如果是转载栈主转载的文章，请附上原文链接</li>
                             </ui>
