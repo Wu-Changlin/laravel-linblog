@@ -154,6 +154,8 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login')->group(fun
         Route::get('isResource', 'ResourceStockController@isResource');
         //导入资源分类        http://192.168.164.134:1133/admin/resource/importResource
         Route::post('importResource', 'ResourceStockController@importResource')->name('resource.importResource');
+        //导入资源分类        http://192.168.164.134:1133/admin/resource/exportResource
+        Route::get('exportResource', 'ResourceStockController@importResource')->name('resource.exportResource');
     });
 
 
