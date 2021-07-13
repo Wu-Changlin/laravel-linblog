@@ -1,5 +1,4 @@
 body{
-   
     background-attachment:fixed;
     background-size: 100%;
     no-repeat: center top;
@@ -403,13 +402,13 @@ body{
 }
 
 
-.demo2-bg{
+/*.demo2-bg{
     background: url(http://csssecrets.io/images/tiger.jpg) no-repeat;
     background-size: cover;
     width: 500px;
     height: 300px;
     position: relative;
-}
+}*/
 
 .demo2{
     position: absolute;

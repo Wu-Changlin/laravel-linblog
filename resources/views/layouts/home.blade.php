@@ -35,14 +35,14 @@
             @endif
         @endforeach
       <!--</div>-->
-      <div class="right m-item item m-mobile-hide">
-        <form name="search" action="#" method="post" target="_blank">
-          <div class="ui icon transparent input m-margin-tb-tiny" style="color: white">
-            <input style="color: white" type="text" name="query" placeholder="Search....">
-            <i onclick="document.forms['search'].submit()" class="search link icon"></i>
-          </div>
-        </form>
-      </div>
+{{--      <div class="right m-item item m-mobile-hide">--}}
+{{--        <form name="search" action="#" method="post" target="_blank">--}}
+{{--          <div class="ui icon transparent input m-margin-tb-tiny" style="color: white">--}}
+{{--            <input style="color: white" type="text" name="query" placeholder="Search....">--}}
+{{--            <i onclick="document.forms['search'].submit()" class="search link icon"></i>--}}
+{{--          </div>--}}
+{{--        </form>--}}
+{{--      </div>--}}
     </div>
   </div>
   <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
@@ -73,11 +73,11 @@
             </div>
 
             <div class="four wide column">
-                <div style="font-size: large;font-weight: bold;" class="ui inverted m-text-thin m-text-spaced m-margin-top-max" >统计</div>
+                <div style="font-size: large;font-weight: bold;" class="ui inverted m-text-thin m-text-spaced m-margin-top-max" >架构</div>
                 <div class="ui inverted link list" >
-                	<div href="#" class="m-text-thin">项目名称：<a href="https://github.com/Wu-Changlin/laravel-linblog" class="ui  m-inline-block m-margin-top-null" style="font-size:medium;"> laravel-linblog</a> </div>
+                	<div href="#" class="m-text-thin">项目名称：<a href="https://github.com/Wu-Changlin/laravel-linblog" class="ui  m-inline-block m-margin-top-null" style="font-size:medium;">laravel-linblog</a> </div>
                 	<div href="#" class="m-text-thin">框架版本：<h2  class="ui  m-inline-block m-margin-top-null" style="font-size:medium;">laravel-v5.50.</h2> </div>
-                    <div href="#" class="m-text-thin">主题名称：<a href="https://github.com/oneStarLR/myblog-page" class="ui  m-inline-block m-margin-top-null" style="font-size:medium;">  myblog-page </a> </div>
+                    <div href="#" class="m-text-thin">主题名称：<a href="https://github.com/oneStarLR/myblog-page" class="ui  m-inline-block m-margin-top-null" style="font-size:medium;">myblog-page.</a> </div>
                 </div>
             </div>
 

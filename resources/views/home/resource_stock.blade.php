@@ -18,11 +18,11 @@
             <img src="{{ asset('home/images/bg.jpg') }}" alt="" class="ui m-bg image" style="width: 100%;height: 100%">
             <div class="m-bg-class_cover">
                 <div class="ui container" style="position: relative ;bottom: -540px;">
-                    <h2 class="m-font-size-title-large" align="center">古之燧火，今之星火，明之你我；点燃思想火炬，照亮别人,温暖自己。</h2>
+                    <h2 class="m-font-size-title-large" align="center"> {{ $head['keywords'] }}</h2>
                     <div class="ui container" align="center">
                         <div class="ui horizontal link list" align="center">
                             <div class="item">
-                                <a href="#" style="color: #ffffff;font-size: 18px">没有人相当英雄，但总要有人去完成使命。</a>
+                                <a href="#" style="color: #ffffff;font-size: 18px">{{ $head['description'] }}</a>
                             </div>
                         </div>
                     </div>
@@ -44,8 +44,6 @@
                             <div class="ui basic teal left pointing label">{{ $v->resource_stock_num }}</div>
                         </div>
                         @endforeach
-
-
                         <a onclick="addResource()" class="ui red basic button m-margin-tb-tiny">添加资源</a>
 
                     </div>
@@ -61,7 +59,6 @@
 
                                     @foreach($resource_stock_top as $s)
                                         <h2 id="{{ $s->resource_id }}" style="margin: 0 auto" class="ui header m-margin-top">
-                                            <i class="camera icon"></i>
                                             <div class="content">
                                                 {{ $s->name }}
                                             </div>

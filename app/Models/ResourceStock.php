@@ -141,19 +141,24 @@ class ResourceStock extends Base
     }
 
 
+    /**
+     * 检测资源网站是否有效
+     */
     public static function isCheckurl()
     {
+        $num=0;
+        //$check_url_res=self::where([['is_pull','=',2],['pid','!=',0]])->get(['resource_stock_id','url']);
         $check_url_res=self::where([['is_pull','=',2],['pid','!=',0]])->get(['resource_stock_id','url']);
         for($i=0;$i<$check_url_res->count();$i++){
             $check_code=self::httpcode($check_url_res[$i]->url);
-
-            if($check_code!=200){//如果网站失效
-//                echo $check_url_res[$i]->resource_stock_id;
-                self::find($check_url_res[$i]->resource_stock_id)->update(['is_pull'=>3]);//使用update方法修改资源分类
+            if($check_code==0){//如果网站失效
+                self::find($check_url_res[$i]->resource_stock_id)->update(['is_pull'=>2]);//使用update方法修改资源分类
                 //本次修改资源分类信息写入log
-                self::addAadminLog(7,3,$check_url_res[$i]->resource_stock_i,date('Y-m-d H:i:s', time()));
+                self::addAadminLog(7,3,$check_url_res[$i]->resource_stock_id,date('Y-m-d H:i:s', time()));
+                $num++;
             }
         }
+       // return $num;
     }
 
     /**
@@ -163,17 +168,34 @@ class ResourceStock extends Base
      */
     public static function httpcode($url)
     {
-        ini_set('max_execution_time',120);
+
         $ch = curl_init();
-        $timeout = 3;
-        curl_setopt($ch,CURLOPT_FOLLOWLOCATION,1);
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-        curl_setopt($ch, CURLOPT_HEADER, 1);
-        curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-        curl_setopt($ch,CURLOPT_URL,$url);
-        curl_exec($ch);
-        return $httpcode = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5000);
+
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit/600.1.3 (KHTML, like Gecko) Version/8.0 Mobile/12A4345d Safari/600.1.4'));
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+
+        curl_setopt($ch, CURLOPT_REDIR_PROTOCOLS, -1);
+
+        $contents = curl_exec($ch);
+        $httpcode = curl_getinfo($ch,CURLINFO_HTTP_CODE);
         curl_close($ch);
+        return $httpcode;
+
+
     }
+
+
+
+
+
 
 }

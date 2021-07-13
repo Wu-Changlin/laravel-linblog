@@ -34,7 +34,6 @@ class ResourceStockController extends Controller
             }
         }
         $assign=compact('data');
-
         return view('admin.resource_stock.resource_stock_list',$assign);
     }
 
@@ -209,6 +208,9 @@ class ResourceStockController extends Controller
         }
     }
 
+    /*
+     * 检测资源网址
+     */
     public function isResource(){
         ResourceStock::isCheckurl();
     }
@@ -295,17 +297,24 @@ class ResourceStockController extends Controller
             $data[$k]['pid'] = intval($v[5]);
             $data[$k]['is_pull'] = intval($v[6]);
             $data[$k]['is_verify'] = intval($v[7]);
-            $res=ResourceStock::create($data[$k]);
+            //查询新资源名称是否已存在
+            $resource_name_count = ResourceStock::where('name','=',$data[$k]['name'])->count();
+            if(!$resource_name_count){ //资源名称未重复
+                $res=ResourceStock::create($data[$k]);
+                if($res){
+                    echo $res->resource_stock_id.'数量：'.$i.'/数据写入成功,新增资源分类'."</br>";
+                    ResourceStock::addAadminLog(7,2,$res->resource_stock_id,$res->created_at);
+                    $i++;
+                }else{
+                    return redirect()->back()->withInput()->with('err', '数据写入失败,新增资源分类失败');
+                }
+            }else{//资源名称重复
 
-            if($res){
-                echo $res->resource_stock_id.'数据写入成功,新增资源分类';
-                ResourceStock::addAadminLog(7,2,$res->resource_stock_id,$res->created_at);
-            }else{
-                echo '数据写入失败,新增资源分类失败';
             }
 
             //入库(资源库)
         }
+        return redirect()->back()->withInput()->with('err', '数据写入');
         //dd($data);
     }
 
@@ -313,7 +322,12 @@ class ResourceStockController extends Controller
      * 导出资源库
      */
     public function exportResource (){
+
         $cellData=ResourceStock::where('pid','>',0)->get();
+        if ($cellData->count()<1) {
+            return redirect()->back()->withInput()->with('err', '没有资源可导出');
+        }
+
         $data[0] = ["资源名称","资源图片","资源描述","资源地址","资源类型","父级资源","下架","验证"];
         foreach ($cellData as $k=>$v){
             $k ++;
@@ -363,6 +377,8 @@ class ResourceStockController extends Controller
         })->store('xls');//   保存在/storage/exports/
         //->export('xls');  //保存在本地
         //->store('xls')->export('xls'); //直接下载
+
+        return redirect()->route("resource.index")->with('msg', "导出资源分类成功");
 
     }
 

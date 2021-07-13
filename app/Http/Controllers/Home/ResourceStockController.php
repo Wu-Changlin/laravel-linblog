@@ -42,6 +42,11 @@ class ResourceStockController extends Controller
 
         //中间内容
         $resource_res=ResourceStock::where([['pid','>', 0],['is_pull','=',2]])->get();
+        //类型替换
+        $data_type=ResourceStock::mate_type();
+        foreach ($resource_res as $k){
+            $k->type=$data_type[$k->type];
+        }
         //网页头部
         $category_res=Category::where('val','=','resource')->get(["name","description","keywords"]);
         $head = [

@@ -46,7 +46,7 @@
                         <li>
                             <a class="login-area dropdown-toggle" data-toggle="dropdown">
                                 <section>
-                                    <h2><span class="profile"><span>admin</span></span></h2>
+                                    <h2><span class="profile"><span>{{ $admin_name }}</span></span></h2>
                                 </section>
                             </a>
                             <!--Login Area Dropdown-->

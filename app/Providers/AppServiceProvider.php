@@ -37,6 +37,22 @@ class AppServiceProvider extends ServiceProvider
             $view->with($assign);
             //dd($assign);
         });
+        //后台通用数据
+        view()->composer('admin/*', function($view){
+            //已登录
+            $admin_user=session('admin_user');
+            if(isset($admin_user)){
+                $assign = [
+                    'admin_name'=>$admin_user['name']
+                ];
+
+                $view->with($assign);
+            }else{
+
+            }
+
+
+        });
 
     }
 

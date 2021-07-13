@@ -31,7 +31,6 @@ Route::namespace('Home')->name('home.')->group(function () {
 
 // 用户登录后台
 Route::namespace('Admin')->prefix('admin')->group(function () {
-//    http://192.168.164.134:1133/admin/login/logIn
     Route::prefix('login')->group(function () {
         //登录页面  http://192.168.164.134:1133/admin/login/index
         Route::get('index','LoginController@index')->name("login.index");
@@ -43,12 +42,12 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 
 
 // 用户注册
-Route::namespace('Admin')->prefix('register')->group(function () {
-        //注册页面  http://192.168.164.134:1133/register
-        Route::get('/','RegisterController@showRegisterUserIndex' );
-        // 注册     http://192.168.164.134:1133/register/registerUser
-        Route::post('registerUser', 'RegisterController@registerUser');
-});
+//Route::namespace('Admin')->prefix('register')->group(function () {
+//        //注册页面  http://192.168.164.134:1133/register
+//        Route::get('/','RegisterController@showRegisterUserIndex' );
+//        // 注册     http://192.168.164.134:1133/register/registerUser
+//        Route::post('registerUser', 'RegisterController@registerUser');
+//});
 
 
 
@@ -154,8 +153,8 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login')->group(fun
         Route::get('isResource', 'ResourceStockController@isResource');
         //导入资源分类        http://192.168.164.134:1133/admin/resource/importResource
         Route::post('importResource', 'ResourceStockController@importResource')->name('resource.importResource');
-        //导入资源分类        http://192.168.164.134:1133/admin/resource/exportResource
-        Route::get('exportResource', 'ResourceStockController@importResource')->name('resource.exportResource');
+        //导出资源分类        http://192.168.164.134:1133/admin/resource/exportResource
+        Route::get('exportResource', 'ResourceStockController@exportResource');
     });
 
 

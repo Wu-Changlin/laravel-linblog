@@ -29,7 +29,7 @@
         <button type="button" tooltip="导出资源分类" class="btn btn-sm btn-azure btn-addon" onclick="javascript:window.location.href = '/admin/resource/exportResource'"> <i class="fa fa-plus"></i> 导出资源分类（xls）
         </button>
 
-        <button type="button" tooltip="导入资源分类" class="btn btn-sm btn-azure btn-addon" onclick="javascript:window.location.href = '/admin/resource/showAddresourceWeb'"> <i class="fa fa-plus"></i> 导出资源分类（xls）
+        <button type="button" tooltip="导入资源分类" class="btn btn-sm btn-azure btn-addon" onclick="javascript:window.location.href = '/admin/resource/importResource'"> <i class="fa fa-plus"></i> 导入资源分类（xls）
         </button>
 
         <button type="button" tooltip="检测资源分类地址" class="btn btn-sm btn-azure btn-addon" onclick="javascript:window.location.href = '/admin/resource/isResource'"> <i class="fa fa-plus"></i> 检测资源分类地址
