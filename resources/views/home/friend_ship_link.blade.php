@@ -142,7 +142,7 @@
                     $('#toolbar').hide(500);
                     $('#nav').show(500);
                 }
-                console.log('Scrolled to waypoint!  ' + direction);
+
             }
         })
 

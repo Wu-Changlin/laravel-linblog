@@ -10,8 +10,7 @@
     <link rel="stylesheet" href="{{asset('home/css/typo.css')}}" th:href="@{/home/css/typo.css}">
     <link rel="stylesheet" href="{{asset('home/css/animate.css')}}" th:href="@{/home/css/animate.css}">
     <link rel="stylesheet" href="{{asset('home/static/prism/prism.css')}}" th:href="@{/home/static/prism/prism.css}">
-    <link rel="stylesheet" href="{{asset('home/static/tocbot/tocbot.css')}}" th:href="@{/home/static/tocbot/tocbot.css}">
-    <link rel="stylesheet" href="{{asset('home/static/timeline/timeline.css')}}" th:href="@{/home/static/timeline/timeline.css}">
+
 @endsection
 
 
@@ -85,66 +84,34 @@
         <!--文章内容结束-->
 
 
-        <!--目录+置顶开始-->
-        <div id="toolbar" class="m-padded m-fixed m-right-bottom" style="display: none">
-            <div class="ui vertical icon buttons ">
-                <button type="button" class="ui toc teal button" >目录</button>
-                <div id="toTop-button" class="ui icon button" ><i class="chevron up icon"></i></div>
-            </div>
+        <!--置顶开始-->
+        <div id="toolbar" class="m-padded-tb-large m-fixed m-right-bottom">
+            <a href="#" class="ui icon button"><i class="chevron up icon"></i> </a>
         </div>
-        <!--目录弹出开始-->
-        <div class="ui toc-container flowing popup transition hidden" style="width: 250px!important;">
-            <ol class="js-toc">
-
-            </ol>
-        </div>
-        <!--目录弹出结束-->
-        <!--目录+置顶结束-->
+        <!--置顶结束-->
 
     <!--文章页结束-->
 
 @endsection
 
 @section('js')
-    <script src="{{ asset('home/js/jquery.scrollTo.min.js') }}"></script>
-    <script src="{{ asset('home/static/tocbot/tocbot.min.js') }}"></script>
+
     <script src="{{ asset('home/static/prism/prism.js') }}"></script>
     <script  type="text/javascript">
 
-        tocbot.init({
-            // Where to render the table of contents.
-            tocSelector: '.js-toc',
-            // Where to grab the headings to build the table of contents.
-            contentSelector: '.js-toc-content',
-            // Which headings to grab inside of the contentSelector element.
-            headingSelector: 'h1, h2, h3',
-        });
+       var waypoint = new Waypoint({
+           element: document.getElementById('waypoint'),
+           handler: function(direction) {
+               if (direction == 'down') {
+                   $('#toolbar').show(100);
+                   $('#nav').hide(100);
+               } else {
+                   $('#toolbar').hide(500);
+                   $('#nav').show(500);
+               }
 
-        $('.toc.button').popup({
-            popup : $('.toc-container.popup'),
-            on : 'click',
-            position: 'left center'
-        });
-
-        $('#toTop-button').click(function () {
-            $(window).scrollTo(0,500);
-        });
-
-
-
-        var waypoint = new Waypoint({
-            element: document.getElementById('waypoint'),
-            handler: function(direction) {
-                if (direction == 'down') {
-                    $('#toolbar').show(100);
-                    $('#nav').hide(100);
-                } else {
-                    $('#toolbar').hide(500);
-                    $('#nav').show(500);
-                }
-                console.log('Scrolled to waypoint!  ' + direction);
-            }
-        })
+           }
+       })
 
 
 

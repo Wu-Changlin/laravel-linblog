@@ -147,7 +147,7 @@
         </div>
         <!--弹框内容结束-->
 
-        <!--+置顶开始-->
+        <!--置顶开始-->
         <div id="toolbar" class="m-padded-tb-large m-fixed m-right-bottom">
             <a href="#" class="ui icon button"><i class="chevron up icon"></i> </a>
         </div>
@@ -171,7 +171,7 @@
                     $('#toolbar').hide(500);
                     $('#nav').show(500);
                 }
-                console.log('Scrolled to waypoint!  ' + direction);
+                
             }
         })
         function addResource() {
