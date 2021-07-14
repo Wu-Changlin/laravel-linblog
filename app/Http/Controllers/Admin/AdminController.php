@@ -95,7 +95,6 @@ class AdminController extends Controller
         $data = AdminModel::find($admin_id);
         $data->toArray();
         $assign=compact('data');  // compact() 的字符串可以就是变量的名字  （ data 视图里的变量名）
-//        dd($assign);
         return view('admin.admin.admin_update',$assign);
 
     }
@@ -120,7 +119,6 @@ class AdminController extends Controller
             return redirect()->back()->withInput()->with('err', '非法请求');
         }
         $res=AdminModel::updateAdmin($data);   //执行修改
-
         switch ($res) { //判断修改返回值
             case 0:
                 return redirect()->back()->withInput()->with('err', '数据为空');
