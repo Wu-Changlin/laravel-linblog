@@ -30,7 +30,6 @@ class AdminController extends Controller
      */
     public function showAdminUser()
     {
-
         $data=AdminModel::paginate(10);
         $assign=compact('data');  // compact() 的字符串可以就是变量的名字  （ data 视图里的变量名）
         return view('admin.admin.admin_list',$assign);
@@ -44,7 +43,6 @@ class AdminController extends Controller
     public function showAddadminWeb()
     {
 
-        //dd('showAddadminWeb.显示新增管理员模板页面');
         return view('admin.admin.admin_add');
 
     }
