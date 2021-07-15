@@ -70,6 +70,8 @@ class Article extends Base
         if(empty($data)){//如果$data为空
            return 0;
         }
+
+
         $article_count = self::where('title',$data['title'])->count(); //根据用户输入标题查询数据库文章表标题字段
         if($article_count){//如果有数据说明文章已存在
             return 1;
@@ -79,6 +81,7 @@ class Article extends Base
         }else{
             $data['html']="";
         }
+
         $res=self::create($data);//使用create新增文章
         //本次新增文章信息写入log
         self::addAadminLog(3,2,$res->article_id,$res->created_at);

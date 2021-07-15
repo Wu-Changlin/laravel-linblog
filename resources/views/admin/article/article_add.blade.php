@@ -143,6 +143,7 @@
                                             <td>
                                                 <div id="lin-content">
                                                     <textarea name="markdown">{{ old('markdown') }}</textarea>
+                                                    <textarea id="my-editormd-html-code" name="my-editormd-html-code" style="display:none;"></textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -195,6 +196,7 @@
                 width     : "100%",
                 height    : 720,
                 toc       : true,
+                //saveHTMLToTextarea : true,
                 //atLink    : false,    // disable @link
                 //emailLink : false,    // disable email address auto link
                 todoList  : true,
