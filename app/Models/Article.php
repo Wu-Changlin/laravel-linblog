@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use GrahamCampbell\Markdown\Facades\Markdown;
 
 use Illuminate\Support\Facades\DB;
 
-
+use GrahamCampbell\Markdown\Facades\Markdown;
+use Parsedown;
 
 class Article extends Base
 {
@@ -71,13 +71,14 @@ class Article extends Base
            return 0;
         }
 
-
         $article_count = self::where('title',$data['title'])->count(); //根据用户输入标题查询数据库文章表标题字段
         if($article_count){//如果有数据说明文章已存在
             return 1;
         }
         if(!empty($data['markdown'])){//如果$data['markdown']有数据，则转html
-            $data['html']= Markdown::convertToHtml($data['markdown']);//markdown转html
+            $markdownParser = new Parsedown();
+            $data['html'] = $markdownParser->setBreaksEnabled(true)->text($data['markdown']);
+           // $data['html']= Markdown::convertToHtml($data['markdown']);//markdown转html
         }else{
             $data['html']="";
         }
@@ -111,7 +112,9 @@ class Article extends Base
             }
         }
         if(!empty($edit_info['markdown'])){//如果$data['markdown']有数据，则转html
-            $edit_info['html']= Markdown::convertToHtml($data['markdown']);//markdown转html
+            $markdownParser = new Parsedown();
+            $data['html'] = $markdownParser->setBreaksEnabled(true)->text($data['markdown']);
+            //$edit_info['html']= Markdown::convertToHtml($data['markdown']);//markdown转html
         }
         if(!empty($edit_info['is_pull'])){//如果下架文章有数据
             $tag_is_pull_res=DB::table('tags')->where('tag_id', '=',$data['tag_id'])->get(['is_pull']); //文章所属标签

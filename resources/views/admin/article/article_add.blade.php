@@ -143,7 +143,6 @@
                                             <td>
                                                 <div id="lin-content">
                                                     <textarea name="markdown">{{ old('markdown') }}</textarea>
-                                                    <textarea id="my-editormd-html-code" name="my-editormd-html-code" style="display:none;"></textarea>
                                                 </div>
                                             </td>
                                         </tr>
