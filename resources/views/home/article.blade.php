@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{asset('home/css/typo.css')}}" th:href="@{/home/css/typo.css}">
     <link rel="stylesheet" href="{{asset('home/css/animate.css')}}" th:href="@{/home/css/animate.css}">
     <link rel="stylesheet" href="{{asset('home/static/prism/prism.css')}}" th:href="@{/home/static/prism/prism.css}">
-
+{{--    <link href="https://cdn.bootcss.com/prism/1.15.0/plugins/line-numbers/prism-line-numbers.css" rel="stylesheet">--}}
 @endsection
 
 
@@ -97,8 +97,8 @@
 @section('js')
 
     <script src="{{ asset('home/static/prism/prism.js') }}"></script>
+    <script src="https://cdn.bootcss.com/prism/1.15.0/plugins/line-numbers/prism-line-numbers.js"></script>    <!-- 代码显示行号-->
     <script  type="text/javascript">
-
        var waypoint = new Waypoint({
            element: document.getElementById('waypoint'),
            handler: function(direction) {
@@ -112,9 +112,7 @@
 
            }
        })
-
-
-
+       $('pre').addClass("line-numbers").css("white-space", "pre-wrap"); <!-- 设置代码显示行号-->
     </script>
 
 

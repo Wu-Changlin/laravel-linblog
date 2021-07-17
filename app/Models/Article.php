@@ -111,11 +111,13 @@ class Article extends Base
                 return 3;
             }
         }
+
         if(!empty($edit_info['markdown'])){//如果$data['markdown']有数据，则转html
             $markdownParser = new Parsedown();
-            $data['html'] = $markdownParser->setBreaksEnabled(true)->text($data['markdown']);
+            $edit_info['html'] = $markdownParser->setBreaksEnabled(true)->text($data['markdown']);
             //$edit_info['html']= Markdown::convertToHtml($data['markdown']);//markdown转html
         }
+
         if(!empty($edit_info['is_pull'])){//如果下架文章有数据
             $tag_is_pull_res=DB::table('tags')->where('tag_id', '=',$data['tag_id'])->get(['is_pull']); //文章所属标签
             $tag_is_pull_data = json_decode($tag_is_pull_res,true);//使用true，转数组
@@ -129,11 +131,11 @@ class Article extends Base
             }
 
         }
+
         self::find($data['article_id'])->update($edit_info);//使用update方法修改文章
         //本次修改文章信息写入log
         self::addAadminLog(3,3,$data['article_id'],date('Y-m-d H:i:s', time()));
         return 2;
-
     }
 
     /**
