@@ -35,6 +35,8 @@ class Admin extends Base
         session(['admin_user'=>$admin_session]);
         //更新管理员登录次数+1
         $admin_users->login_number +=1;
+        $admin_users->last_login_ip=request()->ip();
+        $admin_users->last_login_time=date('Y-m-d H:i:s', time());
         $admin_users->save();
         //本次登录信息写入log
         self::addAadminLog(6,4,$admin_users->login_number,date('Y-m-d H:i:s', time()));
@@ -144,8 +146,12 @@ class Admin extends Base
     //退出后台管理并返回后台登录页，清除用户缓存
     public static function adminlogOut(){
         $admin_user=session('admin_user');
-
         $admin_user = self::find($admin_user['admin_id'],["login_number"]);
+        //记录退出时的IP和时间
+        $admin_user->last_login_ip=request()->ip();
+        $admin_user->last_login_time=date('Y-m-d H:i:s', time());
+        $admin_user->save();
+        
         self::addAadminLog(6,5,$admin_user->login_number,date('Y-m-d H:i:s', time()));
         session()->flush(); // 清空session
     }
