@@ -42,7 +42,7 @@ class CategoryController extends Controller
             ->where([['articles.category_id','=', $category_id],["articles.is_pull",'=',2]])
             ->join("tags", "articles.tag_id", '=', "tags.tag_id")
             ->join('categorys','articles.category_id', '=', 'categorys.category_id')
-            ->paginate(1);
+            ->paginate(10);
         //4:获取类型id的信息 填充网页头部
         $category_res=Category::find($category_id,["name","description","keywords"]);
         $head = [
