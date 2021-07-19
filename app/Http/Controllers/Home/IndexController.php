@@ -37,7 +37,7 @@ class IndexController extends Controller
             ->join("tags", "articles.tag_id", '=', "tags.tag_id")
             ->join('categorys','articles.category_id', '=', 'categorys.category_id')
             ->orderByDesc("articles.created_at")
-            ->paginate(2);
+            ->paginate(10);
         //获取类型id的信息 填充网页头部
         $category_res=Category::find(1,["name","description","keywords"]);
         $head = [

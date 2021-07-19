@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{asset('home/css/typo.css')}}" th:href="@{/home/css/typo.css}">
     <link rel="stylesheet" href="{{asset('home/css/animate.css')}}" th:href="@{/home/css/animate.css}">
     <link rel="stylesheet" href="{{asset('home/static/prism/prism.css')}}" th:href="@{/home/static/prism/prism.css}">
-{{--    <link href="https://cdn.bootcss.com/prism/1.15.0/plugins/line-numbers/prism-line-numbers.css" rel="stylesheet">--}}
+    <link href="https://cdn.bootcss.com/prism/1.15.0/plugins/line-numbers/prism-line-numbers.css" rel="stylesheet">
 @endsection
 
 
@@ -55,8 +55,6 @@
             <div class="ui container m-opacity box-shadow-max">
                 <!--内容-->
                 <div class="ui attached padded segment">
-
-
                     <!--中间主要内容部分-->
                     <div id="content" class="typo  typo-selection js-toc-content m-padded-lr-responsive m-padded-tb-large">
                        
@@ -114,7 +112,5 @@
        })
        $('pre').addClass("line-numbers").css("white-space", "pre-wrap"); <!-- 设置代码显示行号-->
     </script>
-
-
 
 @endsection

@@ -151,7 +151,6 @@ class Admin extends Base
         $admin_user->last_login_ip=request()->ip();
         $admin_user->last_login_time=date('Y-m-d H:i:s', time());
         $admin_user->save();
-        
         self::addAadminLog(6,5,$admin_user->login_number,date('Y-m-d H:i:s', time()));
         session()->flush(); // 清空session
     }
