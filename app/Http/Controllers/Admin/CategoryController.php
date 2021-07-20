@@ -13,7 +13,6 @@ class CategoryController extends Controller
      */
     public function index()
     {
-
         $data= CategoryModel::paginate(10);
         //数字转文字 页面减少判断
         foreach($data as $key){
@@ -22,7 +21,6 @@ class CategoryController extends Controller
         }
         $assign=compact('data');
         return view('admin.category.category_list',$assign);
-
     }
 
     /**
@@ -47,7 +45,6 @@ class CategoryController extends Controller
      */
     public function showAddcategoryWeb()
     {
-
         $data=$this->mate_type(3,3);
         $data=array_except($data, array(0));//从数组移除给定的键=1的值对
         $assign=compact('data');
@@ -97,7 +94,6 @@ class CategoryController extends Controller
      */
     public function showUpdatecategoryWeb($category_id)
     {
-
         if(empty($category_id)){
             return redirect()->back()->withInput()->with('err', '非法访问');
         }

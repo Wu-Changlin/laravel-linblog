@@ -55,7 +55,9 @@
                                             <td align="left">
                                                 <select name="category_id">
                                                     @foreach($categorys as $v)
+                                                        @if ( $v->category_id>1)
                                                         <option  value="{{ $v->category_id }}">{{ $v->category_name }}</option>
+                                                        @endif
                                                     @endforeach
                                                 </select>
                                             </td>

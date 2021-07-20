@@ -15,7 +15,6 @@ class ArticleController extends Controller
      */
     public function showArticle()
     {
-
         $data= ArticleModel::lists();
         $assign=compact('data');
         foreach($data as $key){
@@ -115,8 +114,6 @@ class ArticleController extends Controller
     {
         if($request->isMethod('post')){
             $input = $request->except('s','_token');  //去除 s：路由地址 ，_token： 表单中包含一个隐藏的 CSRF 令牌字段
-
-
             $data['category_id'] = intval($input['category_id']) ? intval($input['category_id']) : 0;
             $data['tag_id'] = intval($input['tag_id']) ? intval($input['tag_id']) : 0;
             $data['article_id'] = intval($input['article_id']) ? intval($input['article_id']) : 0;
@@ -136,9 +133,7 @@ class ArticleController extends Controller
             }else{
                 $data['author_id']=0;
             }
-
             $res=ArticleModel::updateArticle($data);
-
             switch ($res) { //判断新增返回值
                 case 0:
                     return redirect()->back()->withInput()->with('err', '数据为空');

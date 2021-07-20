@@ -94,7 +94,6 @@ class FriendshipLinkController extends Controller
         //判断是否post请求
         if ($request->isMethod('post')) {
             $input = $request->except('s','_token');  //去除 s：路由地址 ，_token： 表单中包含一个隐藏的 CSRF 令牌字段
-
             $data['link_id'] = intval($input['id']) ? intval($input['id']) : 0;
             $data['name'] = isset($input['name']) ? $input['name'] : "";
             $data['url'] = isset($input['url']) ? $input['url'] : "";
@@ -148,7 +147,6 @@ class FriendshipLinkController extends Controller
             default:
                 return redirect()->back()->withInput()->with('err', '网络错误,删除友好博客失败');
         }
-
 
     }
 
