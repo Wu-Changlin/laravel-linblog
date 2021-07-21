@@ -25,9 +25,11 @@
                     <h2 class="m-font-size-title-large" align="center">{{ $article->title}}</h2>
                     <div class="ui container" align="center">
                         <div class="ui horizontal link list" align="center">
+                            @if ($article->author !='转载')
                             <div class="item">
                                 <div class="ui orange basic label" style="font-size: 7px">原创</div>
                             </div>
+                            @endif
                             <div class="item">
                                 <i class="user outline outline icon m-font-size-text-mini"></i>
                                 <a href="#" style="color: #ffffff;font-size: 15px">{{ $article->author}}</a>
