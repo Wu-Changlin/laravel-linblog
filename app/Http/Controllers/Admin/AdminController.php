@@ -143,8 +143,8 @@ class AdminController extends Controller
 
     /**
      * 彻底删除管理员      清空管理员的所有数据  其下分类、文章 、标签、评论、网站配置
-     * @param $admin_user_id 管理员 id
-     *deleteAdmin_admin_code  0：默认  1：删除管理员失败  2：删除管理员成功
+     * @param $admin_id 管理员 id
+     * $res  0：数据为空  1：已删除管理员  2：删除管理员成功
      */
     public function deleteAdminUser($admin_id)
     {

@@ -5,7 +5,6 @@ namespace App\Models;
 
 use Illuminate\Support\Facades\DB;
 
-use GrahamCampbell\Markdown\Facades\Markdown;
 use Parsedown;
 
 class Article extends Base

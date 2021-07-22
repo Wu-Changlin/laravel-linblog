@@ -137,7 +137,17 @@ class Admin extends Base
         if(!$admin_count){ //不存在说明已删除
             return 1;
         }
-        self::where('admin_id','=',$admin_id)->delete();
+//        $article_ids=Article::where('author_id','=',$admin_id)->get(['article_id']);
+//        $article_id_count=$article_ids->count();
+//        if($article_id_count>0){
+//            for ($i=1;$i<=$article_id_count;$i++){
+//                    echo '$i:'.$i;
+//            }
+//        }
+//
+//        Article::where('author_id','=',$admin_id)->delete();//执行删除管理员所有文章
+
+        self::where('admin_id','=',$admin_id)->delete();//执行删除管理员
         //本次删除管理员信息写入log
         self::addAadminLog(6,1,$admin_id,date('Y-m-d H:i:s', time()));
         return 2;
