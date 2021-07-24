@@ -137,19 +137,19 @@ class Admin extends Base
         if(!$admin_count){ //不存在说明已删除
             return 1;
         }
+        //删除管理员发布的文章
         $article_ids=Article::where('author_id','=',$admin_id)->get(['article_id']);
         $article_id_count=$article_ids->count();
         if($article_id_count>0){
             for ($i=1;$i<=$article_id_count;$i++){
-//                $article_info = self::find($article_ids,["markdown","cover"]); //查询包含图片路径的信息
-//                $preg = '/(?<=\()+\/uploads\/images\/article\/+[^\)]+/';// 匹配括号里面的内容的正则表达式 markdown里的图片路径：(/uploads/images/article/20210616/DkCGWaGQTm1623848364.png)
-//                preg_match_all($preg, $article_info->markdown, $allImg);//这里匹配指定文章/uploads/images/article/的img
-//                $allImg=array_flatten($allImg); //多维数组转一维
-//                array_push($allImg,$article_info->cover);//把封面图入栈
-//                self::deletedCover($allImg,2); //删除图片
-//                self::where('article_id','=',$article_id)->delete();
-//                //本次删除文章信息写入log
-//                self::addAadminLog(3,1,$article_id,date('Y-m-d H:i:s', time()));
+                $article_info = Article::find($article_ids[$i-1]->article_id,["markdown","cover"]); //查询包含图片路径的信息
+                $preg = '/(?<=\()+\/uploads\/images\/article\/+[^\)]+/';// 匹配括号里面的内容的正则表达式 markdown里的图片路径：(/uploads/images/article/20210616/DkCGWaGQTm1623848364.png)
+                preg_match_all($preg, $article_info->markdown, $allImg);//这里匹配指定文章/uploads/images/article/的img
+                $allImg=array_flatten($allImg); //多维数组转一维
+                array_push($allImg,$article_info->cover);//把封面图入栈
+                Article::deletedCover($allImg,2); //删除图片
+                //本次删除文章信息写入log
+                Article::addAadminLog(3,1,$article_ids[$i-1]->article_id,date('Y-m-d H:i:s', time()));
             }
         }
 //
