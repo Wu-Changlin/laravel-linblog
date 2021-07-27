@@ -52,7 +52,7 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 
 
 // Admin 模块
-Route::namespace('Admin')->prefix('admin')->middleware('admin.login')->group(function () {
+Route::namespace('Admin')->prefix('admin')->middleware('admin.login','checkrbac')->group(function () {
     // 后台首页     http://192.168.164.134:1133/admin/index
     Route::get('index', 'AdminController@showIndex')->name("admin.index");
     // 退出      http://192.168.164.134:1133/admin/logOut

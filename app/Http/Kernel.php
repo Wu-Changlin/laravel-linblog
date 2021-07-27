@@ -60,6 +60,8 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'admin.login' => \App\Http\Middleware\AdminLogin::class,//检测管理员是否登录
+        //自定义中间件
+        'admin.login' => \App\Http\Middleware\AdminLogin::class, //检测管理员是否登录
+        'checkrbac' => \App\Http\Middleware\CheckRbac::class,  //检测管理员是否拥有权限
     ];
 }
