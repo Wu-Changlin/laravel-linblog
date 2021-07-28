@@ -2,9 +2,9 @@
 
 @section('title', '霖博客,技术博客,个人博客模板,php博客系统')
 
-@section('keywords', '编辑角色')
+@section('keywords', '编辑权限')
 
-@section('description', '显示编辑角色页面')
+@section('description', '显示编辑权限页面')
 
 @section('content')
 <!-- Page Content -->
@@ -16,9 +16,9 @@
                 <a href="{{ route("admin.index") }}">系统</a>
             </li>
             <li>
-                <a href="{{ route("admin.showAdminUser") }}">角色管理</a>
+                <a href="{{ route("admin.showAdminUser") }}">权限管理</a>
             </li>
-            <li class="active">角色修改</li>
+            <li class="active">权限修改</li>
         </ul>
     </div>
     <!-- /Page Breadcrumb -->
@@ -30,39 +30,42 @@
             <div class="col-lg-12 col-sm-12 col-xs-12">
                 <div class="widget">
                     <div class="widget-header bordered-bottom bordered-blue">
-                        <span class="widget-caption">角色修改</span>
+                        <span class="widget-caption">修改权限</span>
                     </div>
                     <div class="widget-body">
                         <div id="horizontal-form">
-                            <form class="form-horizontal" role="form" action="{{ route("admin.updateAdminUser") }}" method="post">
+                            <form class="form-horizontal" role="form" action="" method="post">
                                 {{ csrf_field() }}
-                                <input type="hidden" name="id" value="{{ $data->admin_id }}">
                                 <div class="form-group">
-                                    <label for="username" class="col-sm-2 control-label no-padding-right">角色昵称</label>
+                                    <label for="username" class="col-sm-2 control-label no-padding-right">上级权限</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control"  placeholder="" name="name" value="{{ $data->name }}" type="text">
+                                        <select name="pid">
+                                            <option value="0">顶级权限</option>
+                                            {{--                                            {volist name="authRuleRes" id="authRules"}--}}
+                                            {{--                                            <option value="{$authRules.id}"><?php if($authRules['level']!=0){echo '|';}echo str_repeat('—',$authRules['level']*3);?>{$authRules.title}</option>--}}
+                                            {{--                                            {/volist}--}}
+                                        </select>
                                     </div>
-                                    <p class="help-block col-sm-4 red">* 必填</p>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="username" class="col-sm-2 control-label no-padding-right">角色邮箱</label>
+                                    <label for="username" class="col-sm-2 control-label no-padding-right">权限名称</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control"  placeholder="" name="email" value="{{ $data->email }}" type="text">
+                                        <input class="form-control"  placeholder="" name="title"  type="text">
                                     </div>
-                                    <p class="help-block col-sm-2 red">* 必填</p>
-                                    <p id="invalid-email"  class="col-sm-2 red" hidden>*邮箱格式错误</p>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="group_id" class="col-sm-2 control-label no-padding-right">角色密码</label>
+                                    <label for="username" class="col-sm-2 control-label no-padding-right">控/方</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control"  placeholder="" name="password" value="{{ $data->password }}" type="text">
+                                        <input class="form-control"  placeholder="" name="name"  type="text">
                                     </div>
                                 </div>
+
+
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10">
-                                        <button type="submit" class="btn btn-default">修改信息</button>
+                                        <button type="submit" class="btn btn-default">保存信息</button>
                                     </div>
                                 </div>
                             </form>
