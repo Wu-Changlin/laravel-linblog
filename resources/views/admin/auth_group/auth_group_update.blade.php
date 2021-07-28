@@ -67,16 +67,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {{--                                            {volist name="authRuleRes" id="authRule"}--}}
-                                            {{--                                            <tr>--}}
-                                            {{--                                                <td>--}}
-                                            {{--                                                    <label>--}}
-                                            {{--                                                        <?php echo str_repeat('&nbsp',$authRule['level']*5);?><input name="rules[]" value="{$authRule.id}" dataid="id-{$authRule.dataid}" class="inverted checkbox-parent {if condition="$authRule['level'] neq 0"}checkbox-child{/if}" type="checkbox" value="true">--}}
-                                            {{--                                                        <span {if condition="$authRule['level'] eq 0"}style="font-weight:bold"{/if} class="text">{$authRule.title}</span>--}}
-                                            {{--                                                    </label>--}}
-                                            {{--                                                </td>--}}
-                                            {{--                                            </tr>--}}
-                                            {{--                                            {/volist}--}}
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -101,23 +92,5 @@
 <!-- /Page Content -->
 @endsection
 
-@section('js')
-
-    <script>
-        // 验证邮箱格式是否正确
-        $('input[name="email"]').on('input', function () {
-            var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; //邮箱正则
-            var inputValue = $('input[name="email"]').val();                  //input框name="email"的值
-            if (mailformat.test(inputValue) || inputValue === '') {           // email格式错误或者input框name="email"的值为空
-                $('#invalid-email').hide();
-                $('button').prop('disabled', false);
-            } else {                                                          // email格式正确或者input框name="email"的值不为空
-                $('#invalid-email').show();
-                $('button').prop('disabled', true);
-            }
-        });
-    </script>
-
-@endsection
 
 

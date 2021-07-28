@@ -30,36 +30,50 @@
             <div class="col-lg-12 col-sm-12 col-xs-12">
                 <div class="widget">
                     <div class="widget-header bordered-bottom bordered-blue">
-                        <span class="widget-caption">新增角色</span>
+                        <span class="widget-caption">新增角色组</span>
                     </div>
                     <div class="widget-body">
                         <div id="horizontal-form">
-                            <form class="form-horizontal" role="form" action="{{ route("admin.addAdminUser") }}" method="post">
+                            <form class="form-horizontal" role="form" action="" method="post">
                                 {{ csrf_field() }}
                                 <div class="form-group">
-                                    <label for="username" class="col-sm-2 control-label no-padding-right">角色名称</label>
+                                    <label for="username" class="col-sm-2 control-label no-padding-right">角色组名称</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control"  placeholder=""  name="name"  required="" type="text" value="{{ old('name') }}">
+                                        <input class="form-control"  placeholder="" name="title"  type="text">
                                     </div>
-                                    <p class="help-block col-sm-4 red">* 必填</p>
                                 </div>
-{{--                                placeholder=""--}}
+
                                 <div class="form-group">
-                                    <label for="username" class="col-sm-2 control-label no-padding-right">角色邮箱</label>
+                                    <label for="username" class="col-sm-2 control-label no-padding-right">启用状态</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control"  placeholder="" name="email"  required="" type="text" value="{{ old('email') }}">
+                                        <p class="help-block col-sm-4 red">
+                                            <label>
+                                                <input class="checkbox-slider colored-darkorange" checked="checked"  name="status" value="1" type="checkbox">
+                                                <span class="text"></span>
+                                            </label>
+                                        </p>
                                     </div>
-                                    <p class="help-block col-sm-2 red">* 必填</p>
-                                    <p  id="invalid-email"  class="col-sm-2 red" hidden>*邮箱格式错误</p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="username" class="col-sm-2 control-label no-padding-right">配置权限</label>
+                                    <div class="col-sm-6">
+                                        <table class="table table-hover" style="background-color: rgb(242, 242, 242);">
+                                            <thead class="bordered-darkorange">
+                                            <tr>
+                                                <th>
+                                                    明细表
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
 
 
-                                <div class="form-group">
-                                    <label for="group_id" class="col-sm-2 control-label no-padding-right">角色密码</label>
-                                    <div class="col-sm-6">
-                                        <input class="form-control"  placeholder=""  name="password"   required="" type="text" value="{{ old('password') }}">
-                                    </div>
-                                </div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10">
                                         <button type="submit" class="btn btn-default">保存信息</button>
@@ -79,23 +93,5 @@
 @endsection
 
 
-@section('js')
-
-    <script>
-        // 验证邮箱格式是否正确
-        $('input[name="email"]').on('input', function () {
-            var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; //邮箱正则
-            var inputValue = $('input[name="email"]').val();                  //input框name="email"的值
-            if (mailformat.test(inputValue) || inputValue === '') {           // email格式错误或者input框name="email"的值为空
-                $('#invalid-email').hide();
-                $('button').prop('disabled', false);
-            } else {                                                          // email格式正确或者input框name="email"的值不为空
-                $('#invalid-email').show();
-                $('button').prop('disabled', true);
-            }
-        });
-    </script>
-
-@endsection
 
 

@@ -178,10 +178,10 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login','checkrbac'
     Route::prefix('web')->group(function () {
         // 网站配置列表   http://192.168.164.134:1133/admin/web/showWebConfig
         Route::get('showWebconfig', 'WebConfigController@showWebConfig')->name('webconfig.index');
-        //网站配置视图
+        // 网站配置视图
         Route::get('configView', 'WebConfigController@configView')->name('webconfig.configView');
         Route::post('updateConfigView', 'WebConfigController@updateConfigview')->name('webconfig.updateConfigview');
-        //添加网站配置    http://192.168.164.134:1133/admin/web/showAddwebConfig
+        // 添加网站配置    http://192.168.164.134:1133/admin/web/showAddwebConfig
         Route::get('showAddwebConfig', 'WebConfigController@showAddwebConfig');
         Route::post('addWebconfig', 'WebConfigController@addWebconfig')->name('webconfig.addWebconfig');
         // 更新网站配置   http://192.168.164.134:1133/admin/web/showUpdatewebConfig/1
@@ -189,6 +189,35 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login','checkrbac'
         Route::post('updateWebconfig', 'WebConfigController@updateWebconfig')->name('webconfig.updateWebconfig');
         // 删除网站配置   http://192.168.164.134:1133/admin/web/deleteWebconfig/1
         Route::get('deleteWebconfig/{id}', 'WebConfigController@deleteWebConfig');
+    });
+
+    //权限管理
+    Route::prefix('rule')->group(function () {
+        // 权限列表  http://192.168.164.134:1133/admin/rule/index
+        Route::get('index', 'AuthRuleController@index')->name('rule.index');
+        // 添加权限 http://192.168.164.134:1133/admin/rule/store
+        Route::get('store', 'AuthRuleController@store');
+        Route::post('create', 'AuthRuleController@create')->name('rule.create');
+        // 编辑权限 http://192.168.164.134:1133/admin/rule/edit/1
+        Route::get('edit/{id}', 'AuthRuleController@edit');
+        Route::post('update', 'AuthRuleController@update')->name('rule.update');
+        // 删除权限 http://192.168.164.134:1133/admin/rule/delete/1
+        Route::get('delete/{id}', 'AuthRuleController@delete');
+
+    });
+    //角色管理
+    Route::prefix('group')->group(function () {
+        // 权限列表  http://192.168.164.134:1133/admin/group/index
+        Route::get('index', 'AuthGroupController@index')->name('group.index');
+        // 添加权限 http://192.168.164.134:1133/admin/group/store
+        Route::get('store', 'AuthGroupController@store');
+        Route::post('create', 'AuthGroupController@create')->name('group.create');
+        // 编辑权限 http://192.168.164.134:1133/admin/group/edit/1
+        Route::get('edit/{id}', 'AuthGroupController@edit');
+        Route::post('update', 'AuthGroupController@update')->name('group.update');
+        // 删除权限 http://192.168.164.134:1133/admin/group/delete/1
+        Route::get('delete/{id}', 'AuthGroupController@delete');
+
     });
 
 

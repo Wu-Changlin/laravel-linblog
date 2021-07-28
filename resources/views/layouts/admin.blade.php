@@ -107,6 +107,24 @@
                             </a>
                         </li>
                     </ul>
+                    <ul class="submenu">
+                        <li>
+                            <a href=" {{route('group.index')}}">
+                                    <span class="menu-text">
+                                        角色列表                                    </span>
+                                <i class="menu-expand"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="submenu">
+                        <li>
+                            <a href=" {{route('rule.index')}}">
+                                    <span class="menu-text">
+                                        权限列表                                    </span>
+                                <i class="menu-expand"></i>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 <li>
