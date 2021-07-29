@@ -34,14 +34,17 @@
                     </div>
                     <div class="widget-body">
                         <div id="horizontal-form">
-                            <form class="form-horizontal" role="form" action="" method="post">
+                            <form class="form-horizontal" role="form" action="{{route('rule.create')}}" method="post">
                                 {{ csrf_field() }}
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">上级权限</label>
                                     <div class="col-sm-6">
                                         <select name="pid">
                                             <option value="0">顶级权限</option>
+                                            @foreach($data as $k=>$v)
+                                                <option value="{{$v['rule_id']}}">@if($v['level']!=0)  {{ '|'.str_repeat('—',$v['level']*3)}}@endif {{ $v['title'] }}</option>
 
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -49,14 +52,14 @@
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">权限名称</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control"  placeholder="" name="title"  type="text">
+                                        <input class="form-control"  placeholder="" name="title"  type="text" value="{{ old('title') }}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">控/方</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control"  placeholder="" name="name"  type="text">
+                                        <input class="form-control"  placeholder="" name="name"  type="text" value="{{ old('name') }}">
                                     </div>
                                 </div>
 

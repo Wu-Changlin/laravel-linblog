@@ -42,7 +42,23 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-
+                                    @foreach($data as $k=>$v)
+                                    <tr>
+                                        <td align="center">{{ $v['rule_id'] }}</td>
+                                        <td align="center"><input name="{{ $v['rule_id'] }}" type="text" style="text-align:center;"value="{{ $v['sort'] }}"></td>
+                                        <td > @if($v['level']!=0)  {{ '|'.str_repeat('—',$v['level']*3)}}@endif {{ $v['title'] }} </td>
+                                        <td align="center">{{$v['name']}}</td>
+                                        <td align="center">{{$v['level']}}</td>
+                                        <td align="center">
+                                            <a href="" class="btn btn-primary btn-sm shiny">
+                                                <i class="fa fa-edit"></i> 编辑
+                                            </a>
+                                            <a href="#" onClick="warning('三思后行，确实要删除吗','{{ url('admin/rule/delete',[$v['rule_id']]) }}')" class="btn btn-danger btn-sm shiny">
+                                                <i class="fa fa-trash-o"></i> 删除
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    @endforeach
 
                                 </tbody>
                             </table>

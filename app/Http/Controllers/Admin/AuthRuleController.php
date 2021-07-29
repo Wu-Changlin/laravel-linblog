@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-
+use App\Models\AuthRule;
 use Illuminate\Http\Request;
 
 /**
@@ -17,7 +17,10 @@ class AuthRuleController extends Controller
      */
     public function index()
     {
-        return view('admin.auth_rule.auth_rule_list');
+        $res=AuthRule::all(); //执行新增
+        $data=AuthRule::getCateTree($res->toArray());
+        $assign=compact('data');
+        return view('admin.auth_rule.auth_rule_list',$assign);
     }
     
 
@@ -29,7 +32,10 @@ class AuthRuleController extends Controller
     public function store()
     {
 
-        return view('admin.auth_rule.auth_rule_add');
+        $res=AuthRule::all(); //执行新增
+        $data=AuthRule::getCateTree($res->toArray());
+        $assign=compact('data');
+        return view('admin.auth_rule.auth_rule_add',$assign);
 
     }
 
@@ -40,30 +46,29 @@ class AuthRuleController extends Controller
      */
     public function create(Request $request)
     {
-        return redirect()->back()->withInput()->with('err', '新增权限');
-//        //判断是否post请求
-//        if ($request->isMethod('post')) {
-//            $input = $request->except('s','_token');  //去除 s：路由地址 ，_token： 表单中包含一个隐藏的 CSRF 令牌字段
-//            $data['name'] = isset($input['name']) ? $input['name'] : "";
-//            $data['email'] = isset($input['email']) ? $input['email'] : "";
-//            $data['password'] = isset($input['password']) ? $input['password'] : "";
-//        }else{
-//            return redirect()->back()->withInput()->with('err', '非法请求');
-//        }
-//        $res=AuthRule::addAdmin($data); //执行新增
-//        switch ($res) { //判断新增返回值
-//            case 0:
-//                return redirect()->back()->withInput()->with('err', '数据为空');
-//                break;
-//            case 1:
-//                return redirect()->back()->withInput()->with('err', '邮箱已注册');
-//                break;
-//            case 2:
-//                return redirect()->route("admin.showAdminUser")->with('msg', "新增权限成功");
-//                break;
-//            default:
-//                return redirect()->back()->withInput()->with('err', '数据写入失败,新增权限失败');
-//        }
+        //判断是否post请求
+        if ($request->isMethod('post')) {
+            $input = $request->except('s','_token');  //去除 s：路由地址 ，_token： 表单中包含一个隐藏的 CSRF 令牌字段
+            $data['pid'] = isset($input['pid']) ? intval($input['pid']) : 0;
+            $data['title'] = isset($input['title']) ? $input['title'] : "";
+            $data['name'] = isset($input['name']) ? $input['name'] : "";
+        }else{
+            return redirect()->back()->withInput()->with('err', '非法请求');
+        }
+        $res=AuthRule::addRule($data); //执行新增
+        switch ($res) { //判断新增返回值
+            case 0:
+                return redirect()->back()->withInput()->with('err', '数据为空');
+                break;
+            case 1:
+                return redirect()->back()->withInput()->with('err', '权限已存在');
+                break;
+            case 2:
+                return redirect()->route("rule.index")->with('msg', "新增权限成功");
+                break;
+            default:
+                return redirect()->back()->withInput()->with('err', '数据写入失败,新增权限失败');
+        }
 
     }
 
@@ -136,25 +141,24 @@ class AuthRuleController extends Controller
      */
     public function delete($rule_id)
     {
-        return redirect()->back()->withInput()->with('err', '删除权限成功');
-//        if(empty($rule_id)){
-//            return redirect()->back()->withInput()->with('err', '非法访问');
-//        }
-//
-//        $res=AuthRule::deleteRule($rule_id);//执行删除
-//        switch ($res) { //判断删除返回值
-//            case 0:
-//                return redirect()->back()->withInput()->with('err', '数据为空');
-//                break;
-//            case 1:
-//                return redirect()->back()->withInput()->with('err', '已删除权限');
-//                break;
-//            case 2:
-//                return redirect()->route("admin.showAdminUser")->with('msg', "删除权限成功");
-//                break;
-//            default:
-//                return redirect()->back()->withInput()->with('err', '网络错误,删除权限失败');
-//        }
+        if(empty($rule_id)){
+            return redirect()->back()->withInput()->with('err', '非法访问');
+        }
+
+        $res=AuthRule::deleteRule($rule_id);//执行删除
+        switch ($res) { //判断删除返回值
+            case 0:
+                return redirect()->back()->withInput()->with('err', '数据为空');
+                break;
+            case 1:
+                return redirect()->back()->withInput()->with('err', '已删除权限');
+                break;
+            case 2:
+                return redirect()->route("rule.index")->with('msg', "删除权限成功");
+                break;
+            default:
+                return redirect()->back()->withInput()->with('err', '网络错误,删除权限失败');
+        }
 
     }
     

@@ -50,14 +50,13 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 //});
 
 
-
 // Admin 模块
 Route::namespace('Admin')->prefix('admin')->middleware('admin.login','checkrbac')->group(function () {
     // 后台首页     http://192.168.164.134:1133/admin/index
     Route::get('index', 'AdminController@showIndex')->name("admin.index");
     // 退出      http://192.168.164.134:1133/admin/logOut
     Route::get('logOut', 'AdminController@logOut')->name('admin.logout');
-    // 管理员控制器
+    //6 管理员控制器
     Route::prefix('adminUser')->group(function () {
         // 管理员列表    http://192.168.164.134:1133/admin/adminUser/showAdminUser
         Route::get('showAdminUser', 'AdminController@showAdminUser')->name("admin.showAdminUser");
@@ -76,7 +75,9 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login','checkrbac'
         Route::get('deleteAdminUser/{id}', 'AdminController@deleteAdminUser');
     });
 
-    // 分类管理
+
+
+    //1 分类管理
     Route::prefix('category')->group(function () {
         // 分类列表     http://192.168.164.134:1133/admin/category/index
         Route::get('index', 'CategoryController@index')->name('category.index');
@@ -98,7 +99,7 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login','checkrbac'
 
 
 
-    // 标签管理
+    //2 标签管理
     Route::prefix('tag')->group(function () {
         // 标签列表     http://192.168.164.134:1133/admin/tag/showTag
         Route::get('showTag', 'TagController@showTag')->name('tag.showTag');
@@ -115,7 +116,8 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login','checkrbac'
     });
 
 
-    // 文章管理
+
+    //3 文章管理
     Route::prefix('article')->group(function () {
         // 文章列表     http://192.168.164.134:1133/admin/article/showArticle
         Route::get('showArticle', 'ArticleController@showArticle')->name('article.showArticle');
@@ -134,7 +136,28 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login','checkrbac'
         Route::get('deleteArticle/{id}', 'ArticleController@deleteArticle');
     });
 
-    // 资源管理
+
+
+    //5 网站配置管理
+    Route::prefix('web')->group(function () {
+        // 网站配置列表   http://192.168.164.134:1133/admin/web/showWebConfig
+        Route::get('showWebconfig', 'WebConfigController@showWebConfig')->name('webconfig.index');
+        // 网站配置视图
+        Route::get('configView', 'WebConfigController@configView')->name('webconfig.configView');
+        Route::post('updateConfigView', 'WebConfigController@updateConfigview')->name('webconfig.updateConfigview');
+        // 添加网站配置    http://192.168.164.134:1133/admin/web/showAddwebConfig
+        Route::get('showAddwebConfig', 'WebConfigController@showAddwebConfig');
+        Route::post('addWebconfig', 'WebConfigController@addWebconfig')->name('webconfig.addWebconfig');
+        // 更新网站配置   http://192.168.164.134:1133/admin/web/showUpdatewebConfig/1
+        Route::get('showUpdatewebConfig/{id}', 'WebConfigController@showUpdatewebConfig');
+        Route::post('updateWebconfig', 'WebConfigController@updateWebconfig')->name('webconfig.updateWebconfig');
+        // 删除网站配置   http://192.168.164.134:1133/admin/web/deleteWebconfig/1
+        Route::get('deleteWebconfig/{id}', 'WebConfigController@deleteWebConfig');
+    });
+
+
+
+    //7 资源管理
     Route::prefix('resource')->group(function () {
         // 资源分类列表     http://192.168.164.134:1133/admin/resource/index
         Route::get('index', 'ResourceStockController@index')->name('resource.index');
@@ -159,7 +182,7 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login','checkrbac'
 
 
 
-    // 友情链接管理
+    //8 友情链接管理
     Route::prefix('friendshipLink')->group(function () {
         // 友情链接列表  http://192.168.164.134:1133/admin/friendshipLink/index
         Route::get('index', 'FriendshipLinkController@index')->name('friendshipLink.index');
@@ -174,24 +197,8 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login','checkrbac'
     });
 
 
-    // 网站配置管理
-    Route::prefix('web')->group(function () {
-        // 网站配置列表   http://192.168.164.134:1133/admin/web/showWebConfig
-        Route::get('showWebconfig', 'WebConfigController@showWebConfig')->name('webconfig.index');
-        // 网站配置视图
-        Route::get('configView', 'WebConfigController@configView')->name('webconfig.configView');
-        Route::post('updateConfigView', 'WebConfigController@updateConfigview')->name('webconfig.updateConfigview');
-        // 添加网站配置    http://192.168.164.134:1133/admin/web/showAddwebConfig
-        Route::get('showAddwebConfig', 'WebConfigController@showAddwebConfig');
-        Route::post('addWebconfig', 'WebConfigController@addWebconfig')->name('webconfig.addWebconfig');
-        // 更新网站配置   http://192.168.164.134:1133/admin/web/showUpdatewebConfig/1
-        Route::get('showUpdatewebConfig/{id}', 'WebConfigController@showUpdatewebConfig');
-        Route::post('updateWebconfig', 'WebConfigController@updateWebconfig')->name('webconfig.updateWebconfig');
-        // 删除网站配置   http://192.168.164.134:1133/admin/web/deleteWebconfig/1
-        Route::get('deleteWebconfig/{id}', 'WebConfigController@deleteWebConfig');
-    });
 
-    //权限管理
+    //9 权限管理
     Route::prefix('rule')->group(function () {
         // 权限列表  http://192.168.164.134:1133/admin/rule/index
         Route::get('index', 'AuthRuleController@index')->name('rule.index');
@@ -205,7 +212,10 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login','checkrbac'
         Route::get('delete/{id}', 'AuthRuleController@delete');
 
     });
-    //角色管理
+
+
+
+    //10 角色管理
     Route::prefix('group')->group(function () {
         // 权限列表  http://192.168.164.134:1133/admin/group/index
         Route::get('index', 'AuthGroupController@index')->name('group.index');

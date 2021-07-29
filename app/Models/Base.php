@@ -15,9 +15,11 @@ class Base extends Model
      */
     protected $guarded = [];
 
+
+
     /**
      * 记录管理员操作
-     * @param $exec_object 执行操作对象  0:默认 1：分类， 2：标签 ，3：文章，4：评论，5：网站配置 ， 6：管理员， 7：资源库，8：友链
+     * @param $exec_object 执行操作对象 0:默认 1：分类， 2：标签 ，3：文章，4：评论，5：网站配置 ， 6：管理员， 7：资源库，8：友链，9：权限，10：角色
      *@param $exec_type    执行操作类型1：删除， 2：添加， 3：修改， 4：登录， 5：退出，6：前台添加',  如果 $exec_type=4 或 $exec_type=5 那么执行操作对象id exec_object_id=登录次数
      * @param $exec_object_id   执行操作对象id    如果登录或退出 $exec_object_id=登录次数
      * @param $created_at       创建记录时间

@@ -106,8 +106,6 @@
                                 <i class="menu-expand"></i>
                             </a>
                         </li>
-                    </ul>
-                    <ul class="submenu">
                         <li>
                             <a href=" {{route('group.index')}}">
                                     <span class="menu-text">
@@ -115,8 +113,6 @@
                                 <i class="menu-expand"></i>
                             </a>
                         </li>
-                    </ul>
-                    <ul class="submenu">
                         <li>
                             <a href=" {{route('rule.index')}}">
                                     <span class="menu-text">
@@ -125,6 +121,7 @@
                             </a>
                         </li>
                     </ul>
+
                 </li>
 
                 <li>
