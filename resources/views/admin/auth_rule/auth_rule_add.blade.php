@@ -16,7 +16,7 @@
                 <a href="{{route("admin.index")}}">系统</a>
             </li>
             <li>
-                <a href="{{ route("admin.showAdminUser") }}">权限管理</a>
+                <a href="{{ route("rule.index") }}">权限管理</a>
             </li>
             <li class="active">添加权限</li>
         </ul>
@@ -41,10 +41,11 @@
                                     <div class="col-sm-6">
                                         <select name="pid">
                                             <option value="0">顶级权限</option>
+
                                             @foreach($data as $k=>$v)
                                                 <option value="{{$v['rule_id']}}">@if($v['level']!=0)  {{ '|'.str_repeat('—',$v['level']*3)}}@endif {{ $v['title'] }}</option>
-
                                             @endforeach
+
                                         </select>
                                     </div>
                                 </div>

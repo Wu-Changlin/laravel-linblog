@@ -50,7 +50,7 @@
                                         <td align="center">{{$v['name']}}</td>
                                         <td align="center">{{$v['level']}}</td>
                                         <td align="center">
-                                            <a href="" class="btn btn-primary btn-sm shiny">
+                                            <a href="{{ url('admin/rule/edit',[$v['rule_id']]) }}" class="btn btn-primary btn-sm shiny">
                                                 <i class="fa fa-edit"></i> 编辑
                                             </a>
                                             <a href="#" onClick="warning('三思后行，确实要删除吗','{{ url('admin/rule/delete',[$v['rule_id']]) }}')" class="btn btn-danger btn-sm shiny">

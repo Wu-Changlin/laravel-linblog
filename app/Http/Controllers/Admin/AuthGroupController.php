@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AuthRule;
 use Illuminate\Http\Request;
 
 
@@ -17,7 +18,11 @@ class AuthGroupController extends Controller
      */
     public function index()
     {
-       return view('admin.auth_group.auth_group_list');
+        $res=AuthRule::all(); //执行新增
+        $data=AuthRule::getCateTree($res->toArray());
+        $assign=compact('data');
+        dd($data);
+        return view('admin.auth_group.auth_group_list',$assign);
 
 
     }

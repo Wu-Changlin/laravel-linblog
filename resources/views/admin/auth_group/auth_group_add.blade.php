@@ -16,7 +16,7 @@
                 <a href="{{route("admin.index")}}">系统</a>
             </li>
             <li>
-                <a href="{{ route("admin.showAdminUser") }}">角色管理</a>
+                <a href="{{ route("group.index") }}">角色管理</a>
             </li>
             <li class="active">添加角色</li>
         </ul>
@@ -34,7 +34,7 @@
                     </div>
                     <div class="widget-body">
                         <div id="horizontal-form">
-                            <form class="form-horizontal" role="form" action="" method="post">
+                            <form class="form-horizontal" role="form" action="{{ route('group.create') }}" method="post">
                                 {{ csrf_field() }}
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">角色组名称</label>
@@ -67,6 +67,35 @@
                                             </tr>
                                             </thead>
                                             <tbody>
+                                                {volist name="authRuleRes" id="authRule"}
+                                                <tr>
+                                                    <td>
+                                                        <label>
+                                                            <?php echo str_repeat('&nbsp',$authRule['level']*5);?>
+
+                                                                <input name="rules[]" value="{$authRule.id}" dataid="id-{$authRule.dataid}" class="inverted checkbox-parent {if condition="$authRule['level'] neq 0"}checkbox-child{/if}" type="checkbox" value="true">
+                                                            <span {if condition="$authRule['level'] eq 0"}style="font-weight:bold"{/if} class="text">{$authRule.title}</span>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                                {/volist}
+
+
+                                                <tr>
+                                                    <td>
+                                                        <label>
+                                                            @foreach($data as $k=>$v)
+                                                                <option value="{{$v['rule_id']}}">@if($v['level']!=0)  {{ '|'.str_repeat('—',$v['level']*3)}}@endif {{ $v['title'] }}</option>
+
+
+                                                           {{ str_repeat('&nbsp',$v['level']*5) }}
+
+                                                            <input name="rules[]" value="{$authRule.id}" dataid="id-{$authRule.dataid}" class="inverted checkbox-parent {if condition="$authRule['level'] neq 0"}checkbox-child{/if}" type="checkbox" value="true">
+                                                            <span {if condition="$authRule['level'] eq 0"}style="font-weight:bold"{/if} class="text">{$authRule.title}</span>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
 
                                             </tbody>
                                         </table>

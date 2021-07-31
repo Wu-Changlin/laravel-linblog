@@ -16,7 +16,7 @@
                 <a href="{{ route("admin.index") }}">系统</a>
             </li>
             <li>
-                <a href="{{ route("admin.showAdminUser") }}">角色管理</a>
+                <a href="{{ route("group.index") }}">角色管理</a>
             </li>
             <li class="active">修改角色</li>
         </ul>

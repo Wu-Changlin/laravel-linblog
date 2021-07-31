@@ -16,7 +16,7 @@
                 <a href="{{ route("admin.index") }}">系统</a>
             </li>
             <li>
-                <a href="{{ route("admin.showAdminUser") }}">权限管理</a>
+                <a href="{{ route("rule.index") }}">权限管理</a>
             </li>
             <li class="active">权限修改</li>
         </ul>
@@ -34,16 +34,18 @@
                     </div>
                     <div class="widget-body">
                         <div id="horizontal-form">
-                            <form class="form-horizontal" role="form" action="" method="post">
+                            <form class="form-horizontal" role="form" action="{{ route('rule.update') }}" method="post">
+                                <input type="text" name="rule_id" value="{{ $rule['rule_id'] }}" hidden>
                                 {{ csrf_field() }}
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">上级权限</label>
                                     <div class="col-sm-6">
                                         <select name="pid">
                                             <option value="0">顶级权限</option>
-                                            {{--                                            {volist name="authRuleRes" id="authRules"}--}}
-                                            {{--                                            <option value="{$authRules.id}"><?php if($authRules['level']!=0){echo '|';}echo str_repeat('—',$authRules['level']*3);?>{$authRules.title}</option>--}}
-                                            {{--                                            {/volist}--}}
+                                            @foreach($data as $k=>$v)
+                                                <option value="{{$v['rule_id']}}" @if($v['rule_id']==$rule['pid'])  selected="selected" @endif>@if($v['level']!=0)  {{ '|'.str_repeat('—',$v['level']*3)}}@endif {{ $v['title'] }}</option>
+
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -51,14 +53,14 @@
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">权限名称</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control"  placeholder="" name="title"  type="text">
+                                        <input class="form-control"  placeholder="" name="title"  type="text" value="{{ $rule['title'] }}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">控/方</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control"  placeholder="" name="name"  type="text">
+                                        <input class="form-control"  placeholder="" name="name"  type="text" value="{{ $rule['name'] }}">
                                     </div>
                                 </div>
 
