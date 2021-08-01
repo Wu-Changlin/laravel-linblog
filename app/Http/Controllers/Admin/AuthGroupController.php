@@ -18,11 +18,8 @@ class AuthGroupController extends Controller
      */
     public function index()
     {
-        $res=AuthRule::all(); //执行新增
-        $data=AuthRule::getCateTree($res->toArray());
-        $assign=compact('data');
-        dd($data);
-        return view('admin.auth_group.auth_group_list',$assign);
+
+        return view('admin.auth_group.auth_group_list');
 
 
     }
@@ -35,8 +32,11 @@ class AuthGroupController extends Controller
     public function store()
     {
 
+        $res=AuthRule::all(); //执行新增
+        $data=AuthRule::authRuleTree($res->toArray());
+        $assign=compact('data');
 
-        return view('admin.auth_group.auth_group_update');
+        return view('admin.auth_group.auth_group_add',$assign);
 
     }
 
@@ -47,30 +47,30 @@ class AuthGroupController extends Controller
      */
     public function create(Request $request)
     {
-        return redirect()->back()->withInput()->with('err', '新增角色成功');
         //判断是否post请求
-//        if ($request->isMethod('post')) {
-//            $input = $request->except('s','_token');  //去除 s：路由地址 ，_token： 表单中包含一个隐藏的 CSRF 令牌字段
-//            $data['name'] = isset($input['name']) ? $input['name'] : "";
-//            $data['email'] = isset($input['email']) ? $input['email'] : "";
-//            $data['password'] = isset($input['password']) ? $input['password'] : "";
-//        }else{
-//            return redirect()->back()->withInput()->with('err', '非法请求');
-//        }
-//        $res=AdminModel::addAdmin($data); //执行新增
-//        switch ($res) { //判断新增返回值
-//            case 0:
-//                return redirect()->back()->withInput()->with('err', '数据为空');
-//                break;
-//            case 1:
-//                return redirect()->back()->withInput()->with('err', '邮箱已注册');
-//                break;
-//            case 2:
-//                return redirect()->route("admin.showAdminUser")->with('msg', "新增角色成功");
-//                break;
-//            default:
-//                return redirect()->back()->withInput()->with('err', '数据写入失败,新增角色失败');
-//        }
+        if ($request->isMethod('post')) {
+            $input = $request->except('s','_token');  //去除 s：路由地址 ，_token： 表单中包含一个隐藏的 CSRF 令牌字段
+            dd($input);
+            $data['name'] = isset($input['name']) ? $input['name'] : "";
+            $data['email'] = isset($input['email']) ? $input['email'] : "";
+            $data['password'] = isset($input['password']) ? $input['password'] : "";
+        }else{
+            return redirect()->back()->withInput()->with('err', '非法请求');
+        }
+        $res=AdminModel::addAdmin($data); //执行新增
+        switch ($res) { //判断新增返回值
+            case 0:
+                return redirect()->back()->withInput()->with('err', '数据为空');
+                break;
+            case 1:
+                return redirect()->back()->withInput()->with('err', '邮箱已注册');
+                break;
+            case 2:
+                return redirect()->route("admin.showAdminUser")->with('msg', "新增角色成功");
+                break;
+            default:
+                return redirect()->back()->withInput()->with('err', '数据写入失败,新增角色失败');
+        }
 
     }
 

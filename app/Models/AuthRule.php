@@ -103,32 +103,46 @@ class AuthRule extends Base
         return 2;
     }
 
-    /**
-     * 功能:无限级分类
-     * 参数:$data 权限查询结果集
-     * 返回值:$arr 排序后的数组
-     */
-    public static function  getCateTree($data) {
-        $arr = self::cateSort($data);
+
+    public static function authRuleTree($rule_data){
+        return self::sort($rule_data);
+    }
+
+
+    public static function sort($data,$pid=0){
+        static $arr=array();
+        foreach ($data as $k => $v) {
+            if($v['pid']==$pid){
+                $v['dataid']=self::getparentid($v['rule_id']);
+                $arr[]=$v;
+                self::sort($data,$v['rule_id']);
+            }
+        }
         return $arr;
     }
 
-    /**
-     * 功能:无限级分类排序
-     * 参数:$data 权限查询结果集
-     * 返回值:$arr 递归查询排序后的数组
-     */
-    public static function cateSort($data,$pid=0) {
-        static $arr = array();
-        foreach($data as $k => $v) {
-            if($v['pid'] == $pid) {
-                $arr[$k] = $v;
-                self::cateSort($data,$v['rule_id']);
-            }
-        }
+
+    public static function getparentid($authRuleid){
+        $AuthRuleRes=self::all();
+        return self::_getparentid($AuthRuleRes,$authRuleid,True);
 
     }
+    public static function _getparentid($AuthRuleRes,$authRuleid,$clear=False){
+        static $arr=array();
+        if($clear){
+            $arr=array();
+        }
+        foreach ($AuthRuleRes as $k => $v) {
+            if($v['rule_id']==$authRuleid){
+                $arr[]=$v['rule_id'];
+                self:: _getparentid($AuthRuleRes,$v['pid'],False);
+            }
+        }
+        asort($arr);
+        $arrStr=implode('-',$arr);
 
+        return $arrStr;
+    }
 
     /**
      * 调用递归查询

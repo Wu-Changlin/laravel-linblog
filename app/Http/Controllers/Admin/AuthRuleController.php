@@ -18,7 +18,7 @@ class AuthRuleController extends Controller
     public function index()
     {
         $res=AuthRule::all(); //执行新增
-        $data=AuthRule::getCateTree($res->toArray());
+        $data=AuthRule::authRuleTree($res->toArray());
         $assign=compact('data');
         return view('admin.auth_rule.auth_rule_list',$assign);
     }
@@ -33,7 +33,7 @@ class AuthRuleController extends Controller
     {
 
         $res=AuthRule::all(); //执行新增
-        $data=AuthRule::getCateTree($res->toArray());
+        $data=AuthRule::authRuleTree($res->toArray());
         $assign=compact('data');
         return view('admin.auth_rule.auth_rule_add',$assign);
 
@@ -83,7 +83,7 @@ class AuthRuleController extends Controller
             return redirect()->back()->withInput()->with('err', '非法访问');
         }
         $res=AuthRule::all();
-        $data=AuthRule::getCateTree($res->toArray());
+        $data=AuthRule::authRuleTree($res->toArray());
         $rule_res = AuthRule::find($rule_id);
         $rule=$rule_res->toArray();
         $assign=compact('data','rule');  // compact() 的字符串可以就是变量的名字  （ data 视图里的变量名）

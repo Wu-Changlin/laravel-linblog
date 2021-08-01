@@ -67,31 +67,12 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                                {volist name="authRuleRes" id="authRule"}
+                                            @foreach($data as $k=>$v)
                                                 <tr>
                                                     <td>
                                                         <label>
-                                                            <?php echo str_repeat('&nbsp',$authRule['level']*5);?>
-
-                                                                <input name="rules[]" value="{$authRule.id}" dataid="id-{$authRule.dataid}" class="inverted checkbox-parent {if condition="$authRule['level'] neq 0"}checkbox-child{/if}" type="checkbox" value="true">
-                                                            <span {if condition="$authRule['level'] eq 0"}style="font-weight:bold"{/if} class="text">{$authRule.title}</span>
-                                                        </label>
-                                                    </td>
-                                                </tr>
-                                                {/volist}
-
-
-                                                <tr>
-                                                    <td>
-                                                        <label>
-                                                            @foreach($data as $k=>$v)
-                                                                <option value="{{$v['rule_id']}}">@if($v['level']!=0)  {{ '|'.str_repeat('—',$v['level']*3)}}@endif {{ $v['title'] }}</option>
-
-
-                                                           {{ str_repeat('&nbsp',$v['level']*5) }}
-
-                                                            <input name="rules[]" value="{$authRule.id}" dataid="id-{$authRule.dataid}" class="inverted checkbox-parent {if condition="$authRule['level'] neq 0"}checkbox-child{/if}" type="checkbox" value="true">
-                                                            <span {if condition="$authRule['level'] eq 0"}style="font-weight:bold"{/if} class="text">{$authRule.title}</span>
+                                                                <?php echo str_repeat('&nbsp',$v['level']*5);?><input name="rules[]" value="{{$v['rule_id']}}" dataid="id-{{ $v['dataid'] }}" class="inverted checkbox-parent @if($v['level']==0)  checkbox-child  @endif "  type="checkbox" value="true">
+                                                            <span  @if($v['level']==0)  style="font-weight:bold"  @endif class="text">{{$v['title']}}</span>
                                                         </label>
                                                     </td>
                                                 </tr>
@@ -121,6 +102,46 @@
 <!-- /Page Content -->
 @endsection
 
+@section('js')
+    <script type="text/javascript">
+        /* 权限配置 */
+        $(function () {
+            //动态选择框，上下级选中状态变化
+            $('input.checkbox-parent').on('change', function () {
+                var dataid = $(this).attr("dataid");
+                $('input[dataid^=' + dataid + ']').prop('checked', $(this).is(':checked'));
+            });
+            $('input.checkbox-child').on('change', function () {
+                var dataid = $(this).attr("dataid");
+                dataid = dataid.substring(0, dataid.lastIndexOf("-"));
+                var parent = $('input[dataid=' + dataid + ']');
+                if ($(this).is(':checked')) {
+                    parent.prop('checked', true);
+                    //循环到顶级
+                    while (dataid.lastIndexOf("-") != 2) {
+                        dataid = dataid.substring(0, dataid.lastIndexOf("-"));
+                        parent = $('input[dataid=' + dataid + ']');
+                        parent.prop('checked', true);
+                    }
+                } else {
+                    //父级
+                    if ($('input[dataid^=' + dataid + '-]:checked').length == 0) {
+                        parent.prop('checked', false);
+                        //循环到顶级
+                        while (dataid.lastIndexOf("-") != 2) {
+                            dataid = dataid.substring(0, dataid.lastIndexOf("-"));
+                            parent = $('input[dataid=' + dataid + ']');
+                            if ($('input[dataid^=' + dataid + '-]:checked').length == 0) {
+                                parent.prop('checked', false);
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+@endsection
 
 
 
