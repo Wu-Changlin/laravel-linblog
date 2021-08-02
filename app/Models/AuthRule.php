@@ -104,11 +104,22 @@ class AuthRule extends Base
     }
 
 
+    /**
+     * 整理权限数据
+     * @param $rule_data 权限数据
+     * @return array     已排序和关系链化权限数据
+     */
     public static function authRuleTree($rule_data){
         return self::sort($rule_data);
     }
 
 
+    /**
+     * 排序
+     * @param $data     需要排序权限数据
+     * @param int $pid  权限rule_id的上级权限rule_id
+     * @return array    已排序和关系链化权限数据
+     */
     public static function sort($data,$pid=0){
         static $arr=array();
         foreach ($data as $k => $v) {
@@ -121,12 +132,24 @@ class AuthRule extends Base
         return $arr;
     }
 
-
+    /**
+     * 查询权限数据并调用权限关系链函数
+     * @param $authRuleid 权限rule_id
+     * @return string     权限关系链
+     */
     public static function getparentid($authRuleid){
         $AuthRuleRes=self::all();
         return self::_getparentid($AuthRuleRes,$authRuleid,True);
 
     }
+
+    /**
+     * 权限关系链
+     * @param $AuthRuleRes 权限数据
+     * @param $authRuleid  权限rule_id
+     * @param bool $clear
+     * @return string     顶级权限-一级权限-二级权限
+     */
     public static function _getparentid($AuthRuleRes,$authRuleid,$clear=False){
         static $arr=array();
         if($clear){
@@ -140,7 +163,6 @@ class AuthRule extends Base
         }
         asort($arr);
         $arrStr=implode('-',$arr);
-
         return $arrStr;
     }
 

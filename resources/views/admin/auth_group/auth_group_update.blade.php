@@ -34,12 +34,13 @@
                     </div>
                     <div class="widget-body">
                         <div id="horizontal-form">
-                            <form class="form-horizontal" role="form" action="" method="post">
+                            <form class="form-horizontal" role="form" action="{{ route('group.update') }}" method="post">
+                                <input name="group_id" value="{{ $data->group_id }}" hidden>
                                 {{ csrf_field() }}
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">角色组名称</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control"  placeholder="" name="title"  type="text">
+                                        <input class="form-control"  placeholder="" name="title"  type="text" value="{{ $data->title }}">
                                     </div>
                                 </div>
 
@@ -48,7 +49,7 @@
                                     <div class="col-sm-6">
                                         <p class="help-block col-sm-4 red">
                                             <label>
-                                                <input class="checkbox-slider colored-darkorange" checked="checked"  name="status" value="1" type="checkbox">
+                                                <input class="checkbox-slider colored-darkorange"  name="status" value="1"  @if( $data->status !=0)  checked="checked"  @endif type="checkbox">
                                                 <span class="text"></span>
                                             </label>
                                         </p>
@@ -67,7 +68,16 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-
+                                                @foreach($rules_data as $k=>$v)
+                                                    <tr>
+                                                        <td>
+                                                            <label>
+                                                                <?php echo str_repeat('&nbsp',$v['level']*5);?><input   <?php $arr=explode(',', $data->rules);if(in_array($v['rule_id'],$arr)){echo  'checked="checked"';}?>  name="rules[]" value="{{$v['rule_id']}}" dataid="id-{{ $v['dataid'] }}" class="inverted checkbox-parent  @if($v['level']!=0)  checkbox-child  @endif "  type="checkbox" value="true">
+                                                                <span  @if($v['level']==0)  style="font-weight:bold"  @endif class="text">{{$v['title']}}</span>
+                                                            </label>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>

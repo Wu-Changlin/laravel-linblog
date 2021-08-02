@@ -39,7 +39,7 @@
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">角色组名称</label>
                                     <div class="col-sm-6">
-                                        <input class="form-control"  placeholder="" name="title"  type="text">
+                                        <input class="form-control"  placeholder="" name="title"  type="text" required>
                                     </div>
                                 </div>
 
@@ -71,12 +71,12 @@
                                                 <tr>
                                                     <td>
                                                         <label>
-                                                                <?php echo str_repeat('&nbsp',$v['level']*5);?><input name="rules[]" value="{{$v['rule_id']}}" dataid="id-{{ $v['dataid'] }}" class="inverted checkbox-parent @if($v['level']==0)  checkbox-child  @endif "  type="checkbox" value="true">
+                                                                <?php echo str_repeat('&nbsp',$v['level']*5);?><input name="rules[]" value="{{$v['rule_id']}}" dataid="id-{{ $v['dataid'] }}" class="inverted checkbox-parent  @if($v['level']!=0)  checkbox-child  @endif "  type="checkbox" value="true">
                                                             <span  @if($v['level']==0)  style="font-weight:bold"  @endif class="text">{{$v['title']}}</span>
                                                         </label>
                                                     </td>
                                                 </tr>
-                                                @endforeach
+                                            @endforeach
 
                                             </tbody>
                                         </table>

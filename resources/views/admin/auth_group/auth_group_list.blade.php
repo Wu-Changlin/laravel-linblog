@@ -41,8 +41,27 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-
-
+                                        @foreach($data as $k=>$v)
+                                        <tr>
+                                            <td align="center">{{ $v->group_id }}</td>
+                                            <td align="center">{{ $v->title }}</td>
+                                            <td align="center">
+                                                @if($v->status==1)
+                                                    <a class="btn btn-success btn-sm" href="javascript:void(0);">启用</a>
+                                                @else
+                                                    <a class="btn btn-darkorange btn-sm" href="javascript:void(0);">禁用
+                                                @endif
+                                            </td>
+                                            <td align="center">
+                                                <a href="{{ url('admin/group/edit',[  $v->group_id ]) }}" class="btn btn-primary btn-sm shiny">
+                                                    <i class="fa fa-edit"></i> 编辑
+                                                </a>
+                                                <a href="#" onClick="warning('三思后行，确实要删除吗','{{ url('admin/group/delete',[ $v->group_id ]) }}')" class="btn btn-danger btn-sm shiny">
+                                                    <i class="fa fa-trash-o"></i> 删除
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </form>

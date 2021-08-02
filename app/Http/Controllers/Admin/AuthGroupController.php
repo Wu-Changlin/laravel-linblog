@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AuthGroup;
 use App\Models\AuthRule;
 use Illuminate\Http\Request;
 
@@ -19,9 +20,9 @@ class AuthGroupController extends Controller
     public function index()
     {
 
-        return view('admin.auth_group.auth_group_list');
-
-
+        $data=AuthGroup::all(); //执行新增
+        $assign=compact('data');
+        return view('admin.auth_group.auth_group_list',$assign);
     }
 
     /**
@@ -35,7 +36,6 @@ class AuthGroupController extends Controller
         $res=AuthRule::all(); //执行新增
         $data=AuthRule::authRuleTree($res->toArray());
         $assign=compact('data');
-
         return view('admin.auth_group.auth_group_add',$assign);
 
     }
@@ -50,23 +50,23 @@ class AuthGroupController extends Controller
         //判断是否post请求
         if ($request->isMethod('post')) {
             $input = $request->except('s','_token');  //去除 s：路由地址 ，_token： 表单中包含一个隐藏的 CSRF 令牌字段
-            dd($input);
-            $data['name'] = isset($input['name']) ? $input['name'] : "";
-            $data['email'] = isset($input['email']) ? $input['email'] : "";
-            $data['password'] = isset($input['password']) ? $input['password'] : "";
+            $data['title'] = isset($input['title']) ? $input['title'] : "";
+            $data['status'] = intval($input['status']) ? intval($input['status']) : 0;
+            $data['rules']=isset($input['rules']) ?implode(',',$input['rules']) :"";
         }else{
             return redirect()->back()->withInput()->with('err', '非法请求');
         }
-        $res=AdminModel::addAdmin($data); //执行新增
+
+        $res=AuthGroup::addGroup($data); //执行新增
         switch ($res) { //判断新增返回值
             case 0:
                 return redirect()->back()->withInput()->with('err', '数据为空');
                 break;
             case 1:
-                return redirect()->back()->withInput()->with('err', '邮箱已注册');
+                return redirect()->back()->withInput()->with('err', '角色已存在');
                 break;
             case 2:
-                return redirect()->route("admin.showAdminUser")->with('msg', "新增角色成功");
+                return redirect()->route("group.index")->with('msg', "新增角色成功");
                 break;
             default:
                 return redirect()->back()->withInput()->with('err', '数据写入失败,新增角色失败');
@@ -81,14 +81,15 @@ class AuthGroupController extends Controller
      */
     public function edit($group_id)
     {
-//        if(empty($group_id)){
-//            return redirect()->back()->withInput()->with('err', '非法访问');
-//        }
-//        $data = AdminModel::find($group_id);
-//        $data->toArray();
-//        $assign=compact('data');  // compact() 的字符串可以就是变量的名字  （ data 视图里的变量名）
-        //return view('admin.admin.admin_update',$assign);
-        return view('admin.auth_group.auth_group_update');
+        if(empty($group_id)){
+            return redirect()->back()->withInput()->with('err', '非法访问');
+        }
+        $data = AuthGroup::find($group_id);
+        $data->toArray();
+        $rules_res=AuthRule::all(); //执行新增
+        $rules_data=AuthRule::authRuleTree($rules_res->toArray());
+        $assign=compact('data','rules_data');  // compact() 的字符串可以就是变量的名字  （ data 视图里的变量名）
+        return view('admin.auth_group.auth_group_update',$assign);
 
     }
 
@@ -101,37 +102,35 @@ class AuthGroupController extends Controller
      */
     public function update(Request $request)
     {
-        return redirect()->back()->withInput()->with('err', '更改角色信息');
         //判断是否post请求
-//        if ($request->isMethod('post')) {
-//            $input = $request->except('s','_token');  //去除 s：路由地址 ，_token： 表单中包含一个隐藏的 CSRF 令牌字段
-//            $data['name'] = isset($input['name']) ? $input['name'] : "";
-//            $data['email'] = isset($input['email']) ? $input['email'] : "";
-//            $data['password'] = isset($input['password']) ? $input['password'] : "";
-//            $data['admin_id'] = isset($input['id']) ? $input['id'] : 0;
-//        }else{
-//            return redirect()->back()->withInput()->with('err', '非法请求');
-//        }
-//        $res=AdminModel::updateAdmin($data);   //执行修改
-//        switch ($res) { //判断修改返回值
-//            case 0:
-//                return redirect()->back()->withInput()->with('err', '数据为空');
-//                break;
-//            case 1:
-//                return redirect()->back()->withInput()->with('msg', "保留");
-//                break;
-//            case 2:
-//                return redirect()->route("admin.showAdminUser")->with('msg', "更改角色信息成功");
-//                break;
-//            case 3:
-//                return redirect()->back()->withInput()->with('err', '邮箱已注册');
-//                break;
-//            case 4:
-//                return redirect()->route("login.index")->with('msg','重置密码，注销登录');
-//                break;
-//            default:
-//                return redirect()->back()->withInput()->with('err', '数据写入失败,更改角色信息失败');
-//        }
+        if ($request->isMethod('post')) {
+            $input = $request->except('s','_token');  //去除 s：路由地址 ，_token： 表单中包含一个隐藏的 CSRF 令牌字段
+            $data['group_id'] = isset($input['group_id']) ? intval($input['group_id']) : 0;
+            $data['title'] = isset($input['title']) ? $input['title'] : "";
+            $data['status'] = intval($input['status']) ? intval($input['status']) : 0;
+            $data['rules']=isset($input['rules']) ?implode(',',$input['rules']) :"";
+        }else{
+            return redirect()->back()->withInput()->with('err', '非法请求');
+        }
+
+        $res=AuthGroup::updateGroup($data);   //执行修改
+        switch ($res) { //判断修改返回值
+            case 0:
+                return redirect()->back()->withInput()->with('err', '数据为空');
+                break;
+            case 1:
+                return redirect()->back()->withInput()->with('msg', "保留");
+                break;
+            case 2:
+                return redirect()->route("group.index")->with('msg', "更改角色成功");
+                break;
+            case 3:
+                return redirect()->back()->withInput()->with('err', '角色已存在');
+                break;
+            default:
+                return redirect()->back()->withInput()->with('err', '数据写入失败,更改角色失败');
+        }
+
 
     }
 
