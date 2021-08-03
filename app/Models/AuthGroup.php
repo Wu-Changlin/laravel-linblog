@@ -9,8 +9,6 @@ class AuthGroup extends Base
     protected $primaryKey = 'group_id'; //创建的表字段中主键ID的名称不为id，则需要通过 $primaryKey 来指定一下设定主键id
 
 
-
-
     /**
      * 新增角色
      * @param $data 新增角色数据
@@ -40,7 +38,7 @@ class AuthGroup extends Base
             return 0;
         }
 
-        $rule_res = self::find($data['group_id'],["group_id","title","status"]); //查询该权限信息
+        $rule_res = self::find($data['group_id'],["group_id","title","status","rules"]); //查询该权限信息
         $rule_info=$rule_res->toArray(); //集合转数组
 
         //判断字段是否需要修改
@@ -61,47 +59,30 @@ class AuthGroup extends Base
         self::addAadminLog(10,3,$data['group_id'],date('Y-m-d H:i:s', time()));
         return 2;
     }
-//
-//
-//    /**
-//     * 删除角色
-//     * @param $admin_id 角色id
-//     * @return int 0：$admin_id为空，1：已删除角色，2：成功删除
-//     * @throws \Exception
-//     */
-//    public static function deleteAdmin ($admin_id) {
-//        if(empty($admin_id)){
-//            return 0;
-//        }
-//        //查询数据库中是否存在该角色  0：没有  1：存在
-//        $admin_count = self::where('admin_id','=',$admin_id)->count();
-//        if(!$admin_count){ //不存在说明已删除
-//            return 1;
-//        }
-//        //删除角色发布的文章
-//        $article_ids=Article::where('author_id','=',$admin_id)->get(['article_id']);
-//        $article_id_count=$article_ids->count();
-//        if($article_id_count>0){
-//            for ($i=1;$i<=$article_id_count;$i++){
-//                $article_info = Article::find($article_ids[$i-1]->article_id,["markdown","cover"]); //查询包含图片路径的信息
-//                $preg = '/(?<=\()+\/uploads\/images\/article\/+[^\)]+/';// 匹配括号里面的内容的正则表达式 markdown里的图片路径：(/uploads/images/article/20210616/DkCGWaGQTm1623848364.png)
-//                preg_match_all($preg, $article_info->markdown, $allImg);//这里匹配指定文章/uploads/images/article/的img
-//                $allImg=array_flatten($allImg); //多维数组转一维
-//                array_push($allImg,$article_info->cover);//把封面图入栈
-//                Article::deletedCover($allImg,2); //删除图片
-//                //本次删除文章信息写入log
-//                Article::addAadminLog(3,1,$article_ids[$i-1]->article_id,date('Y-m-d H:i:s', time()));
-//            }
-//        }
-////
-//        Article::where('author_id','=',$admin_id)->delete();//执行删除角色所有文章
-//
-//        self::where('admin_id','=',$admin_id)->delete();//执行删除角色
-//        //本次删除角色信息写入log
-//        self::addAadminLog(6,1,$admin_id,date('Y-m-d H:i:s', time()));
-//        return 2;
-//    }
-//
+
+
+    /**
+     * 删除角色
+     * @param $group_id 角色id
+     * @return int 0：$group_id，1：已删除角色，2：成功删除
+     * @throws \Exception
+     */
+    public static function deleteGroup ($group_id) {
+        if(empty($group_id)){
+            return 0;
+        }
+        //查询数据库中是否存在该角色  0：没有  1：存在
+        $group_count = self::where('group_id','=',$group_id)->count();
+        if(!$group_count){ //不存在说明已删除
+            return 1;
+        }
+
+        self::where('group_id','=',$group_id)->delete();//执行删除角色
+        //本次删除角色信息写入log
+        self::addAadminLog(10,1,$group_id,date('Y-m-d H:i:s', time()));
+        return 2;
+    }
+
 
     
 }

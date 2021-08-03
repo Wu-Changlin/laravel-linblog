@@ -90,7 +90,6 @@ class AuthGroupController extends Controller
         $rules_data=AuthRule::authRuleTree($rules_res->toArray());
         $assign=compact('data','rules_data');  // compact() 的字符串可以就是变量的名字  （ data 视图里的变量名）
         return view('admin.auth_group.auth_group_update',$assign);
-
     }
 
 
@@ -107,7 +106,7 @@ class AuthGroupController extends Controller
             $input = $request->except('s','_token');  //去除 s：路由地址 ，_token： 表单中包含一个隐藏的 CSRF 令牌字段
             $data['group_id'] = isset($input['group_id']) ? intval($input['group_id']) : 0;
             $data['title'] = isset($input['title']) ? $input['title'] : "";
-            $data['status'] = intval($input['status']) ? intval($input['status']) : 0;
+            $data['status'] = isset($input['status']) ? intval($input['status']) : 0;
             $data['rules']=isset($input['rules']) ?implode(',',$input['rules']) :"";
         }else{
             return redirect()->back()->withInput()->with('err', '非法请求');
@@ -142,25 +141,24 @@ class AuthGroupController extends Controller
      */
     public function delete($group_id)
     {
-        return redirect()->back()->withInput()->with('err', '已删除角色');
-//        if(empty($group_id)){
-//            return redirect()->back()->withInput()->with('err', '非法访问');
-//        }
-//
-//        $res=AdminModel::deleteAdmin($group_id);//执行删除
-//        switch ($res) { //判断删除返回值
-//            case 0:
-//                return redirect()->back()->withInput()->with('err', '数据为空');
-//                break;
-//            case 1:
-//                return redirect()->back()->withInput()->with('err', '已删除角色');
-//                break;
-//            case 2:
-//                return redirect()->route("admin.showAdminUser")->with('msg', "删除角色成功");
-//                break;
-//            default:
-//                return redirect()->back()->withInput()->with('err', '网络错误,删除角色失败');
-//        }
+        if(empty($group_id)){
+            return redirect()->back()->withInput()->with('err', '非法访问');
+        }
+
+        $res=AuthGroup::deleteGroup($group_id);//执行删除
+        switch ($res) { //判断删除返回值
+            case 0:
+                return redirect()->back()->withInput()->with('err', '数据为空');
+                break;
+            case 1:
+                return redirect()->back()->withInput()->with('err', '已删除角色');
+                break;
+            case 2:
+                return redirect()->route("group.index")->with('msg', "删除角色成功");
+                break;
+            default:
+                return redirect()->back()->withInput()->with('err', '网络错误,删除角色失败');
+        }
 
     }
     
