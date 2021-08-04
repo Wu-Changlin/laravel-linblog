@@ -4,6 +4,8 @@ namespace App\Models;
 
 
 
+use Illuminate\Support\Facades\DB;
+
 class AuthGroup extends Base
 {
     protected $primaryKey = 'group_id'; //创建的表字段中主键ID的名称不为id，则需要通过 $primaryKey 来指定一下设定主键id
@@ -78,6 +80,7 @@ class AuthGroup extends Base
         }
 
         self::where('group_id','=',$group_id)->delete();//执行删除角色
+        DB::table('auth_group_access')->where('group_id','=',$group_id)->delete();//删除角色关系链
         //本次删除角色信息写入log
         self::addAadminLog(10,1,$group_id,date('Y-m-d H:i:s', time()));
         return 2;
