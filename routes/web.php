@@ -187,13 +187,13 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login','checkrbac'
         // 友情链接列表  http://192.168.164.134:1133/admin/friendshipLink/index
         Route::get('index', 'FriendshipLinkController@index')->name('friendshipLink.index');
         // 添加友情链接   http://192.168.164.134:1133/admin/friendshipLink/showAddfriendWeb
-        Route::get('showAddfriendWeb', 'FriendshipLinkController@showAddfriendWeb');
-        Route::post('addFriend', 'FriendshipLinkController@addFriend')->name('friendshipLink.addFriend');
+        Route::get('store', 'FriendshipLinkController@store');
+        Route::post('create', 'FriendshipLinkController@create')->name('friendshipLink.create');
         // 编辑友情链接
-        Route::get('showUpdatefriendWeb/{id}', 'FriendshipLinkController@showUpdatefriendWeb');
-        Route::post('updateFriend', 'FriendshipLinkController@updateFriend')->name('friendshipLink.updateFriend');
+        Route::get('edit/{id}', 'FriendshipLinkController@edit');
+        Route::post('update', 'FriendshipLinkController@update')->name('friendshipLink.update');
         // 删除友情链接
-        Route::get('deleteFriend/{id}', 'FriendshipLinkController@deleteFriend');
+        Route::get('delete/{id}', 'FriendshipLinkController@delete');
     });
 
 

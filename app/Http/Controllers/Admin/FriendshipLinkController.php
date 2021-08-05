@@ -28,7 +28,7 @@ class FriendshipLinkController extends Controller
     /**
      * 显示新增友好博客页
      */
-    public function showAddfriendWeb()
+    public function store()
     {
         return view('admin.friend_ship_link.friend_ship_link_add');
     }
@@ -38,7 +38,7 @@ class FriendshipLinkController extends Controller
      * @return
      *
      */
-    public function addFriend(Request $request)
+    public function create(Request $request)
     {
         if($request->isMethod('post')){
             $input = $request->except('s','_token');
@@ -71,7 +71,7 @@ class FriendshipLinkController extends Controller
      * 显示更改友好博客页     下架友好博客 该友好博客下的所有文章也会下架
      *@param $link_id 友好博客id
      */
-    public function showUpdatefriendWeb($link_id)
+    public function edit($link_id)
     {
 
         if(empty($link_id)){
@@ -89,7 +89,7 @@ class FriendshipLinkController extends Controller
      * @param $tag_id 更改友好博客id
      * updateArticle_update_code  0：默认  1：更改友好博客失败  2：更改友好博客成功  3：保存中
      */
-    public function updateFriend(Request $request)
+    public function update(Request $request)
     {
         //判断是否post请求
         if ($request->isMethod('post')) {
@@ -128,7 +128,7 @@ class FriendshipLinkController extends Controller
      * @param $link_id 友好博客id
      *deleteFriend_delete_code  0：默认 1：删除失败   2：成功删除
      */
-    public function deleteFriend($link_id)
+    public function delete($link_id)
     {
         if(empty($link_id)){
             return redirect()->back()->withInput()->with('err', '非法访问');
