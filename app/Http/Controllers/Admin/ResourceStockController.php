@@ -58,7 +58,7 @@ class ResourceStockController extends Controller
      * 显示新增资源分类页
      *
      */
-    public function showAddresourceWeb()
+    public function store()
     {
         $pid_res=ResourceStock::pid_resources();
         $data=ResourceStock::mate_type();
@@ -81,7 +81,7 @@ class ResourceStockController extends Controller
      * @return
      *
      */
-    public function addResources(Request $request)
+    public function create(Request $request)
     {
         if($request->isMethod('post')){
             $input = $request->except('s','_token');
@@ -120,7 +120,7 @@ class ResourceStockController extends Controller
      * 显示更改资源分类页
      *@param $resource_stock_id 资源id
      */
-    public function showUpdateresourceWeb($resource_stock_id)
+    public function edit($resource_stock_id)
     {
         if(empty($resource_stock_id)){
             return redirect()->back()->withInput()->with('err', '非法访问');
@@ -141,7 +141,7 @@ class ResourceStockController extends Controller
      * 更改资源分类    下架顶级资源分类 该分类下的所有子级资源也会下架
      *
      */
-    public function updateResource(Request $request)
+    public function update(Request $request)
     {
         //判断是否post请求
         if ($request->isMethod('post')) {
@@ -187,7 +187,7 @@ class ResourceStockController extends Controller
      * @param $category_id 分类id
      *deleteCategory_delete_code  0：默认 1：删除失败   2：成功删除
      */
-    public function deleteResource($resource_stock_id)
+    public function delete($resource_stock_id)
     {
         if(empty($resource_stock_id)){
             return redirect()->back()->withInput()->with('err', '非法访问');

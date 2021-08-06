@@ -34,7 +34,7 @@
                     </div>
                     <div class="widget-body" style="">
                         <div id="horizontal-form" style="">
-                            <form class="form-horizontal" role="form" action="{{ route('friendshipLink.update') }}" method="post" style="">
+                            <form class="form-horizontal" role="form" action="{{ route('friendshipLink.update ') }}" method="post" style="">
                                {{ csrf_field() }}
                                 <input type="hidden" name="id" value="{{ $data->link_id }}">
                                 <div class="form-group">

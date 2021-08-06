@@ -162,16 +162,16 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login','checkrbac'
         // 资源分类列表     http://192.168.164.134:1133/admin/resource/index
         Route::get('index', 'ResourceStockController@index')->name('resource.index');
         //显示添加资源分类页面 http://192.168.164.134:1133/admin/resource/showAddresourceWeb
-        Route::get('showAddresourceWeb', 'ResourceStockController@showAddresourceWeb');
+        Route::get('store', 'ResourceStockController@store');
         // 添加资源分类     http://192.168.164.134:1133/admin/resource/addResources
-        Route::post('addResources', 'ResourceStockController@addResources')->name('resource.addResources');
+        Route::post('create', 'ResourceStockController@create')->name('resource.create');
 
         // 显示编辑资源分类     http://192.168.164.134:1133/admin/resource/showUpdateresourceWeb/1
-        Route::get('showUpdateresourceWeb/{id}', 'ResourceStockController@showUpdateresourceWeb');
+        Route::get('edit/{id}', 'ResourceStockController@showUpdateresourceWeb');
         // 编辑资源分类   http://192.168.164.134:1133/admin/resource/updateResource
-        Route::post('updateResource', 'ResourceStockController@updateResource')->name('resource.updateResource');
+        Route::post('update', 'ResourceStockController@updateResource')->name('resource.update');
         // 删除资源分类     http://192.168.164.134:1133/admin/resource/deleteResource/1
-        Route::get('deleteResource/{id}', 'ResourceStockController@deleteResource');
+        Route::get('delete/{id}', 'ResourceStockController@delete');
         // 检测资源分类地址        http://192.168.164.134:1133/admin/resource/isResource
         Route::get('isResource', 'ResourceStockController@isResource');
         //导入资源分类        http://192.168.164.134:1133/admin/resource/importResource

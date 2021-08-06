@@ -38,7 +38,7 @@
                     </div>
                     <div class="widget-body" style="">
                         <div id="horizontal-form" style="">
-                            <form class="form-horizontal" role="form" action="{{ route('resource.addResources') }}" method="post" enctype="multipart/form-data">
+                            <form class="form-horizontal" role="form" action="{{ route('resource.create') }}" method="post" enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">上级资源分类</label>

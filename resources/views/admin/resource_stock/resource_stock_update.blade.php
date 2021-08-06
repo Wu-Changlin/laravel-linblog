@@ -39,7 +39,7 @@
                     </div>
                     <div class="widget-body" style="">
                         <div id="horizontal-form" style="">
-                            <form class="form-horizontal" role="form" action="{{ route('resource.updateResource') }}" method="post" enctype="multipart/form-data">
+                            <form class="form-horizontal" role="form" action="{{ route('resource.update') }}" method="post" enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 <input type="text" name="resource_stock_id" value="{{ $resource->resource_stock_id }}" hidden>
                                 <div class="form-group">

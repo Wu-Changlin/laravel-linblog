@@ -23,7 +23,7 @@
     <!-- Page Body -->
     <div class="page-body">
 
-        <button type="button" tooltip="添加资源分类" class="btn btn-sm btn-azure btn-addon" onclick="javascript:window.location.href = '/admin/resource/showAddresourceWeb'"> <i class="fa fa-plus"></i> Add
+        <button type="button" tooltip="添加资源分类" class="btn btn-sm btn-azure btn-addon" onclick="javascript:window.location.href = '/admin/resource/store'"> <i class="fa fa-plus"></i> Add
         </button>
 
         <button type="button" tooltip="导出资源分类" class="btn btn-sm btn-azure btn-addon" onclick="javascript:window.location.href = '/admin/resource/exportResource'"> <i class="fa fa-plus"></i> 导出资源分类（xls）
@@ -72,10 +72,10 @@
                                         <td align="center">{{  $v->is_verify }}</td>
                                         <td align="center">{{  $v->is_pull }}</td>
                                         <td align="center">
-                                            <a href="{{ url('admin/resource/showUpdateresourceWeb',[$v->resource_stock_id]) }}" class="btn btn-primary btn-sm shiny">
+                                            <a href="{{ url('admin/resource/edit',[$v->resource_stock_id]) }}" class="btn btn-primary btn-sm shiny">
                                                 <i class="fa fa-edit"></i> 编辑
                                             </a>
-                                            <a href="#" onclick="warning('三思后行，确实要删除吗','{{ url('admin/resource/deleteResource',[$v->resource_stock_id]) }}')" class="btn btn-danger btn-sm shiny">
+                                            <a href="#" onclick="warning('三思后行，确实要删除吗','{{ url('admin/resource/delete',[$v->resource_stock_id]) }}')" class="btn btn-danger btn-sm shiny">
                                                 <i class="fa fa-trash-o"></i> 删除
                                             </a>
                                         </td>
