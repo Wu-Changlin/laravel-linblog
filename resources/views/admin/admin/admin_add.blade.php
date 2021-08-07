@@ -16,7 +16,7 @@
                 <a href="{{route("admin.index")}}">系统</a>
             </li>
             <li>
-                <a href="{{ route("admin.showAdminUser") }}">管理员管理</a>
+                <a href="{{ route("adminUser.index") }}">管理员管理</a>
             </li>
             <li class="active">添加管理员</li>
         </ul>
@@ -34,7 +34,7 @@
                     </div>
                     <div class="widget-body">
                         <div id="horizontal-form">
-                            <form class="form-horizontal" role="form" action="{{ route("admin.addAdminUser") }}" method="post">
+                            <form class="form-horizontal" role="form" action="{{ route("adminUser.create") }}" method="post">
                                 {{ csrf_field() }}
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">管理员名称</label>

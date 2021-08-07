@@ -35,7 +35,7 @@
                     </div>
                     <div class="widget-body">
                         <div id="horizontal-form">
-                            <form class="form-horizontal" role="form" action="{{ route('webconfig.addWebconfig') }}" method="post">
+                            <form class="form-horizontal" role="form" action="{{ route('webconfig.create') }}" method="post">
                                 {{ csrf_field() }}
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">中文名称</label>

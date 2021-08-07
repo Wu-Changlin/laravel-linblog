@@ -23,7 +23,7 @@
     <!-- Page Body -->
     <div class="page-body">
 
-        <button type="button" tooltip="添加用户" class="btn btn-sm btn-azure btn-addon" onClick="javascript:window.location.href = '/admin/adminUser/showAddadminWeb'"> <i class="fa fa-plus"></i> Add
+        <button type="button" tooltip="添加用户" class="btn btn-sm btn-azure btn-addon" onClick="javascript:window.location.href = '/admin/adminUser/store'"> <i class="fa fa-plus"></i> Add
         </button>
         <div class="row">
             <div class="col-lg-12 col-sm-12 col-xs-12">
@@ -47,10 +47,10 @@
                                         <td align="center">{{ $v->name }}</td>
                                         <td align="center">{{ $v->email }}</td>
                                         <td align="center">
-                                            <a href="{{ url('admin/adminUser/showUpdateAdminWeb', [$v->admin_id]) }}" class="btn btn-primary btn-sm shiny">
+                                            <a href="{{ url('admin/adminUser/edit', [$v->admin_id]) }}" class="btn btn-primary btn-sm shiny">
                                                 <i class="fa fa-edit"></i> 编辑
                                             </a>
-                                            <a href="#" onClick="warning('三思后行，确实要删除吗','{{ url('admin/adminUser/deleteAdminUser', [$v->admin_id]) }}')" class="btn btn-danger btn-sm shiny">
+                                            <a href="#" onClick="warning('三思后行，确实要删除吗','{{ url('admin/adminUser/delete', [$v->admin_id]) }}')" class="btn btn-danger btn-sm shiny">
                                                 <i class="fa fa-trash-o"></i> 删除
                                             </a>
                                         </td>

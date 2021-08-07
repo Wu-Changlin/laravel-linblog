@@ -15,7 +15,7 @@ class RegisterController extends Controller
      * 显示注册页
      * showRegisterUserIndex
      */
-    public function showRegisterUserIndex()
+    public function index()
     {
         //dd('showRegisterUserIndex.showRegisterUserIndex.显示注册页');
         return view('admin.register.register');

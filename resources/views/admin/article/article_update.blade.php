@@ -28,7 +28,7 @@
                     <a href="{{ route('admin.index') }}">系统</a>
                 </li>
                 <li>
-                    <a href="{{ route('article.showArticle') }}">文章管理</a>
+                    <a href="{{ route('article.index') }}">文章管理</a>
                 </li>
                 <li class="active">修改文章</li>
             </ul>
@@ -46,7 +46,7 @@
                         </div>
                         <div class="widget-body">
                             <div class="flip-scroll">
-                                <form action="{{ route('article.updateArticle') }}" method="post" enctype="multipart/form-data">
+                                <form action="{{ route('article.update') }}" method="post" enctype="multipart/form-data">
                                     <input type="text" name="article_id" value="{{ $articles->article_id }}" hidden>
                                     {{ csrf_field() }}
                                     <table class="table table-bordered table-hover">

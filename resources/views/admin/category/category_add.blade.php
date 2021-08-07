@@ -34,7 +34,7 @@
                     </div>
                     <div class="widget-body" style="">
                         <div id="horizontal-form" style="">
-                            <form class="form-horizontal" role="form" action="{{ route('category.addCategory') }}" method="post" style="">
+                            <form class="form-horizontal" role="form" action="{{ route('category.create') }}" method="post" style="">
                                 {{ csrf_field() }}
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">上级分类</label>

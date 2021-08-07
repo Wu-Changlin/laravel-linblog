@@ -16,7 +16,7 @@
                 <a href="{{ route("admin.index") }}">系统</a>
             </li>
             <li>
-                <a href="{{ route("admin.showAdminUser") }}">管理员管理</a>
+                <a href="{{ route("adminUser.index") }}">管理员管理</a>
             </li>
             <li class="active">管理员修改</li>
         </ul>
@@ -34,7 +34,7 @@
                     </div>
                     <div class="widget-body">
                         <div id="horizontal-form">
-                            <form class="form-horizontal" role="form" action="{{ route("admin.updateAdminUser") }}" method="post">
+                            <form class="form-horizontal" role="form" action="{{ route("adminUser.update") }}" method="post">
                                 {{ csrf_field() }}
                                 <input type="hidden" name="id" value="{{ $data->admin_id }}">
                                 <div class="form-group">

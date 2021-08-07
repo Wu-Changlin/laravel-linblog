@@ -13,7 +13,7 @@ class ArticleController extends Controller
      * 显示所有文章
      * showArticle_show_code 1：显示所有文章失败  2：显示所有文章成功
      */
-    public function showArticle()
+    public function index()
     {
         $data= ArticleModel::lists();
         $assign=compact('data');
@@ -28,7 +28,7 @@ class ArticleController extends Controller
      * @return
      *
      */
-    public function showAddarticleWeb()
+    public function store()
     {
         $categorys=ArticleModel::categorys();  //分类
         $tags=ArticleModel::tags();            //标签
@@ -43,7 +43,7 @@ class ArticleController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse  0:数据为空, 1:文章已存在, 2:新增文章成功,其他：数据写入失败,新增文章失败
      */
-    public function addArticle(Request $request )
+    public function create(Request $request )
     {
         if($request->isMethod('post')){
             $input = $request->except('s','_token');  //去除 s：路由地址 ，_token： 表单中包含一个隐藏的 CSRF 令牌字段
@@ -74,7 +74,7 @@ class ArticleController extends Controller
                     return redirect()->back()->withInput()->with('err', '文章已存在');
                     break;
                 case 2:
-                    return redirect()->route("article.showArticle")->with('msg', "新增文章成功");
+                    return redirect()->route("article.index")->with('msg', "新增文章成功");
                     break;
                 default:
                     return redirect()->back()->withInput()->with('err', '数据写入失败,新增文章失败');
@@ -92,7 +92,7 @@ class ArticleController extends Controller
      * @param $article_id 更改文章id
      *
      */
-    public function showUpdatearticleWeb($article_id)
+    public function edit($article_id)
     {
 
         if(empty($article_id)){
@@ -110,7 +110,7 @@ class ArticleController extends Controller
      * @param $article_id 更改文章id
      * updateArticle_update_code
      */
-    public function updateArticle(Request $request)
+    public function update(Request $request)
     {
         if($request->isMethod('post')){
             $input = $request->except('s','_token');  //去除 s：路由地址 ，_token： 表单中包含一个隐藏的 CSRF 令牌字段
@@ -164,7 +164,7 @@ class ArticleController extends Controller
      * @param $article_id 文章id
      *deleteArticle_delete_code  0：默认  1：删除失败  2：删除成功
      */
-    public function deleteArticle($article_id)
+    public function delete($article_id)
     {
 
         if(empty($article_id)){
@@ -179,7 +179,7 @@ class ArticleController extends Controller
                 return redirect()->back()->withInput()->with('err', '文章不存在');
                 break;
             case 2:
-                return redirect()->route("article.showArticle")->with('msg', "删除文章成功");
+                return redirect()->route("article.index")->with('msg', "删除文章成功");
                 break;
             default:
                 return redirect()->back()->withInput()->with('err', '网络错误,删除文章失败');

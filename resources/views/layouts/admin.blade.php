@@ -100,7 +100,7 @@
                     </a>
                     <ul class="submenu">
                         <li>
-                            <a href=" {{url('admin/adminUser/showAdminUser')}}">
+                            <a href=" {{ route('adminUser.index') }}">
                                     <span class="menu-text">
                                         管理员列表                                    </span>
                                 <i class="menu-expand"></i>
@@ -132,7 +132,7 @@
                     </a>
                     <ul class="submenu">
                         <li>
-                            <a href="{{url('admin/category/index')}}">
+                            <a href="{{ route('category.index') }}">
                                     <span class="menu-text">
                                         分类列表                                    </span>
                                 <i class="menu-expand"></i>
@@ -149,7 +149,7 @@
                     </a>
                     <ul class="submenu">
                         <li>
-                            <a href="{{ route('tag.showTag')  }}">
+                            <a href="{{ route('tag.index')  }}">
                                     <span class="menu-text">
                                         标签列表                                    </span>
                                 <i class="menu-expand"></i>
@@ -166,7 +166,7 @@
                     </a>
                     <ul class="submenu">
                         <li>
-                            <a href="{{ route('article.showArticle') }}">
+                            <a href="{{ route('article.index') }}">
                                     <span class="menu-text">
                                         文章列表                                    </span>
                                 <i class="menu-expand"></i>

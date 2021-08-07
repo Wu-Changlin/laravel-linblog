@@ -13,13 +13,21 @@ use Illuminate\Http\Request;
 class WebConfigController extends Controller
 {
 
-    //网站配置视图
+    /**
+     * 显示网站配置启动项
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View|\think\response\View
+     */
     public function configView(){
         $data=WebConfig::all();
         $assign=compact('data');
         return view('admin.web_config.web_config_view',$assign);
     }
 
+    /**
+     * 修改网站配置启动项
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function updateConfigview(Request $request){
         //判断是否post请求
         if ($request->isMethod('post')) {
@@ -44,10 +52,12 @@ class WebConfigController extends Controller
         }
 
     }
+
     /**
-     *showWebConfig        显示网站配置列表
+     * 显示网站配置列表
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View|\think\response\View
      */
-    public function showWebconfig()
+    public function index()
     {
         $data=WebConfig::paginate(10);
         foreach ($data as $key){
@@ -62,12 +72,12 @@ class WebConfigController extends Controller
     /**
      *显示新增网站配置项页
      */
-    public function showAddwebConfig(){
+    public function store(){
         return view('admin.web_config.web_config_add');
     }
 
 
-    public function addWebconfig(Request $request)
+    public function create(Request $request)
     {
 
         //判断是否post请求
@@ -108,7 +118,7 @@ class WebConfigController extends Controller
      * @param $web_onfig_id   网站配置项id
      *
      */
-    public function showUpdatewebConfig($webConfig_id){
+    public function edit($webConfig_id){
         if(empty($webConfig_id)){
             return redirect()->back()->withInput()->with('err', '非法访问');
         }
@@ -121,7 +131,7 @@ class WebConfigController extends Controller
      * 更改网站配置
      *
      */
-    public function updateWebconfig(Request $request){
+    public function update(Request $request){
 //判断是否post请求
         if ($request->isMethod('post')) {
             $input = $request->except('s','_token');  //去除 s：路由地址 ，_token： 表单中包含一个隐藏的 CSRF 令牌字段
@@ -163,7 +173,7 @@ class WebConfigController extends Controller
      * @param $webConfig_id   删除网站配置项id
      * @return
      */
-    public  function deleteWebConfig($webConfig_id){
+    public  function delete($webConfig_id){
         if(empty($webConfig_id)){
             return redirect()->back()->withInput()->with('err', '非法访问');
         }

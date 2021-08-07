@@ -34,7 +34,7 @@
                     </div>
                     <div class="widget-body">
                         <div id="horizontal-form">
-                            <form class="form-horizontal" role="form" action="{{ route('webconfig.updateWebconfig') }}" method="post">
+                            <form class="form-horizontal" role="form" action="{{ route('webconfig.update') }}" method="post">
                                 {{ csrf_field() }}
                                 <input type="hidden" name="id" value="{{ $data->config_id }}">
                                 <div class="form-group">

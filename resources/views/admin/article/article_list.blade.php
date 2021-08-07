@@ -23,7 +23,7 @@
     <!-- Page Body -->
     <div class="page-body">
 
-        <button type="button" tooltip="添加用户" class="btn btn-sm btn-azure btn-addon" onclick="javascript:window.location.href = '/admin/article/showAddarticleWeb'"> <i class="fa fa-plus"></i> Add
+        <button type="button" tooltip="添加用户" class="btn btn-sm btn-azure btn-addon" onclick="javascript:window.location.href = '/admin/article/store'"> <i class="fa fa-plus"></i> Add
         </button>
         <div class="row">
             <div class="col-lg-12 col-sm-12 col-xs-12">
@@ -59,10 +59,10 @@
 
                                         </td>
                                         <td align="center">
-                                            <a href="{{ url('admin/article/showUpdatearticleWeb',[$v->article_id]) }}" class="btn btn-primary btn-sm shiny">
+                                            <a href="{{ url('admin/article/edit',[$v->article_id]) }}" class="btn btn-primary btn-sm shiny">
                                                 <i class="fa fa-edit"></i> 编辑
                                             </a>
-                                            <a href="#" onclick="warning('三思后行，确实要删除吗','{{ url('admin/article/deleteArticle',[$v->article_id]) }}')" class="btn btn-danger btn-sm shiny">
+                                            <a href="#" onclick="warning('三思后行，确实要删除吗','{{ url('admin/article/delete',[$v->article_id]) }}')" class="btn btn-danger btn-sm shiny">
                                                 <i class="fa fa-trash-o"></i> 删除
                                             </a>
                                         </td>

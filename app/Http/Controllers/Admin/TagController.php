@@ -12,7 +12,7 @@ class TagController extends Controller
      * 显示标签
      * showTag_show_code 1：显示标签失败  2：显示标签成功
      */
-    public function showTag()
+    public function index()
     {
         $data= TagModel::lists();
         //数字转文字 页面减少判断
@@ -28,7 +28,7 @@ class TagController extends Controller
      *
      *
      */
-    public function showAddtagWeb()
+    public function store()
     {
         $data=TagModel::categorys();
         $assing=compact('data');
@@ -41,7 +41,7 @@ class TagController extends Controller
      *
      *
      */
-    public function addTag(Request $request)
+    public function create(Request $request)
     {
 
         if($request->isMethod('post')){
@@ -63,7 +63,7 @@ class TagController extends Controller
                 return redirect()->back()->withInput()->with('err', '标签已存在');
                 break;
             case 2:
-                return redirect()->route("tag.showTag")->with('msg', "新增标签成功");
+                return redirect()->route("tag.index")->with('msg', "新增标签成功");
                 break;
             default:
                 return redirect()->back()->withInput()->with('err', '数据写入失败,新增标签失败');
@@ -76,7 +76,7 @@ class TagController extends Controller
      * @param $tag_id 更改标签id
      *
      */
-    public function showUpdatetagWeb($tag_id)
+    public function edit($tag_id)
     {
         if( ! isset($tag_id)){
           return redirect()->back()->with('err', '非法访问');
@@ -92,7 +92,7 @@ class TagController extends Controller
      * @param $tag_id 更改标签id
      * updateArticle_update_code  0：默认  1：更改标签失败  2：更改标签成功  3：保存中
      */
-    public function updateTag(Request $request)
+    public function updata(Request $request)
     {
         //判断是否post请求
         if ($request->isMethod('post')) {
@@ -115,7 +115,7 @@ class TagController extends Controller
                 return redirect()->back()->withInput()->with('msg', "保留");
                 break;
             case 2:
-                return redirect()->route("tag.showTag")->with('msg', "更改标签信息成功");
+                return redirect()->route("tag.index")->with('msg', "更改标签信息成功");
                 break;
             case 3:
                 return redirect()->back()->withInput()->with('err', '标签已存在');
@@ -133,7 +133,7 @@ class TagController extends Controller
      * @param $tag_id 标签id
      *deleteArticle_delete_code  0：默认  1：删除标签失败  2：删除标签成功
      */
-    public function deleteTag($tag_id)
+    public function delete($tag_id)
     {
         if(empty($tag_id)){
             return redirect()->back()->withInput()->with('err', '非法访问');
@@ -147,7 +147,7 @@ class TagController extends Controller
                 return redirect()->back()->withInput()->with('err', '标签不存在');
                 break;
             case 2:
-                return redirect()->route("tag.showTag")->with('msg', "删除标签成功");
+                return redirect()->route("tag.index")->with('msg', "删除标签成功");
                 break;
             default:
                 return redirect()->back()->withInput()->with('err', '网络错误,删除标签失败');

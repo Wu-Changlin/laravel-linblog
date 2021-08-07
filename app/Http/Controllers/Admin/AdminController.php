@@ -15,7 +15,6 @@ class AdminController extends Controller
 {
     /**
      * 博客后台首页
-     * showIndex_show_code   1：博客后台首页失败  2：博客后台首页成功
      */
     public function showIndex()
     {
@@ -25,10 +24,9 @@ class AdminController extends Controller
 
     /**
      * 管理员列表  判断当前登录用户是否设置为管理员 $is_admin 0:默认（普通用户）2：管理员
-     * @return  showAdminUser_show_code
      * post
      */
-    public function showAdminUser()
+    public function index()
     {
         $data=AdminModel::paginate(10);
         $assign=compact('data');  // compact() 的字符串可以就是变量的名字  （ data 视图里的变量名）
@@ -40,7 +38,7 @@ class AdminController extends Controller
      * @return  showAddadminWeb
      * post
      */
-    public function showAddadminWeb()
+    public function store()
     {
 
         return view('admin.admin.admin_add');
@@ -52,7 +50,7 @@ class AdminController extends Controller
      * @return  addAdminUser_add_code  0：默认  1：新增管理员 失败  2：新增管理员成功
      * post
      */
-    public function addAdminUser(AdminRequest $request)
+    public function create(AdminRequest $request)
     {
         //判断是否post请求
         if ($request->isMethod('post')) {
@@ -72,7 +70,7 @@ class AdminController extends Controller
                 return redirect()->back()->withInput()->with('err', '邮箱已注册');
                 break;
             case 2:
-                return redirect()->route("admin.showAdminUser")->with('msg', "新增管理员成功");
+                return redirect()->route("admin.index")->with('msg', "新增管理员成功");
                 break;
             default:
                 return redirect()->back()->withInput()->with('err', '数据写入失败,新增管理员失败');
@@ -85,7 +83,7 @@ class AdminController extends Controller
      *
      *@param $admin_id 更改管理员信息
      */
-    public function showUpdateAdminWeb($admin_id)
+    public function edit($admin_id)
     {
         if(empty($admin_id)){
             return redirect()->back()->withInput()->with('err', '非法访问');
@@ -104,7 +102,7 @@ class AdminController extends Controller
      * @param $admin_id 更改管理员信息
      * updateArticle_update_code  0：默认  1：更改管理员信息失败  2：更改管理员信息成功
      */
-    public function updateAdminUser(AdminRequest $request)
+    public function update(AdminRequest $request)
     {
         //判断是否post请求
         if ($request->isMethod('post')) {
@@ -125,7 +123,7 @@ class AdminController extends Controller
                 return redirect()->back()->withInput()->with('msg', "保留");
                 break;
             case 2:
-                return redirect()->route("admin.showAdminUser")->with('msg', "更改管理员信息成功");
+                return redirect()->route("admin.index")->with('msg', "更改管理员信息成功");
                 break;
             case 3:
                 return redirect()->back()->withInput()->with('err', '邮箱已注册');
@@ -146,7 +144,7 @@ class AdminController extends Controller
      * @param $admin_id 管理员 id
      * $res  0：数据为空  1：已删除管理员  2：删除管理员成功
      */
-    public function deleteAdminUser($admin_id)
+    public function delete($admin_id)
     {
         if(empty($admin_id)){
             return redirect()->back()->withInput()->with('err', '非法访问');
@@ -164,7 +162,7 @@ class AdminController extends Controller
                 return redirect()->back()->withInput()->with('err', '已删除管理员');
                 break;
             case 2:
-                return redirect()->route("admin.showAdminUser")->with('msg', "删除管理员成功");
+                return redirect()->route("admin.index")->with('msg', "删除管理员成功");
                 break;
             default:
                 return redirect()->back()->withInput()->with('err', '网络错误,删除管理员失败');

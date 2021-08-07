@@ -23,7 +23,7 @@
     <!-- Page Body -->
     <div class="page-body">
 
-        <button type="button" tooltip="添加标签" class="btn btn-sm btn-azure btn-addon" onclick="javascript:window.location.href = '/admin/tag/showAddtagWeb'"> <i class="fa fa-plus"></i> Add
+        <button type="button" tooltip="添加标签" class="btn btn-sm btn-azure btn-addon" onclick="javascript:window.location.href = '/admin/tag/store'"> <i class="fa fa-plus"></i> Add
         </button>
         <div class="row">
             <div class="col-lg-12 col-sm-12 col-xs-12">
@@ -54,10 +54,10 @@
                                         <td align="center">{{  $v->description }}</td>
                                         <td align="center">{{  $v->is_pull }}</td>
                                         <td align="center">
-                                            <a href="{{ url('admin/tag/showUpdatetagWeb',[$v->tag_id]) }}" class="btn btn-primary btn-sm shiny">
+                                            <a href="{{ url('admin/tag/edit',[$v->tag_id]) }}" class="btn btn-primary btn-sm shiny">
                                                 <i class="fa fa-edit"></i> 编辑
                                             </a>
-                                            <a href="#" onclick="warning('三思后行，确实要删除吗','{{ url('admin/tag/deleteTag',[$v->tag_id]) }}')" class="btn btn-danger btn-sm shiny">
+                                            <a href="#" onclick="warning('三思后行，确实要删除吗','{{ url('admin/tag/delete',[$v->tag_id]) }}')" class="btn btn-danger btn-sm shiny">
                                                 <i class="fa fa-trash-o"></i> 删除
                                             </a>
                                         </td>

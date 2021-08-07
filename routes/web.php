@@ -59,20 +59,20 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login','checkrbac'
     //6 管理员控制器
     Route::prefix('adminUser')->group(function () {
         // 管理员列表    http://192.168.164.134:1133/admin/adminUser/showAdminUser
-        Route::get('showAdminUser', 'AdminController@showAdminUser')->name("admin.showAdminUser");
+        Route::get('index', 'AdminController@index')->name("adminUser.index");
 
-        // 显示新增管理员页面    http://192.168.164.134:1133/admin/adminUser/showAddadminWeb
-        Route::get('showAddadminWeb', 'AdminController@showAddadminWeb');
-        // 新增管理员    http://192.168.164.134:1133/admin/adminUser/addAdminUser
-        Route::post('addAdminUser', 'AdminController@addAdminUser')->name("admin.addAdminUser");
+        // 显示新增管理员页面    http://192.168.164.134:1133/admin/adminUser/store
+        Route::get('store', 'AdminController@store');
+        // 新增管理员    http://192.168.164.134:1133/admin/adminUser/create
+        Route::post('create', 'AdminController@create')->name("adminUser.create");
 
-        // 显示编辑管理员页面    http://192.168.164.134:1133/admin/adminUser/showUpdateAdminWeb/1
-        Route::get('showUpdateAdminWeb/{id}', 'AdminController@showUpdateAdminWeb');
-        // 编辑管理员    http://192.168.164.134:1133/admin/adminUser/updateAdminUser/
-        Route::post('updateAdminUser', 'AdminController@updateAdminUser')->name("admin.updateAdminUser");
+        // 显示编辑管理员页面    http://192.168.164.134:1133/admin/adminUser/edit/1
+        Route::get('edit/{id}', 'AdminController@edit');
+        // 编辑管理员    http://192.168.164.134:1133/admin/adminUser/update/1
+        Route::post('update', 'AdminController@update')->name("adminUser.update");
 
-        // 删除管理员    http://192.168.164.134:1133/admin/adminUser/deleteAdminUser/1
-        Route::get('deleteAdminUser/{id}', 'AdminController@deleteAdminUser');
+        // 删除管理员    http://192.168.164.134:1133/admin/adminUser/delete/1
+        Route::get('delete/{id}', 'AdminController@delete');
     });
 
 
@@ -81,78 +81,79 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login','checkrbac'
     Route::prefix('category')->group(function () {
         // 分类列表     http://192.168.164.134:1133/admin/category/index
         Route::get('index', 'CategoryController@index')->name('category.index');
-        //显示添加分类页面 http://192.168.164.134:1133/admin/category/showAddcategoryWeb
-        Route::get('showAddcategoryWeb', 'CategoryController@showAddcategoryWeb');
-        // 添加分类     http://192.168.164.134:1133/admin/category/addCategory
-        Route::post('addCategory', 'CategoryController@addCategory')->name('category.addCategory');
+        //显示添加分类页面 http://192.168.164.134:1133/admin/category/store
+        Route::get('store', 'CategoryController@store');
+        // 添加分类     http://192.168.164.134:1133/admin/category/create
+        Route::post('create', 'CategoryController@create')->name('category.create');
 
-        // 显示编辑分类     http://192.168.164.134:1133/admin/category/showUpdatecategoryWeb/1
-        Route::get('showUpdatecategoryWeb/{id}', 'CategoryController@showUpdatecategoryWeb');
-        // 编辑分类   http://192.168.164.134:1133/admin/category/updateCategory
-        Route::post('updateCategory', 'CategoryController@updateCategory')->name('category.updateCategory');
+        // 显示编辑分类     http://192.168.164.134:1133/admin/category/edit/1
+        Route::get('edit/{id}', 'CategoryController@edit');
+        // 编辑分类   http://192.168.164.134:1133/admin/category/update
+        Route::post('update', 'CategoryController@update')->name('category.update');
 
         // 排序         http://192.168.164.134:1133/admin/category/sortCategory
         Route::get('sortCategory', 'CategoryController@sortCategory');
-        // 删除分类     http://192.168.164.134:1133/admin/category/deleteCategory/1
-        Route::get('deleteCategory/{id}', 'CategoryController@deleteCategory');
+        // 删除分类     http://192.168.164.134:1133/admin/category/delete/1
+        Route::get('delete/{id}', 'CategoryController@delete');
     });
 
 
 
     //2 标签管理
     Route::prefix('tag')->group(function () {
-        // 标签列表     http://192.168.164.134:1133/admin/tag/showTag
-        Route::get('showTag', 'TagController@showTag')->name('tag.showTag');
-        // 添加标签     http://192.168.164.134:1133/admin/tag/showAddtagWeb
-        Route::get('showAddtagWeb', 'TagController@showAddtagWeb');
-        Route::post('addTag', 'TagController@addTag')->name('tag.addTag');
+        // 标签列表     http://192.168.164.134:1133/admin/tag/index
+        Route::get('index', 'TagController@index')->name('tag.index');
+        // 添加标签     http://192.168.164.134:1133/admin/tag/store
+        Route::get('store', 'TagController@store');
+        Route::post('create', 'TagController@create')->name('tag.create');
 
-        // 编辑标签     http://192.168.164.134:1133/admin/tag/showUpdatetagWeb/1
-        Route::get('showUpdatetagWeb/{id}', 'TagController@showUpdatetagWeb');
-        Route::post('updateTag', 'TagController@updateTag')->name('tag.updateTag');;
+        // 编辑标签     http://192.168.164.134:1133/admin/tag/edit/1
+        Route::get('edit/{id}', 'TagController@edit');
+        Route::post('update', 'TagController@update')->name('tag.update');;
 
-        // 删除标签     http://192.168.164.134:1133/admin/tag/deleteTag/1
-        Route::get('deleteTag/{id}', 'TagController@deleteTag');
+        // 删除标签     http://192.168.164.134:1133/admin/tag/delete/1
+        Route::get('delete/{id}', 'TagController@delete');
     });
 
 
 
     //3 文章管理
     Route::prefix('article')->group(function () {
-        // 文章列表     http://192.168.164.134:1133/admin/article/showArticle
-        Route::get('showArticle', 'ArticleController@showArticle')->name('article.showArticle');
+        // 文章列表     http://192.168.164.134:1133/admin/article/index
+        Route::get('index', 'ArticleController@index')->name('article.index');
 
-        // 显示发布文章页面     http://192.168.164.134:1133/admin/article/showAddarticleWeb
-        Route::get('showAddarticleWeb', 'ArticleController@showAddarticleWeb');
-        // 执行发布文章操作     http://192.168.164.134:1133/admin/article/addArticle
-        Route::post('addArticle', 'ArticleController@addArticle')->name('article.addArticle');
+        // 显示发布文章页面     http://192.168.164.134:1133/admin/article/store
+        Route::get('store', 'ArticleController@store');
+        // 执行发布文章操作     http://192.168.164.134:1133/admin/article/create
+        Route::post('create', 'ArticleController@create')->name('article.create');
 
-        // 编辑文章     http://192.168.164.134:1133/admin/article/showUpdatearticleWeb/1
-        Route::get('showUpdatearticleWeb/{id}', 'ArticleController@showUpdatearticleWeb');
-        Route::post('updateArticle', 'ArticleController@updateArticle')->name('article.updateArticle');
+        // 编辑文章     http://192.168.164.134:1133/admin/article/edit/1
+        Route::get('edit/{id}', 'ArticleController@edit');
+        Route::post('update', 'ArticleController@update')->name('article.update');
         // 上传图片     http://192.168.164.134:1133/admin/article/uploadArticleImage
         Route::post('uploadArticleImage', 'ArticleController@uploadArticleImage');
-        // 删除文章     http://192.168.164.134:1133/admin/article/deleteArticle/3
-        Route::get('deleteArticle/{id}', 'ArticleController@deleteArticle');
+        // 删除文章     http://192.168.164.134:1133/admin/article/delete/3
+        Route::get('delete/{id}', 'ArticleController@delete');
     });
 
 
 
     //5 网站配置管理
     Route::prefix('web')->group(function () {
-        // 网站配置列表   http://192.168.164.134:1133/admin/web/showWebConfig
-        Route::get('showWebconfig', 'WebConfigController@showWebConfig')->name('webconfig.index');
-        // 网站配置视图
+        // 网站配置列表   http://192.168.164.134:1133/admin/web/index
+        Route::get('index', 'WebConfigController@index')->name('webconfig.index');
+        // 网站配置启动项视图
         Route::get('configView', 'WebConfigController@configView')->name('webconfig.configView');
+        // 修改网站配置启动项
         Route::post('updateConfigView', 'WebConfigController@updateConfigview')->name('webconfig.updateConfigview');
-        // 添加网站配置    http://192.168.164.134:1133/admin/web/showAddwebConfig
-        Route::get('showAddwebConfig', 'WebConfigController@showAddwebConfig');
-        Route::post('addWebconfig', 'WebConfigController@addWebconfig')->name('webconfig.addWebconfig');
-        // 更新网站配置   http://192.168.164.134:1133/admin/web/showUpdatewebConfig/1
-        Route::get('showUpdatewebConfig/{id}', 'WebConfigController@showUpdatewebConfig');
-        Route::post('updateWebconfig', 'WebConfigController@updateWebconfig')->name('webconfig.updateWebconfig');
-        // 删除网站配置   http://192.168.164.134:1133/admin/web/deleteWebconfig/1
-        Route::get('deleteWebconfig/{id}', 'WebConfigController@deleteWebConfig');
+        // 添加网站配置    http://192.168.164.134:1133/admin/web/store
+        Route::get('store', 'WebConfigController@store');
+        Route::post('create', 'WebConfigController@create')->name('webconfig.create');
+        // 更新网站配置   http://192.168.164.134:1133/admin/web/edit/1
+        Route::get('edit/{id}', 'WebConfigController@edit');
+        Route::post('update', 'WebConfigController@update')->name('webconfig.update');
+        // 删除网站配置   http://192.168.164.134:1133/admin/web/delete/1
+        Route::get('delete/{id}', 'WebConfigController@delete');
     });
 
 
@@ -161,16 +162,16 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login','checkrbac'
     Route::prefix('resource')->group(function () {
         // 资源分类列表     http://192.168.164.134:1133/admin/resource/index
         Route::get('index', 'ResourceStockController@index')->name('resource.index');
-        //显示添加资源分类页面 http://192.168.164.134:1133/admin/resource/showAddresourceWeb
+        //显示添加资源分类页面 http://192.168.164.134:1133/admin/resource/store
         Route::get('store', 'ResourceStockController@store');
-        // 添加资源分类     http://192.168.164.134:1133/admin/resource/addResources
+        // 添加资源分类     http://192.168.164.134:1133/admin/resource/create
         Route::post('create', 'ResourceStockController@create')->name('resource.create');
 
-        // 显示编辑资源分类     http://192.168.164.134:1133/admin/resource/showUpdateresourceWeb/1
-        Route::get('edit/{id}', 'ResourceStockController@showUpdateresourceWeb');
-        // 编辑资源分类   http://192.168.164.134:1133/admin/resource/updateResource
-        Route::post('update', 'ResourceStockController@updateResource')->name('resource.update');
-        // 删除资源分类     http://192.168.164.134:1133/admin/resource/deleteResource/1
+        // 显示编辑资源分类     http://192.168.164.134:1133/admin/resource/edit/1
+        Route::get('edit/{id}', 'ResourceStockController@edie');
+        // 编辑资源分类   http://192.168.164.134:1133/admin/resource/update
+        Route::post('update', 'ResourceStockController@update')->name('resource.update');
+        // 删除资源分类     http://192.168.164.134:1133/admin/resource/delete/1
         Route::get('delete/{id}', 'ResourceStockController@delete');
         // 检测资源分类地址        http://192.168.164.134:1133/admin/resource/isResource
         Route::get('isResource', 'ResourceStockController@isResource');
@@ -186,7 +187,7 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin.login','checkrbac'
     Route::prefix('friendshipLink')->group(function () {
         // 友情链接列表  http://192.168.164.134:1133/admin/friendshipLink/index
         Route::get('index', 'FriendshipLinkController@index')->name('friendshipLink.index');
-        // 添加友情链接   http://192.168.164.134:1133/admin/friendshipLink/showAddfriendWeb
+        // 添加友情链接   http://192.168.164.134:1133/admin/friendshipLink/store
         Route::get('store', 'FriendshipLinkController@store');
         Route::post('create', 'FriendshipLinkController@create')->name('friendshipLink.create');
         // 编辑友情链接

@@ -43,7 +43,7 @@ class CategoryController extends Controller
     /**
      * 显示新增分类页
      */
-    public function showAddcategoryWeb()
+    public function store()
     {
         $data=$this->mate_type(3,3);
         $data=array_except($data, array(0));//从数组移除给定的键=1的值对
@@ -57,7 +57,7 @@ class CategoryController extends Controller
      * @return
      *
      */
-    public function addCategory(Request $request)
+    public function create(Request $request)
     {
         if($request->isMethod('post')){
             $input = $request->except('s','_token');
@@ -92,7 +92,7 @@ class CategoryController extends Controller
      * 显示更改分类页     下架分类 该分类下的所有文章也会下架
      *@param $category_id 分类id
      */
-    public function showUpdatecategoryWeb($category_id)
+    public function edit($category_id)
     {
         if(empty($category_id)){
             return redirect()->back()->withInput()->with('err', '非法访问');
@@ -112,7 +112,7 @@ class CategoryController extends Controller
      * 更改分类     下架分类 该分类下的所有文章也会下架
      *
      */
-    public function updateCategory(Request $request)
+    public function update(Request $request)
     {
         //判断是否post请求
         if ($request->isMethod('post')) {
@@ -154,7 +154,7 @@ class CategoryController extends Controller
      * @param $category_id 分类id
      *deleteCategory_delete_code  0：默认 1：删除失败   2：成功删除
      */
-    public function deleteCategory($category_id)
+    public function delete($category_id)
     {
         if(empty($category_id)){
             return redirect()->back()->withInput()->with('err', '非法访问');
@@ -168,7 +168,7 @@ class CategoryController extends Controller
                 return redirect()->back()->withInput()->with('err', '分类不存在');
                 break;
             case 2:
-                return redirect()->route("admin.showAdminUser")->with('msg', "删除分类成功");
+                return redirect()->route("category.index")->with('msg', "删除分类成功");
                 break;
             default:
                 return redirect()->back()->withInput()->with('err', '网络错误,删除分类失败');

@@ -16,7 +16,7 @@
                 <a href="{{route('admin.index')}}">系统</a>
             </li>
             <li>
-                <a href="{{ route('tag.showTag') }}">标签管理</a>
+                <a href="{{ route('tag.index') }}">标签管理</a>
             </li>
             <li class="active">添加标签</li>
         </ul>
@@ -34,7 +34,7 @@
                     </div>
                     <div class="widget-body" style="">
                         <div id="horizontal-form" style="">
-                            <form class="form-horizontal" role="form" action="{{ route('tag.addTag') }}" method="post" style="">
+                            <form class="form-horizontal" role="form" action="{{ route('tag.create') }}" method="post" style="">
                                 {{ csrf_field() }}
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label no-padding-right">所属分类</label>
