@@ -22,9 +22,10 @@ class AdminController extends Controller
     }
 
 
+
     /**
-     * 管理员列表  判断当前登录用户是否设置为管理员 $is_admin 0:默认（普通用户）2：管理员
-     * post
+     * 管理员列表
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View|\think\response\View
      */
     public function index()
     {
@@ -33,10 +34,10 @@ class AdminController extends Controller
         return view('admin.admin.admin_list',$assign);
     }
 
+
     /**
      * 显示新增管理员模板页面
-     * @return  showAddadminWeb
-     * post
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View|\think\response\View
      */
     public function store()
     {
@@ -45,10 +46,11 @@ class AdminController extends Controller
 
     }
 
+
     /**
      * 新增管理员
-     * @return  addAdminUser_add_code  0：默认  1：新增管理员 失败  2：新增管理员成功
-     * post
+     * @param AdminRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function create(AdminRequest $request)
     {
@@ -70,7 +72,7 @@ class AdminController extends Controller
                 return redirect()->back()->withInput()->with('err', '邮箱已注册');
                 break;
             case 2:
-                return redirect()->route("admin.index")->with('msg', "新增管理员成功");
+                return redirect()->route("adminUser.index")->with('msg', "新增管理员成功");
                 break;
             default:
                 return redirect()->back()->withInput()->with('err', '数据写入失败,新增管理员失败');
@@ -96,11 +98,11 @@ class AdminController extends Controller
     }
 
 
-
+    
     /**
      * 更改管理员信息
-     * @param $admin_id 更改管理员信息
-     * updateArticle_update_code  0：默认  1：更改管理员信息失败  2：更改管理员信息成功
+     * @param AdminRequest $request 需要修改管理员信息
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(AdminRequest $request)
     {
@@ -123,7 +125,7 @@ class AdminController extends Controller
                 return redirect()->back()->withInput()->with('msg', "保留");
                 break;
             case 2:
-                return redirect()->route("admin.index")->with('msg', "更改管理员信息成功");
+                return redirect()->route("adminUser.index")->with('msg', "更改管理员信息成功");
                 break;
             case 3:
                 return redirect()->back()->withInput()->with('err', '邮箱已注册');
@@ -139,10 +141,12 @@ class AdminController extends Controller
     }
 
 
+
     /**
      * 彻底删除管理员      清空管理员的所有数据  其下分类、文章 、标签、评论、网站配置
      * @param $admin_id 管理员 id
-     * $res  0：数据为空  1：已删除管理员  2：删除管理员成功
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception  0：数据为空  1：已删除管理员  2：删除管理员成功
      */
     public function delete($admin_id)
     {
@@ -162,7 +166,7 @@ class AdminController extends Controller
                 return redirect()->back()->withInput()->with('err', '已删除管理员');
                 break;
             case 2:
-                return redirect()->route("admin.index")->with('msg', "删除管理员成功");
+                return redirect()->route("adminUser.index")->with('msg', "删除管理员成功");
                 break;
             default:
                 return redirect()->back()->withInput()->with('err', '网络错误,删除管理员失败');
