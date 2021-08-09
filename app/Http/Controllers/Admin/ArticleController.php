@@ -9,9 +9,10 @@ use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
+
     /**
-     * 显示所有文章
-     * showArticle_show_code 1：显示所有文章失败  2：显示所有文章成功
+     * 文章列表
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View|\think\response\View
      */
     public function index()
     {
@@ -24,9 +25,8 @@ class ArticleController extends Controller
     }
 
     /**
-     *
-     * @return
-     *
+     * 显示新增文章页面
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View|\think\response\View
      */
     public function store()
     {
@@ -38,10 +38,11 @@ class ArticleController extends Controller
         return view('admin.article.article_add',$assign);
     }
 
+
     /**
      *  新增文章
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse  0:数据为空, 1:文章已存在, 2:新增文章成功,其他：数据写入失败,新增文章失败
+     * @return \Illuminate\Http\RedirectResponse 0:数据为空, 1:文章已存在, 2:新增文章成功,其他：数据写入失败,新增文章失败
      */
     public function create(Request $request )
     {
@@ -89,8 +90,8 @@ class ArticleController extends Controller
 
     /**
      * 显示更改文章页
-     * @param $article_id 更改文章id
-     *
+     * @param $article_id 文章id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\View\View|\think\response\View
      */
     public function edit($article_id)
     {
@@ -105,10 +106,11 @@ class ArticleController extends Controller
         return view('admin.article.article_update',$assign);
     }
 
+
     /**
      * 更改文章
-     * @param $article_id 更改文章id
-     * updateArticle_update_code
+     * @param Request $request 文章新数据
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request)
     {
@@ -162,7 +164,8 @@ class ArticleController extends Controller
     /**
      * 删除文章
      * @param $article_id 文章id
-     *deleteArticle_delete_code  0：默认  1：删除失败  2：删除成功
+     * @return \Illuminate\Http\RedirectResponse 0：默认  1：删除失败  2：删除成功
+     * @throws \Exception
      */
     public function delete($article_id)
     {
@@ -197,12 +200,13 @@ class ArticleController extends Controller
     }
 
 
-    /**
-     * 上传文章中的图片
-     * @param Request $request    上传文章中的图片
-     * @return \Illuminate\Http\JsonResponse   上传成功信息（1）
-     */
 
+
+    /**
+     * 上传文章中的图片 （editormd上传图片实现）
+     * @param Request $request 图片
+     * @return \Illuminate\Http\JsonResponse 返回代码
+     */
     public function uploadArticleImage(Request $request)
     {
         //editormd的上传图片返回格式
@@ -227,10 +231,11 @@ class ArticleController extends Controller
         return response()->json($data);
     }
 
+  
     /**
-     *上传文章封面图
-     * @param $file    上传封面图
-     * @return string  图片路径
+     * 上传文章封面图
+     * @param $file     图片对象
+     * @return string   图片路径
      */
     public function uploadCover ($file)
     {
