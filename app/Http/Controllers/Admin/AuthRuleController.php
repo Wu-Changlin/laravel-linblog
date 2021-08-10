@@ -25,9 +25,8 @@ class AuthRuleController extends Controller
     
 
     /**
-     * 显示新增权限模板页面
-     * @return  showAddadminWeb
-     * post
+     *  显示新增权限页面
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View|\think\response\View
      */
     public function store()
     {
@@ -41,8 +40,8 @@ class AuthRuleController extends Controller
 
     /**
      * 新增权限
-     * @return  addAdminUser_add_code  0：默认  1：新增权限 失败  2：新增权限成功
-     * post
+     * @param Request $request 权限数据
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function create(Request $request)
     {
@@ -72,10 +71,10 @@ class AuthRuleController extends Controller
 
     }
 
-    /**
-     * 显示更改权限信息模板页面
-     *
-     *@param $admin_id 更改权限信息
+
+    /**显示更改权限信息页面
+     * @param $rule_id 权限id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\View\View|\think\response\View
      */
     public function edit($rule_id)
     {
@@ -92,11 +91,10 @@ class AuthRuleController extends Controller
     }
 
 
-
     /**
      * 更改权限信息
-     * @param $admin_id 更改权限信息
-     * updateArticle_update_code  0：默认  1：更改权限信息失败  2：更改权限信息成功
+     * @param Request $request 权限新数据
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request)
     {
@@ -132,9 +130,10 @@ class AuthRuleController extends Controller
 
 
     /**
-     * 彻底删除权限
-     * @param $admin_id 权限 id
-     * $res  0：数据为空  1：已删除权限  2：删除权限成功
+     * 删除权限
+     * @param $rule_id 权限id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function delete($rule_id)
     {
