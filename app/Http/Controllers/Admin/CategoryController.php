@@ -40,8 +40,10 @@ class CategoryController extends Controller
        }
     }
 
+
     /**
      * 显示新增分类页
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View|\think\response\View
      */
     public function store()
     {
@@ -52,10 +54,11 @@ class CategoryController extends Controller
     }
 
 
+
     /**
      * 新增分类
-     * @return
-     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function create(Request $request)
     {
@@ -88,9 +91,11 @@ class CategoryController extends Controller
 
     }
 
+
     /**
-     * 显示更改分类页     下架分类 该分类下的所有文章也会下架
-     *@param $category_id 分类id
+     * 显示更改分类页
+     * @param $category_id  分类id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\View\View|\think\response\View
      */
     public function edit($category_id)
     {
@@ -106,11 +111,10 @@ class CategoryController extends Controller
         return view('admin.category.category_update',$assign);
     }
 
-
-
     /**
-     * 更改分类     下架分类 该分类下的所有文章也会下架
-     *
+     * 更改分类
+     * @param Request $request  分类新数据
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request)
     {
@@ -152,7 +156,7 @@ class CategoryController extends Controller
     /**
      * 删除分类    该分类下的所有文章也会删除
      * @param $category_id 分类id
-     *deleteCategory_delete_code  0：默认 1：删除失败   2：成功删除
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function delete($category_id)
     {
