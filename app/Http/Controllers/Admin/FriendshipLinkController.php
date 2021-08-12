@@ -33,10 +33,10 @@ class FriendshipLinkController extends Controller
         return view('admin.friend_ship_link.friend_ship_link_add');
     }
     
-    /**
-     * 新增友好博客
-     * @return
-     *
+
+    /** 新增友好博客
+     * @param Request $request 友好博客数据
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function create(Request $request)
     {
@@ -67,9 +67,11 @@ class FriendshipLinkController extends Controller
 
     }
 
+
     /**
-     * 显示更改友好博客页     下架友好博客 该友好博客下的所有文章也会下架
-     *@param $link_id 友好博客id
+     * 显示更改友好博客页
+     * @param $link_id  友好博客id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\View\View|\think\response\View
      */
     public function edit($link_id)
     {
@@ -86,8 +88,8 @@ class FriendshipLinkController extends Controller
 
     /**
      * 更改友好博客
-     * @param $tag_id 更改友好博客id
-     * updateArticle_update_code  0：默认  1：更改友好博客失败  2：更改友好博客成功  3：保存中
+     * @param Request $request 友好博客id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request)
     {
@@ -122,11 +124,12 @@ class FriendshipLinkController extends Controller
         }
     }
 
-
+    
     /**
-     * 删除友好博客    该友好博客下的所有文章也会删除
-     * @param $link_id 友好博客id
-     *deleteFriend_delete_code  0：默认 1：删除失败   2：成功删除
+     * 删除友好博客
+     * @param $link_id  友好博客id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function delete($link_id)
     {
