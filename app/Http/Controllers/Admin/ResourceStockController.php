@@ -56,7 +56,7 @@ class ResourceStockController extends Controller
 
     /**
      * 显示新增资源分类页
-     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View|\think\response\View
      */
     public function store()
     {
@@ -76,10 +76,11 @@ class ResourceStockController extends Controller
     }
 
 
+
     /**
      * 新增资源分类
-     * @return
-     *
+     * @param Request $request  资源分类数据
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function create(Request $request)
     {
@@ -118,7 +119,8 @@ class ResourceStockController extends Controller
 
     /**
      * 显示更改资源分类页
-     *@param $resource_stock_id 资源id
+     * @param $resource_stock_id    资源id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\View\View|\think\response\View
      */
     public function edit($resource_stock_id)
     {
@@ -138,8 +140,9 @@ class ResourceStockController extends Controller
 
 
     /**
-     * 更改资源分类    下架顶级资源分类 该分类下的所有子级资源也会下架
-     *
+     * 更改资源分类   下架顶级资源分类 该分类下的所有子级资源也会下架
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request)
     {
@@ -182,10 +185,11 @@ class ResourceStockController extends Controller
     }
 
 
+
     /**
      * 删除资源分类    删除顶级资源分类 该分类下的所有子级资源也会删除
-     * @param $category_id 分类id
-     *deleteCategory_delete_code  0：默认 1：删除失败   2：成功删除
+     * @param $resource_stock_id    资源id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function delete($resource_stock_id)
     {
