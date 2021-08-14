@@ -8,9 +8,10 @@ use App\Models\Tag as TagModel ;
 
 class TagController extends Controller
 {
+
     /**
-     * 显示标签
-     * showTag_show_code 1：显示标签失败  2：显示标签成功
+     * 显示标签列表
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View|\think\response\View
      */
     public function index()
     {
@@ -23,10 +24,10 @@ class TagController extends Controller
         return view('admin.tag.tag_list',$assing);
     }
 
+
     /**
-     * 显示新增标签页
-     *
-     *
+     * 显示新增标签页面
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View|\think\response\View
      */
     public function store()
     {
@@ -36,10 +37,11 @@ class TagController extends Controller
         return view('admin.tag.tag_add',$assing);
     }
 
+
     /**
      * 新增标签
-     *
-     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function create(Request $request)
     {
@@ -71,10 +73,11 @@ class TagController extends Controller
     }
 
 
+
     /**
-     * 显示更改标签页
-     * @param $tag_id 更改标签id
-     *
+     * 显示更改标签页面
+     * @param $tag_id   标签id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\View\View|\think\response\View
      */
     public function edit($tag_id)
     {
@@ -87,10 +90,11 @@ class TagController extends Controller
         return view('admin.tag.tag_update',$assing);
     }
 
+
     /**
      * 更改标签
-     * @param $tag_id 更改标签id
-     * updateArticle_update_code  0：默认  1：更改标签失败  2：更改标签成功  3：保存中
+     * @param Request $request 标签id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function updata(Request $request)
     {
@@ -128,10 +132,12 @@ class TagController extends Controller
         }
     }
 
+  
     /**
      * 删除标签
-     * @param $tag_id 标签id
-     *deleteArticle_delete_code  0：默认  1：删除标签失败  2：删除标签成功
+     * @param $tag_id   标签id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function delete($tag_id)
     {
