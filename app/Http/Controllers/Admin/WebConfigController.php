@@ -70,13 +70,18 @@ class WebConfigController extends Controller
 
 
     /**
-     *显示新增网站配置项页
+     *显示新增网站配置项页面
      */
     public function store(){
         return view('admin.web_config.web_config_add');
     }
 
 
+    /**
+     * 新增网站配置
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function create(Request $request)
     {
 
@@ -113,10 +118,11 @@ class WebConfigController extends Controller
 
     }
 
+
     /**
-     * 显示更改网站配置项页
-     * @param $web_onfig_id   网站配置项id
-     *
+     *  显示更改网站配置项页面
+     * @param $webConfig_id 网站配置项id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\View\View|\think\response\View
      */
     public function edit($webConfig_id){
         if(empty($webConfig_id)){
@@ -129,7 +135,8 @@ class WebConfigController extends Controller
 
     /**
      * 更改网站配置
-     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request){
 //判断是否post请求
@@ -168,10 +175,12 @@ class WebConfigController extends Controller
         }
     }
 
+    
     /**
-     * deleteWebConfig        删除网站配置项
-     * @param $webConfig_id   删除网站配置项id
-     * @return
+     *  删除网站配置项
+     * @param $webConfig_id 网站配置项id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public  function delete($webConfig_id){
         if(empty($webConfig_id)){
