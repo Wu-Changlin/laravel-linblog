@@ -71,10 +71,12 @@ class Category extends Base
     }
 
 
+   
     /**
      * 删除分类
-     * @param $category_id    分类id
-     * @return int   0：$data为空，1：分类不存在，2：成功删除分类
+     * @param $category_id  分类id
+     * @return int  0：$data为空，1：分类不存在，2：成功删除分类
+     * @throws \Exception
      */
     public static function deleteCategory ($category_id) {
         if(empty($category_id)){

@@ -12,9 +12,10 @@ class Article extends Base
     //
     protected $primaryKey = 'article_id';
 
+
     /**
      * 文章列表
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public  static function  lists(){
         $cate_tag_article = DB::table('articles')
@@ -64,7 +65,6 @@ class Article extends Base
      * @param $data 新增文章数据
      * @return int 0：$data为空，1：文章标题已存在，2：成功新增文章
      */
-
     public  static  function  addArticle($data){
         if(empty($data)){//如果$data为空
            return 0;

@@ -161,7 +161,10 @@ class Admin extends Base
         return 2;
     }
 
-    //退出后台管理并返回后台登录页，清除用户缓存
+
+    /**
+     * 退出后台管理并返回后台登录页，清除用户缓存
+     */
     public static function adminlogOut(){
         $admin_user=session('admin_user');
         $admin_user = self::find($admin_user['admin_id'],["login_number"]);
