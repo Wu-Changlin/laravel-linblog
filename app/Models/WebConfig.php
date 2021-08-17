@@ -62,7 +62,7 @@ class WebConfig extends Base
     /**
      * 删除配置
      * @param $admin_id 配置id
-     * @return int 0：$admin_id为空，1：已删除配置，2：成功删除
+     * @return int 0：$config_id为空，1：已删除配置，2：成功删除
      * @throws \Exception
      */
     public static function deleteConfig ($config_id) {
